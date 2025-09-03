@@ -1,3 +1,0 @@
-[submodule "libraries/oversec_crypto"]
-	path = libraries/oversec_crypto
-	url = https://github.com/oversecio/oversec_crypto.git
