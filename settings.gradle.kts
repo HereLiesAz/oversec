@@ -1,0 +1,2 @@
+include(":app")
+include(":libraries:oversec_crypto:crypto")
