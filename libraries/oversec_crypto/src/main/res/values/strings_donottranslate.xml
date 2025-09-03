@@ -1,0 +1,41 @@
+<resources>
+
+
+    <!-- DO NOT TRANSLATE! -->
+
+    <string name="crash_email" translatable="false">crashreport@oversec.io</string>
+    <string name="bug_email" translatable="false">bugreport@oversec.io</string>
+
+
+    <string name="tempcontent_authority" translatable="false">oversec_temporary_content</string>
+    <string name="mainprefs_relaxecache_key" translatable="false">relax_cache</string>
+    <string name="mainprefs_allow_screenshot_key" translatable="false">allow_screenshot</string>
+    <string name="mainprefs_screenoffpanic_key" translatable="false">screenoffpanic</string>
+    <string name="mainprefs_hidelauncheronpanic_key" translatable="false">hidelauncheronpanic</string>
+    <string name="mainprefs_launchersecretcode_key" translatable="false">launchersecretcode0</string>
+    <string name="mainprefs_launchersecretcode_default" translatable="false"></string>
+    <string name="mainprefs_dialersecretcodebroadcastworking_key" translatable="false">dialersecretcodebroadcastworking5</string>
+
+    <string name="tooltipid_encryptionparams_sym_general" translatable="false">encryptionparams_sym_general</string>
+    <string name="tooltipid_encryptionparams_simplesym_general" translatable="false">encryptionparams_simplesym_general</string>
+    <string name="tooltipid_encryptionparams_simplesym_general_appsec" translatable="false">encryptionparams_simplesym_general_appsec</string>
+    <string name="tooltipid_encryptionparams_gpg_general" translatable="false">encryptionparams_gpg_general</string>
+
+    <string name="tooltipid_encryptionparams_encrypt_button" translatable="false">encryptionparams_fab</string>
+    <string name="tooltipid_encryptionparams_gpg_choose_own_key" translatable="false">encryptionparams_gpg_choose_own_key</string>
+    <string name="tooltipid_buttonhide_visible" translatable="false">buttonhide_visible</string>
+    <string name="tooltipid_buttonhide_hidden" translatable="false">buttonhide_hidden</string>
+    <string name="tooltipid_edittext_insufficientpadding" translatable="false">edittext_insufficientpadding</string>
+    <string name="tooltipid_edittext_encryptionparamsremembered" translatable="false">edittext_encryptionparamsremembered</string>
+    <string name="tooltipid_buttonencrypt_initial" translatable="false">buttonencrypt_initial</string>
+    <string name="tooltipid_apps_fragment" translatable="false">apps_fragment</string>
+    <string name="tooltipid_keys_fragment" translatable="false">keys_fragment</string>
+    <string name="tooltipid_pgpmessagesarehuge" translatable="false">pgpmessagesarehuge</string>
+    <string name="tooltipid_padders_fragment" translatable="false">padders_fragment</string>
+    <string name="tooltipid_onboarding" translatable="false">onboarding</string>
+    <string name="tooltipid_issues" translatable="false">issues_</string>
+    <string name="tooltipid_serious_issues" translatable="false">seriousissues_</string>
+    <string name="tooltipid_buttoncompose" translatable="false">buttoncompose</string>
+    <string name="tooltipid_compose_encrypt_button" translatable="false">compose_fab</string>
+    <string name="tooltipid_paste_clipboard" translatable="false">paste_clipboardx</string>
+</resources>
