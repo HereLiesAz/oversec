@@ -2,8 +2,8 @@ package io.oversec.one.crypto.ui.util
 
 import android.content.Context
 import android.graphics.Canvas
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import io.oversec.one.crypto.R
 
 class SimpleDividerItemDecoration(context: Context) : RecyclerView.ItemDecoration() {

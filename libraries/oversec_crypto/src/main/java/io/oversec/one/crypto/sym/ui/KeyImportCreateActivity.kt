@@ -10,7 +10,7 @@ import android.graphics.*
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
+import androidx.core.app.ActivityCompat
 import android.text.InputType
 import android.util.TypedValue
 import android.view.Menu

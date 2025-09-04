@@ -3,9 +3,9 @@ package io.oversec.one.crypto.ui.util
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.widget.AppCompatEditText
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.appcompat.widget.AppCompatEditText
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet

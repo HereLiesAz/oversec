@@ -1,8 +1,8 @@
 package io.oversec.one.crypto.sym.ui
 
 import android.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import android.text.format.DateUtils
 import android.util.TypedValue
 import android.view.LayoutInflater

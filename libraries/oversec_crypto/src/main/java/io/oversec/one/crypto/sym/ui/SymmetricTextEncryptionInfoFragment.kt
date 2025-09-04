@@ -2,7 +2,7 @@ package io.oversec.one.crypto.sym.ui
 
 import android.app.Activity
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.text.format.DateUtils
 import android.view.*
 import android.widget.Button

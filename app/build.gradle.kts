@@ -4,7 +4,7 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("com.gladed.androidgitversion")
+    id("com.gladed.androidgitversion") version "0.4.14"
     id("witness")
 }
 
@@ -38,7 +38,7 @@ val appTargets = mapOf(
 
 val langs = listOf("","-de","-es","-fr","-pt","-ru","-tr","-zh-rCN","-it")
 
-fun com.android.build.api.dsl.ProductFlavor.applyAppTgt(appTgt: AppTarget) {
+fun com.android.build.api.dsl.ApplicationProductFlavor.applyAppTgt(appTgt: AppTarget) {
     applicationId = appTgt.applicationId
     resValue("string", "app_name", appTgt.appName)
     resValue("string", "acs_label", appTgt.acsLabel)
@@ -79,14 +79,8 @@ android {
         targetSdkVersion(34)
 
         //hardcoded for F-droid bot
-        versionCode = 1005015
-        versionName = "1.5.15"
-
-        //still need to make sure this is in sync with the git tags
-        val versionCodeFromGit = com.gladed.androidgitversion.AndroidGitVersion.get(project).code()
-        if (versionCode != versionCodeFromGit) {
-            throw Exception("Version Code Mismatch, $versionCode <-> $versionCodeFromGit\nPlease update hardcoded versionCode/versionName")
-        }
+        versionCode = androidGitVersion.code()
+        versionName = androidGitVersion.name()
 
         buildConfigField("java.lang.Boolean", "IS_FRDOID", "new Boolean("+project.hasProperty("fdroid")+")")
 
@@ -105,7 +99,7 @@ android {
         }
 
         getByName("debug") {
-            isMultiDexEnabled = true
+            multiDexEnabled = true
             buildConfigField("java.lang.Long", "X_BUILD_TIME", "new Long("+System.currentTimeMillis()+"L)")
         }
     }
@@ -186,8 +180,8 @@ android {
     // to enable it comment out the code at the bottom of this build.gradle
     lint {
         // Do not abort build if lint finds errors
-        isAbortOnError = false
-        isCheckAllWarnings = true
+        abortOnError = false
+        checkAllWarnings = true
         htmlReport = true
         htmlOutput = file("lint-report.html")
     }
@@ -207,6 +201,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
     buildFeatures {
         compose = true
     }
@@ -218,7 +215,7 @@ android {
 dependencies {
     implementation(fileTree(mapOf("include" to listOf("*.jar"), "dir" to "libs")))
 
-    implementation(project(":libraries:oversec_crypto:crypto"))
+    implementation(project(":libraries:oversec_crypto"))
 
     implementation("org.sufficientlysecure:html-textview:4.0")
     implementation("com.vladsch.flexmark:flexmark-all:0.64.8")
@@ -244,7 +241,7 @@ dependencies {
 
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation(project(":libraries:oversec_crypto:crypto"))
+    testImplementation(project(":libraries:oversec_crypto"))
 }
 
 
@@ -256,14 +253,16 @@ tasks.whenTaskAdded {
 }
 
 // poor-man's preprocess to generate app-specific string resources
-fun replaceEntities(ant: org.apache.tools.ant.Project, appTgt: AppTarget, sFile: java.io.File, tDir: java.io.File, tFile: java.io.File) {
-    ant.invokeMethod("mkdir", mapOf("dir" to tDir))
-    ant.invokeMethod("copy", mapOf("file" to sFile.canonicalPath, "tofile" to tFile.canonicalPath))
-    ant.invokeMethod("replace", mapOf("file" to tFile.canonicalPath, "token" to "&appname;", "value" to appTgt.appName))
-    ant.invokeMethod("replace", mapOf("file" to tFile.canonicalPath, "token" to "&targetapp;", "value" to appTgt.targetApp))
-    ant.invokeMethod("replace", mapOf("file" to tFile.canonicalPath, "token" to "&acs_label;", "value" to appTgt.acsLabel))
-    ant.invokeMethod("replace", mapOf("file" to tFile.canonicalPath, "token" to "&website;", "value" to appTgt.website))
-    ant.invokeMethod("replace", mapOf("file" to tFile.canonicalPath, "token" to "&dllink;", "value" to appTgt.dlLink))
+fun replaceEntities(ant: groovy.ant.AntBuilder, appTgt: AppTarget, sFile: java.io.File, tDir: java.io.File, tFile: java.io.File) {
+    ant.withGroovyBuilder {
+        "mkdir"("dir" to tDir)
+        "copy"("file" to sFile.canonicalPath, "tofile" to tFile.canonicalPath)
+        "replace"("file" to tFile.canonicalPath, "token" to "&appname;", "value" to appTgt.appName)
+        "replace"("file" to tFile.canonicalPath, "token" to "&targetapp;", "value" to appTgt.targetApp)
+        "replace"("file" to tFile.canonicalPath, "token" to "&acs_label;", "value" to appTgt.acsLabel)
+        "replace"("file" to tFile.canonicalPath, "token" to "&website;", "value" to appTgt.website)
+        "replace"("file" to tFile.canonicalPath, "token" to "&dllink;", "value" to appTgt.dlLink)
+    }
 }
 
 tasks.register("preBuildMangleEntities") {
@@ -292,11 +291,11 @@ tasks.register("preBuildMangleEntities") {
             var tFile = File(tDir, "strings_generated.xml")
             replaceEntities(ant, appTgt, sFile, tDir, tFile)
 
-            sFile = File(rootDir, "libraries/oversec_crypto/crypto/src/main/res/values$it/strings.xml")
+            sFile = File(rootDir, "libraries/oversec_crypto/src/main/res/values$it/strings.xml")
             tFile = File(tDir, "strings_crypto_generated.xml")
             replaceEntities(ant, appTgt, sFile, tDir, tFile)
 
-            sFile = File(rootDir, "libraries/oversec_crypto/crypto/src/main/res/values$it/strings_core.xml")
+            sFile = File(rootDir, "libraries/oversec_crypto/src/main/res/values$it/strings_core.xml")
             tFile = File(tDir, "strings_crypto_core_generated.xml")
             replaceEntities(ant, appTgt, sFile, tDir, tFile)
         }
@@ -311,6 +310,8 @@ tasks.whenTaskAdded {
 
 tasks.named("clean") {
     doFirst {
-        ant.invokeMethod("delete", mapOf("dir" to "src", "includes" to "**/strings*_generated.xml"))
+        ant.withGroovyBuilder {
+            "delete"("dir" to "src", "includes" to "**/strings*_generated.xml")
+        }
     }
 }

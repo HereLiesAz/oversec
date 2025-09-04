@@ -1,6 +1,6 @@
 package io.oversec.one.ovl;
 
-import android.support.v4.content.res.ResourcesCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import io.oversec.one.Core;
 import io.oversec.one.R;

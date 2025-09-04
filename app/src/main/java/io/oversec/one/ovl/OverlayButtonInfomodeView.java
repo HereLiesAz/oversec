@@ -1,6 +1,6 @@
 package io.oversec.one.ovl;
 
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 
 import io.oversec.one.Core;
 import io.oversec.one.db.Db;

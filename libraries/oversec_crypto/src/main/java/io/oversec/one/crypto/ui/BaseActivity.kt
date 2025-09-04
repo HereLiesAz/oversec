@@ -1,6 +1,6 @@
 package io.oversec.one.crypto.ui
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.afollestad.materialdialogs.MaterialDialog
 import io.oversec.one.crypto.R
 
