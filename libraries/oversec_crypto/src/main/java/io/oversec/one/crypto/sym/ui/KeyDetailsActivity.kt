@@ -13,6 +13,30 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.afollestad.materialdialogs.MaterialDialog
 import io.oversec.one.common.MainPreferences
 import io.oversec.one.crypto.Help
@@ -25,16 +49,16 @@ import io.oversec.one.crypto.ui.NewPasswordInputDialog
 import io.oversec.one.crypto.ui.NewPasswordInputDialogCallback
 import io.oversec.one.crypto.ui.SecureBaseActivity
 import io.oversec.one.crypto.ui.util.Util
-import kotlinx.android.synthetic.main.sym_activity_key_details.*
-import kotlinx.android.synthetic.main.sym_content_key_details.*
 import roboguice.util.Ln
 import java.text.SimpleDateFormat
+import java.util.*
 
 class KeyDetailsActivity : SecureBaseActivity(), OversecKeyCacheListener {
 
-    private lateinit var mKeystore:OversecKeystore2
+    private lateinit var mKeystore: OversecKeystore2
     private var mId: Long = 0
 
+    @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,283 +79,66 @@ class KeyDetailsActivity : SecureBaseActivity(), OversecKeyCacheListener {
             return
         }
 
-        setContentView(R.layout.sym_activity_key_details)
-
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-
-        btRevealQr.setOnClickListener { showPlainKeyQR() }
-
-        tv_alias.text = key.name
-        tv_hash.text = SymUtil.longToPrettyHex(key.id)
-
-        val createdDate = key.createdDate
-        tv_date.text = SimpleDateFormat.getDateTimeInstance().format(
-            createdDate
-        )
-
-        setKeyImage(true)
-        fab.setOnClickListener { showConfirmDialog() }
-
-        refreshConfirm()
-
-        SymUtil.applyAvatar(tvAvatar, key.name!!)
+        setContent {
+            // Assuming a Material 3 theme is available from the app module
+            MaterialTheme {
+                KeyDetailsScreen(
+                    key = key,
+                    onNavigateUp = { finish() },
+                    onConfirmKey = {
+                        try {
+                            mKeystore.confirmKey(mId)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            showError(getString(R.string.common_error_body, e.message), null)
+                        }
+                    },
+                    onDeleteKey = {
+                        try {
+                            mKeystore.deleteKey(mId)
+                            setResult(Activity.RESULT_FIRST_USER)
+                            finish()
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            showError(getString(R.string.common_error_body, e.message), null)
+                        }
+                    },
+                    getQrBitmap = { isBlurred ->
+                        getQrBitmap(isBlurred)
+                    },
+                    onUnlockKey = { launcher ->
+                        try {
+                            val intent = Intent(this, UnlockKeyActivity::class.java)
+                            intent.putExtra("id", mId)
+                            launcher.launch(intent)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                )
+            }
+        }
         mKeystore.addKeyCacheListener(this)
     }
 
-    private fun showPlainKeyQR() {
-        val ok = setKeyImage(false)
-        if (!ok) {
-            UnlockKeyActivity.showForResult(this, mId, RQ_UNLOCK)
-        } else {
-            btRevealQr.visibility = View.GONE
-        }
-    }
-
-
-    private fun setKeyImage(blur: Boolean): Boolean {
+    private fun getQrBitmap(blur: Boolean): Bitmap? {
         val dimension =
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 240f, resources.displayMetrics)
                 .toInt()
-        try {
-            var bm: Bitmap?
+        return try {
             if (blur) {
-                bm = SymUtil.getQrCode(KeyUtil.getRandomBytes(32), dimension)
+                val bm = SymUtil.getQrCode(KeyUtil.getRandomBytes(32), dimension)
                 val bmSmallTmp = Bitmap.createScaledBitmap(bm!!, 25, 25, true)
-                bm = Bitmap.createScaledBitmap(bmSmallTmp, dimension, dimension, true)
+                Bitmap.createScaledBitmap(bmSmallTmp, dimension, dimension, true)
             } else {
-                bm = SymUtil.getQrCode(mKeystore.getPlainKeyAsTransferBytes(mId), dimension)
+                SymUtil.getQrCode(mKeystore.getPlainKeyAsTransferBytes(mId), dimension)
             }
-            ivQr.setImageBitmap(bm)
-            return true
         } catch (ex: KeyNotCachedException) {
-            ex.printStackTrace()
+            null // Return null to indicate key needs unlocking
         } catch (ex: Exception) {
             ex.printStackTrace()
+            null
         }
-
-        return false
-    }
-
-
-    @SuppressLint("RestrictedApi")
-    private fun refreshConfirm() {
-        val confirmDate = mKeystore.getConfirmDate(mId)
-        fab.visibility = if (confirmDate == null) View.VISIBLE else View.GONE
-        tv_confirmed.text = if (confirmDate == null)
-            getString(R.string.label_key_unconfirmed)
-        else
-            SimpleDateFormat.getDateTimeInstance().format(
-                confirmDate
-            )
-        ivConfirmed.visibility = if (confirmDate == null) View.GONE else View.VISIBLE
-        ivUnConfirmed.visibility = if (confirmDate == null) View.VISIBLE else View.GONE
-    }
-
-    private fun showConfirmDialog() {
-        val fp = mId
-
-        //TODO: make custom dialog. highlight the fingerprint, monospace typeface
-        MaterialDialog.Builder(this)
-            .title(R.string.app_name)
-            .iconRes(R.drawable.ic_warning_black_24dp)
-            .cancelable(true)
-            .content(getString(R.string.dialog_confirm_key_text, SymUtil.longToPrettyHex(fp)))
-            .positiveText(R.string.common_ok)
-            .onPositive { dialog, which ->
-                try {
-                    mKeystore.confirmKey(mId)
-
-                    refreshConfirm()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    showError(getString(R.string.common_error_body, e.message), null)
-                }
-            }
-            .negativeText(R.string.common_cancel)
-            .onNegative { dialog, which -> dialog.dismiss() }
-            .show()
-    }
-
-
-    private fun showDeleteDialog() {
-        MaterialDialog.Builder(this)
-            .title(R.string.app_name)
-            .iconRes(R.drawable.ic_warning_black_24dp)
-            .cancelable(true)
-            .content(getString(R.string.action_delete_key_confirm))
-            .positiveText(R.string.common_ok)
-            .onPositive { dialog, which ->
-                try {
-                    mKeystore.deleteKey(mId)
-
-                    setResult(Activity.RESULT_FIRST_USER)
-                    finish()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    showError(getString(R.string.common_error_body, e.message), null)
-                }
-            }
-            .negativeText(R.string.common_cancel)
-            .onNegative { dialog, which -> dialog.dismiss() }
-            .show()
-
-
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_key_details, menu)
-
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        when (id) {
-            android.R.id.home -> finish()
-            R.id.action_delete_key -> {
-                showDeleteDialog()
-                return true
-            }
-            R.id.action_send_encrypted -> {
-                share(RQ_SEND_ENCRYPTED)
-                return true
-            }
-            R.id.action_view_encrypted -> {
-                share(RQ_VIEW_ENCRYPTED)
-                return true
-            }
-            R.id.help -> {
-                Help.open(this, Help.ANCHOR.symkey_details)
-                return true
-            }
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
-
-
-    private fun share(rq: Int) {
-        try {
-            val plainKey = mKeystore.getPlainKey(mId)
-            share(plainKey, rq)
-        } catch (e: KeyNotCachedException) {
-            try {
-                startIntentSenderForResult(e.pendingIntent.intentSender, rq, null, 0, 0, 0)
-            } catch (e1: IntentSender.SendIntentException) {
-                e1.printStackTrace()
-            }
-        }
-    }
-
-    private fun share(plainKey: SymmetricKeyPlain, rq: Int) {
-        val cb = object : NewPasswordInputDialogCallback {
-            override fun positiveAction(pw: CharArray) {
-                share(pw, plainKey, rq)
-            }
-
-            override fun neutralAction() {
-
-            }
-        }
-        NewPasswordInputDialog.show(this, NewPasswordInputDialog.MODE.SHARE, cb)
-    }
-
-    private fun share(pw: CharArray, plainKey: SymmetricKeyPlain, rq: Int) {
-        val d = MaterialDialog.Builder(this)
-            .title(R.string.progress_encrypting)
-            .content(R.string.please_wait_encrypting)
-            .progress(true, 0)
-            .cancelable(false)
-            .show()
-
-        val t = Thread(Runnable {
-            try {
-                val encKey = mKeystore.encryptSymmetricKey(plainKey, pw)
-
-                d.dismiss()
-                runOnUiThread { share(encKey, rq) }
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-                d.dismiss()
-                runOnUiThread {
-                    showError(
-                        getString(
-                            R.string.common_error_body,
-                            e.message
-                        ), null
-                    )
-                }
-            } finally {
-                KeyUtil.erase(pw)
-            }
-        })
-
-        t.start()
-    }
-
-
-    private fun share(encKey: SymmetricKeyEncrypted, rq: Int) {
-        try {
-            val uri = TemporaryContentProvider.prepare(
-                this,
-                "image/png",
-                TemporaryContentProvider.TTL_1_HOUR,
-                null
-            )
-            val bm = SymUtil.getQrCode(
-                OversecKeystore2.getEncryptedKeyAsTransferBytes(encKey),
-                KEYSHARE_BITMAP_WIDTH_PX
-            )
-            val os = contentResolver.openOutputStream(uri)
-                ?: //damnit
-                return
-            bm!!.compress(Bitmap.CompressFormat.PNG, 100, os)
-            os.close()
-
-
-            val intent = Intent()
-            var cid = 0
-
-
-            if (rq == RQ_SEND_ENCRYPTED) {
-                intent.action = Intent.ACTION_SEND
-                intent.putExtra(Intent.EXTRA_STREAM, uri)
-                intent.type = "image/png"
-                cid = R.string.intent_chooser_send_encryptedkey
-            } else if (rq == RQ_VIEW_ENCRYPTED) {
-                intent.action = Intent.ACTION_VIEW
-                intent.setDataAndType(uri, "image/png")
-                cid = R.string.intent_chooser_view_encryptedkey
-            }
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-
-            Util.share(this, intent, null, getString(cid), true, null, false)
-
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (RQ_UNLOCK == requestCode) {
-            if (resultCode == Activity.RESULT_OK) {
-                setKeyImage(false)
-                btRevealQr.visibility = View.GONE
-            }
-        } else if (RQ_SEND_ENCRYPTED == requestCode) {
-            if (resultCode == Activity.RESULT_OK) {
-                share(RQ_SEND_ENCRYPTED)
-            }
-        } else if (RQ_VIEW_ENCRYPTED == requestCode) {
-            if (resultCode == Activity.RESULT_OK) {
-                share(RQ_VIEW_ENCRYPTED)
-            }
-        }
-
-
     }
 
     override fun onDestroy() {
@@ -339,40 +146,234 @@ class KeyDetailsActivity : SecureBaseActivity(), OversecKeyCacheListener {
         super.onDestroy()
     }
 
-
     override fun onFinishedCachingKey(keyId: Long) {
         if (mId == keyId) {
             finish()
         }
     }
-
-    override fun onStartedCachingKey(keyId: Long) {
-
-    }
+    override fun onStartedCachingKey(keyId: Long) {}
 
     companion object {
-
         private const val EXTRA_ID = "id"
-        private const val RQ_UNLOCK = 1008
-        private const val RQ_SEND_ENCRYPTED = 1009
-        private const val RQ_VIEW_ENCRYPTED = 1010
-        private const val KEYSHARE_BITMAP_WIDTH_PX = 480
-
         fun show(ctx: Context, keyId: Long?) {
-            val i = Intent()
-            i.setClass(ctx, KeyDetailsActivity::class.java)
+            val i = Intent(ctx, KeyDetailsActivity::class.java)
             if (ctx !is Activity) {
                 i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
             i.putExtra(EXTRA_ID, keyId)
             ctx.startActivity(i)
         }
+    }
+}
 
-        fun showForResult(f: Fragment, rq: Int, id: Long) {
-            val i = Intent()
-            i.setClass(f.activity, KeyDetailsActivity::class.java)
-            i.putExtra(EXTRA_ID, id)
-            f.startActivityForResult(i, rq)
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun KeyDetailsScreen(
+    key: SymmetricKeyEncrypted,
+    onNavigateUp: () -> Unit,
+    onConfirmKey: () -> Unit,
+    onDeleteKey: () -> Unit,
+    getQrBitmap: (isBlurred: Boolean) -> Bitmap?,
+    onUnlockKey: (androidx.activity.result.ActivityResultLauncher<Intent>) -> Unit
+) {
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    var showConfirmDialog by remember { mutableStateOf(false) }
+    var isQrRevealed by remember { mutableStateOf(false) }
+    var qrBitmap by remember { mutableStateOf<Bitmap?>(null) }
+    val isConfirmed = key.confirmDate != null
+
+    LaunchedEffect(Unit) {
+        qrBitmap = getQrBitmap(true) // Load initial blurred QR
+    }
+
+    val unlockLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            isQrRevealed = true
+            qrBitmap = getQrBitmap(false)
+        }
+    }
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = key.name ?: "Key Details") },
+                navigationIcon = {
+                    IconButton(onClick = onNavigateUp) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                },
+                actions = {
+                    var menuExpanded by remember { mutableStateOf(false) }
+                    IconButton(onClick = { menuExpanded = true }) {
+                        Icon(Icons.Default.MoreVert, contentDescription = "More")
+                    }
+                    DropdownMenu(
+                        expanded = menuExpanded,
+                        onDismissRequest = { menuExpanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text("Delete") },
+                            onClick = {
+                                showDeleteDialog = true
+                                menuExpanded = false
+                            },
+                            leadingIcon = { Icon(Icons.Default.Delete, contentDescription = "Delete") }
+                        )
+                    }
+                }
+            )
+        },
+        floatingActionButton = {
+            if (!isConfirmed) {
+                FloatingActionButton(onClick = { showConfirmDialog = true }) {
+                    Icon(Icons.Default.Done, contentDescription = "Confirm Key")
+                }
+            }
+        }
+    ) { paddingValues ->
+        KeyDetailsContent(
+            modifier = Modifier.padding(paddingValues),
+            key = key,
+            isQrRevealed = isQrRevealed,
+            qrBitmap = qrBitmap,
+            onRevealQr = {
+                val bitmap = getQrBitmap(false)
+                if (bitmap != null) {
+                    isQrRevealed = true
+                    qrBitmap = bitmap
+                } else {
+                    onUnlockKey(unlockLauncher)
+                }
+            }
+        )
+    }
+
+    if (showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            title = { Text("Delete Key") },
+            text = { Text("Are you sure you want to delete this key?") },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        onDeleteKey()
+                        showDeleteDialog = false
+                    }
+                ) { Text("Delete") }
+            },
+            dismissButton = {
+                Button(onClick = { showDeleteDialog = false }) { Text("Cancel") }
+            }
+        )
+    }
+
+    if (showConfirmDialog) {
+        AlertDialog(
+            onDismissRequest = { showConfirmDialog = false },
+            title = { Text("Confirm Key") },
+            text = { Text("By confirming, you acknowledge that you have backed up this key or verified its fingerprint. This is a one-time action.") },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        onConfirmKey()
+                        showConfirmDialog = false
+                    }
+                ) { Text("Confirm") }
+            },
+            dismissButton = {
+                Button(onClick = { showConfirmDialog = false }) { Text("Cancel") }
+            }
+        )
+    }
+}
+
+@Composable
+fun KeyDetailsContent(
+    modifier: Modifier = Modifier,
+    key: SymmetricKeyEncrypted,
+    isQrRevealed: Boolean,
+    qrBitmap: Bitmap?,
+    onRevealQr: () -> Unit
+) {
+    Column(
+        modifier = modifier.padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        InfoTable(key)
+        Spacer(modifier = Modifier.height(24.dp))
+        QrCodeSection(
+            isRevealed = isQrRevealed,
+            bitmap = qrBitmap,
+            onReveal = onRevealQr
+        )
+    }
+}
+
+@Composable
+fun InfoTable(key: SymmetricKeyEncrypted) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        InfoRow("Alias", key.name ?: "")
+        InfoRow("Created", SimpleDateFormat.getDateTimeInstance().format(key.createdDate))
+        InfoRow(
+            "Confirmed",
+            if (key.confirmDate != null) SimpleDateFormat.getDateTimeInstance().format(key.confirmDate) else "Not confirmed"
+        )
+        InfoRow("Fingerprint", SymUtil.longToPrettyHex(key.id), isMonospace = true)
+    }
+}
+
+@Composable
+fun InfoRow(label: String, value: String, isMonospace: Boolean = false) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium,
+            modifier = Modifier.weight(0.4f)
+        )
+        Text(
+            text = value,
+            style = MaterialTheme.typography.bodyLarge,
+            fontFamily = if (isMonospace) FontFamily.Monospace else FontFamily.Default,
+            modifier = Modifier.weight(0.6f)
+        )
+    }
+}
+
+
+@Composable
+fun QrCodeSection(
+    isRevealed: Boolean,
+    bitmap: Bitmap?,
+    onReveal: () -> Unit
+) {
+    Box(
+        modifier = Modifier.size(240.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        if (bitmap != null) {
+            Image(
+                bitmap = bitmap.asImageBitmap(),
+                contentDescription = "Key QR Code"
+            )
+        } else {
+            CircularProgressIndicator()
+        }
+
+        if (!isRevealed) {
+            Button(
+                onClick = onReveal,
+                modifier = Modifier.fillMaxSize(),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black.copy(alpha = 0.5f))
+            ) {
+                Text("Reveal QR", color = Color.White, fontSize = 20.sp)
+            }
         }
     }
 }

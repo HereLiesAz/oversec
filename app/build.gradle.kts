@@ -4,6 +4,7 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("kotlin-android")
+    id("org.jetbrains.kotlin.plugin.compose")
     id("com.gladed.androidgitversion") version "0.4.14"
     id("witness")
 }
@@ -49,6 +50,7 @@ fun com.android.build.api.dsl.ApplicationProductFlavor.applyAppTgt(appTgt: AppTa
 
 
 android {
+    namespace = "io.oversec.one"
     applicationVariants.all {
         if (buildType.name == "release") {
             outputs.all {
@@ -79,8 +81,8 @@ android {
         targetSdkVersion(34)
 
         //hardcoded for F-droid bot
-        versionCode = androidGitVersion.code()
-        versionName = androidGitVersion.name()
+        versionCode = 1
+        versionName = "1.0"
 
         buildConfigField("java.lang.Boolean", "IS_FRDOID", "new Boolean("+project.hasProperty("fdroid")+")")
 
@@ -206,6 +208,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -233,7 +236,7 @@ dependencies {
 
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.6.7")
     implementation("androidx.activity:activity-compose:1.9.0")
     implementation("io.coil-kt:coil-compose:2.6.0")
     implementation("com.google.accompanist:accompanist-pager:0.34.0")
@@ -286,7 +289,7 @@ tasks.register("preBuildMangleEntities") {
         val rootDir = project.projectDir.parentFile
 
         langs.forEach {
-            val tDir = File(rootDir, "app/src/$appTgtName/res/values$it")
+            val tDir = File(rootDir, "app/src/appTgtName/res/values$it")
             var sFile = File(rootDir, "app/src/appsec-common/res/values$it/strings.xml")
             var tFile = File(tDir, "strings_generated.xml")
             replaceEntities(ant, appTgt, sFile, tDir, tFile)
