@@ -5,8 +5,8 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.IBinder
 import android.os.RemoteException
-import android.support.design.widget.TextInputLayout
-import android.support.v4.content.ContextCompat
+import com.google.android.material.textfield.TextInputLayout
+import androidx.core.content.ContextCompat
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View

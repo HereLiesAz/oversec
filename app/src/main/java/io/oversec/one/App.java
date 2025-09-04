@@ -3,7 +3,7 @@ package io.oversec.one;
 import android.app.ActivityManager;
 import android.content.IntentFilter;
 import android.os.Process;
-import android.support.multidex.MultiDexApplication;
+import androidx.multidex.MultiDexApplication;
 
 import com.kobakei.ratethisapp.RateThisApp;
 

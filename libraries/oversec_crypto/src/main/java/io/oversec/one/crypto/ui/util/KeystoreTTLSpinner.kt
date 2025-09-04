@@ -3,8 +3,8 @@ package io.oversec.one.crypto.ui.util
 import android.content.Context
 import android.database.Cursor
 import android.database.MatrixCursor
-import android.support.v4.widget.SimpleCursorAdapter
-import android.support.v7.widget.AppCompatSpinner
+import androidx.cursoradapter.widget.SimpleCursorAdapter
+import androidx.appcompat.widget.AppCompatSpinner
 import android.util.AttributeSet
 import io.oversec.one.crypto.R
 import java.util.ArrayList

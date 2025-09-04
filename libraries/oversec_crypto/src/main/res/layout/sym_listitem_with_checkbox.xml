@@ -12,7 +12,7 @@
         <include layout="@layout/sym_listitem"/>
     </LinearLayout>
 
-    <android.support.v7.widget.AppCompatCheckBox
+    <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/check"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

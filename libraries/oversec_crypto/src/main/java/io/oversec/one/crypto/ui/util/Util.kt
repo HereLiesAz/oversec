@@ -9,7 +9,7 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.Color
 import android.hardware.Camera
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
 

@@ -1,7 +1,7 @@
 package io.oversec.one.ovl;
 
 import android.graphics.Rect;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.view.View;
 
 import io.oversec.one.Core;
