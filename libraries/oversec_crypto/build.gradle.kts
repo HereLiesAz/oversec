@@ -1,25 +1,27 @@
-import ru.tinkoff.gradle.jarjar.JarJar
-
 plugins {
-    `com.android.library`
-    `kotlin-android`
-    `kotlin-android-extensions`
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
     id("com.google.protobuf")
     id("ru.tinkoff.gradle.jarjar")
     id("witness")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
     compileSdkVersion(36)
+    namespace = "io.oversec.one.crypto"
+
     testOptions {
         unitTests.isIncludeAndroidResources = true
+    }
+    buildFeatures {
+        viewBinding = true
+        compose = true
     }
 
     defaultConfig {
         minSdkVersion(26)
         targetSdkVersion(34)
-        versionCode = 1
-        versionName = "1.0"
     }
     buildTypes {
         getByName("debug") {
@@ -29,11 +31,17 @@ android {
             resValue("string", "prefill_password_fields", "")
         }
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "2.2.0"
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 }
 
-configure<JarJar> {
-    jarJarDependency.set("com.googlecode.jarjar:jarjar:1.3")
-    rules.set(mapOf("commons-codec-1.10.jar" to "org.apache.commons.codec.** shadorg.apache.commons.codec.@1"))
+jarJar {
+    jarJarDependency = "com.googlecode.jarjar:jarjar:1.3"
+    rules = mapOf("commons-codec-1.10.jar" to "org.apache.commons.codec.** shadorg.apache.commons.codec.@1")
 }
 
 protobuf {
@@ -43,7 +51,7 @@ protobuf {
     generateProtoTasks {
         all().forEach { task ->
             task.builtins {
-                remove("javanano")
+                // remove("javanano") // This seems to cause issues with newer gradle versions
                 create("java") {}
             }
         }
@@ -74,16 +82,25 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("com.google.android.material:material:1.11.0")
 
-    androidTestImplementation("junit:junit:4.13.2")
-    androidTestImplementation("org.mockito:mockito-core:3.12.4")
-    androidTestImplementation("androidx.test:runner:1.5.2")
-    androidTestImplementation("com.google.dexmaker:dexmaker:1.2")
-    androidTestImplementation("com.google.dexmaker:dexmaker-mockito:1.2")
+    val composeBom = platform("androidx.compose:compose-bom:2024.04.01")
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    implementation("androidx.activity:activity-compose:1.9.0")
+
+    //androidTestImplementation("junit:junit:4.13.2")
+    //androidTestImplementation("org.mockito:mockito-core:3.12.4")
+    //androidTestImplementation("androidx.test:runner:1.5.2")
+    //androidTestImplementation("com.google.dexmaker:dexmaker:1.2")
+    //androidTestImplementation("com.google.dexmaker:dexmaker-mockito:1.2")
 
 
     testImplementation("junit:junit:4.12")
     testImplementation("org.mockito:mockito-core:2.23.4")
     testImplementation("org.robolectric:robolectric:4.0.2")
     testImplementation("org.robolectric:shadows-supportv4:4.0.2")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.2.0")
 }
