@@ -20,10 +20,9 @@ import org.apache.commons.io.IOUtils
 import org.openintents.openpgp.OpenPgpError
 import org.openintents.openpgp.OpenPgpSignatureResult
 import org.openintents.openpgp.util.OpenPgpApi
-import org.spongycastle.bcpg.ArmoredInputStream
-import org.spongycastle.openpgp.*
-import org.spongycastle.openpgp.operator.bc.BcKeyFingerprintCalculator
-import roboguice.util.Ln
+import org.bouncycastle.bcpg.ArmoredInputStream
+import org.bouncycastle.openpgp.*
+import org.bouncycastle.openpgp.operator.bc.BcKeyFingerprintCalculator
 import java.io.*
 import java.nio.charset.Charset
 import java.security.GeneralSecurityException
@@ -183,11 +182,11 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
             }
             OpenPgpApi.RESULT_CODE_USER_INTERACTION_REQUIRED -> {
                 val pi = result.getParcelableExtra<PendingIntent>(OpenPgpApi.RESULT_INTENT)
-                throw UserInteractionRequiredException(pi, pp.allPublicKeyIds)
+                throw UserInteractionRequiredException(pi!!, pp.allPublicKeyIds)
             }
             OpenPgpApi.RESULT_CODE_ERROR -> {
                 val error = result.getParcelableExtra<OpenPgpError>(OpenPgpApi.RESULT_ERROR)
-                Ln.e("encryption error: %s", error.message)
+                Log.e("GpgCryptoHandler", "encryption error: ${error!!.message}")
                 throw OpenPGPErrorException(error)
             }
             else -> return null
@@ -246,9 +245,9 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
                     res.signatureResult = sigResult
                     val pi = result.getParcelableExtra<PendingIntent>(OpenPgpApi.RESULT_INTENT)
                     if (sigResult.result == OpenPgpSignatureResult.RESULT_KEY_MISSING) {
-                        res.downloadMissingSignatureKeyPendingIntent = pi
+                        res.downloadMissingSignatureKeyPendingIntent = pi!!
                     } else {
-                        res.showSignatureKeyPendingIntent = pi
+                        res.showSignatureKeyPendingIntent = pi!!
                     }
                 }
 
@@ -257,11 +256,11 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
             }
             OpenPgpApi.RESULT_CODE_USER_INTERACTION_REQUIRED -> {
                 val pi = result.getParcelableExtra<PendingIntent>(OpenPgpApi.RESULT_INTENT)
-                throw UserInteractionRequiredException(pi, pkids)
+                throw UserInteractionRequiredException(pi!!, pkids)
             }
             OpenPgpApi.RESULT_CODE_ERROR -> {
                 val error = result.getParcelableExtra<OpenPgpError>(OpenPgpApi.RESULT_ERROR)
-                Ln.e("encryption error: %s", error.message)
+                Log.e("GpgCryptoHandler", "encryption error: ${error!!.message}")
                 throw OpenPGPErrorException(error)
             }
             else -> return null
@@ -344,7 +343,7 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
             }
             OpenPgpApi.RESULT_CODE_ERROR -> {
                 val error = result.getParcelableExtra<OpenPgpError>(OpenPgpApi.RESULT_ERROR)
-                Log.e("TAG", "Error: " + error.message)
+                Log.e("TAG", "Error: " + error!!.message)
 
                 return null
             }
@@ -374,7 +373,7 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
             }
             OpenPgpApi.RESULT_CODE_USER_INTERACTION_REQUIRED -> {
                 //this is the intent we can use to bring up the key selection
-                return result.getParcelableExtra(OpenPgpApi.RESULT_INTENT)
+                return result.getParcelableExtra(OpenPgpApi.RESULT_INTENT)!!
             }
             OpenPgpApi.RESULT_CODE_ERROR -> {
                 //this should never happen
@@ -403,7 +402,7 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
             }
             OpenPgpApi.RESULT_CODE_USER_INTERACTION_REQUIRED -> {
                 //this is the intent we can use to bring up the key selection
-                return result.getParcelableExtra(OpenPgpApi.RESULT_INTENT)
+                return result.getParcelableExtra(OpenPgpApi.RESULT_INTENT)!!
             }
             OpenPgpApi.RESULT_CODE_ERROR -> {
                 //this should never happen
@@ -431,7 +430,7 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
 
             }
             OpenPgpApi.RESULT_CODE_USER_INTERACTION_REQUIRED -> {
-                return result.getParcelableExtra(OpenPgpApi.RESULT_INTENT)
+                return result.getParcelableExtra(OpenPgpApi.RESULT_INTENT)!!
             }
             OpenPgpApi.RESULT_CODE_ERROR -> {
 
@@ -495,7 +494,7 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
             }
             OpenPgpApi.RESULT_CODE_ERROR -> {
                 val error = result.getParcelableExtra<OpenPgpError>(OpenPgpApi.RESULT_ERROR)
-                Log.e("TAG", "Error: " + error.message)
+                Log.e("TAG", "Error: " + error?.message)
                 return null
             }
         }

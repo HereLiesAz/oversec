@@ -30,9 +30,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="md_positive_color">#FF0000</item>
-        <item name="md_neutral_color">#00FF00</item>
-        <item name="md_negative_color">#0000FF</item>
 
         <!--
         <item name="android:windowBackground">@null</item>
@@ -106,11 +103,6 @@
 
     </style>
 
-    <style name="Divider">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/md_divider_black</item>
-    </style>
 
     <style name="ButtonStyleEvenSmaller" parent="Widget.AppCompat.Button.Small">
         <!-- Customizations  -->

@@ -51,6 +51,7 @@ open class BaseDecryptResult {
             BaseDecryptResult.DecryptError.PROTO_ERROR -> result = Result.FAILED_PERMANENTLY
             BaseDecryptResult.DecryptError.NO_HANDLER -> result = Result.RETRY
             BaseDecryptResult.DecryptError.SYM_UNSUPPORTED_CIPHER -> result = Result.RETRY
+            else -> {}
         }
     }
 

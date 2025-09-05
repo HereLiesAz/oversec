@@ -6,7 +6,7 @@ import android.widget.TextView
 import com.google.zxing.BarcodeFormat
 import com.jwetherell.quick_response_code.data.Contents
 import com.jwetherell.quick_response_code.qrcode.QRCodeEncoder
-import org.spongycastle.util.encoders.Base64
+import org.bouncycastle.util.encoders.Base64
 
 import java.math.BigInteger
 import java.nio.ByteBuffer

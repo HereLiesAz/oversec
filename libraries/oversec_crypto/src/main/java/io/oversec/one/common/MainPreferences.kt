@@ -29,7 +29,7 @@ object MainPreferences {
 
     fun getLauncherSecretDialerCode(ctx: Context): String {
         return ctx.getSharedPreferences(FILENAME, 0)
-            .getString(ctx.getString(R.string.mainprefs_launchersecretcode_key), "")
+            .getString(ctx.getString(R.string.mainprefs_launchersecretcode_key), "") ?: ""
     }
 
     fun setLauncherSecretDialerCode(ctx: Context, value: String) {

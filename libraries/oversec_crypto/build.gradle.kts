@@ -65,8 +65,11 @@ dependencies {
 
     implementation("com.nulab-inc:zxcvbn:1.2.5")
     implementation("com.borjabravo:readmoretextview:2.1.0")
-    implementation("org.bouncycastle:bcprov-jdk15on:1.70")
-    implementation("org.bouncycastle:bcpkix-jdk15on:1.70")
+    implementation("com.madgag.spongycastle:core:1.58.0.0")
+    implementation("com.madgag.spongycastle:prov:1.58.0.0")
+    implementation("com.madgag.spongycastle:bcpkix-jdk15on:1.58.0.0")
+    implementation("com.madgag.spongycastle:bcpg-jdk15on:1.58.0.0")
+
 
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.legacy:legacy-support-v13:1.0.0")

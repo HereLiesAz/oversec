@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_ok">OK</string>
+    <string name="common_error_title">Erro</string>
+    <string name="common_error_body">Erro inesperado: %1$s</string>
+    <string name="keystore_ttl_lock_screen">até o desligamento da tela</string>
+    <string name="keystore_ttl_five_minutes">5 minutos</string>
+    <string name="keystore_ttl_thirty_minutes">30 minutos</string>
+    <string name="keystore_ttl_one_hour">uma hora</string>
+    <string name="keystore_ttl_six_hours">6 horas</string>
+    <string name="keystore_ttl_one_day">um dia</string>
+    <string name="keystore_ttl_forever">sempre</string>
+    <string name="unlock_key_title">Desbloquear chave \"%1$s\"</string>
+    <string name="progress_unlocking">Desbloqueando chave</string>
+    <string name="please_wait_decrypting">descriptografando</string>
+    <string name="error_password_wrong">A senha está errada!</string>
+    <string name="action_unlock_key">Desbloquear chave</string>
+    <string name="new_password_keystore_text">Escolha uma senha forte. Ela protegerá a sua chave caso seu dispositivo seja roubado ou confiscado!</string>
+    <string name="new_password_pbkdf_text">Escolha uma senha forte para gerar sua chave a partir dela! Todos os que souberem a senha poderão recriar a sua chave!</string>
+    <string name="new_password_share_text">Escolha uma senha forte. Ela protegerá a sua chave quando for compartilhada com um aplicativo inseguro!</string>
+    <string name="new_password_keystore_title">Senha da chave</string>
+    <string name="new_password_pbkdf_title">Chave baseada em senha</string>
+    <string name="new_password_share_title">Senha de compartilhamento</string>
+    <string name="action_save">Salvar</string>
+    <string name="action_generate">Continuar</string>
+    <string name="action_share">Compartilhar</string>
+    <string name="error_passwords_dont_match">Incompatibilidade de senha</string>
+    <string name="error_password_length">A senha é fraca demais!</string>
+    <string name="action_show_all_content">%1$s caracteres a mais.\nMostrar tudo</string>
+    <string name="error_cannot_show_inner_data_of_type">Erro! Não é possível mostrar dados internos do tipo %1$s</string>
+    <string name="error_cannot_show_inner_data">Erro! Não é possível mostrar dados criptografados</string>
+    <string name="action_perform_passwordinput">Inserir senha</string>
+    <string name="confirmation_share_decrypted__title">Confirmar compartilhamento de texto descriptografado</string>
+    <string name="confirmation_share_decrypted__content">Tem certeza de que deseja compartilhar o texto DESCRIPTOGRAFADO com outro aplicativo, possivelmente inseguro?</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_share_encrypted">Compartilhar texto CRIPTOGRAFADO</string>
+    <string name="action_share_decrypted">Compartilhar texto DESCRIPTOGRAFADO</string>
+    <string name="action_download_missing_public_key">[Chave ausente, baixar?]</string>
+    <string name="action_show_signature_key">Mostrar chave de assinatura</string>
+    <string name="action_share_gpg_ascii">Compartilhar mensagem PGP (ASCII protegido)</string>
+    <string name="action_share_sym_base64">Compartilhar chave simétrica (JSON)</string>
+    <string name="label_key_unconfirmed">não confirmado</string>
+</resources>

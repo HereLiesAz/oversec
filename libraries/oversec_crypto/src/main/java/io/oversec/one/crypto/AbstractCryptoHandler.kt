@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import io.oversec.one.crypto.proto.Inner
 import io.oversec.one.crypto.proto.Outer
-import io.oversec.one.crypto.ui.AbstractBinaryEncryptionInfoFragment
-import io.oversec.one.crypto.ui.AbstractTextEncryptionInfoFragment
 import java.io.IOException
 import java.security.GeneralSecurityException
 
@@ -43,9 +41,9 @@ abstract class AbstractCryptoHandler(protected val mCtx: Context) {
         encryptedText: String?
     ): BaseDecryptResult?
 
-    abstract fun getTextEncryptionInfoFragment(packagename: String?): AbstractTextEncryptionInfoFragment
+    abstract fun getTextEncryptionInfo(packagename: String?): EncryptionInfo
 
-    abstract fun getBinaryEncryptionInfoFragment(packagename: String?): AbstractBinaryEncryptionInfoFragment
+    abstract fun getBinaryEncryptionInfo(packagename: String?): EncryptionInfo
 
     abstract fun buildDefaultEncryptionParams(tdr: BaseDecryptResult): AbstractEncryptionParams
 }
