@@ -192,4 +192,4 @@
     </io.oversec.one.crypto.ui.util.SecureRelativeLayout>
 
 
-</android.support.v4.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>

@@ -68,7 +68,7 @@
                     android:ems="10"
                     android:text="@string/prefill_password_fields"
                     android:layout_gravity="center_horizontal"/>
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <LinearLayout

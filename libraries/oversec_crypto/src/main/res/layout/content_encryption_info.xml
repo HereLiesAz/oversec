@@ -15,4 +15,4 @@
             android:orientation="vertical"
             android:paddingLeft="6dp"
             android:paddingRight="6dp"/>
-</android.support.v4.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>
