@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_ok">Tamam</string>
+    <string name="common_error_title">Hata</string>
+    <string name="common_error_body">Beklenmeyen Bir Hata Oluştu: %1$s</string>
+    <string name="keystore_ttl_lock_screen">Ekran kapanana kadar</string>
+    <string name="keystore_ttl_five_minutes">5 dakika</string>
+    <string name="keystore_ttl_thirty_minutes">30 dakika</string>
+    <string name="keystore_ttl_one_hour">Bir Saat</string>
+    <string name="keystore_ttl_six_hours">6 Saat</string>
+    <string name="keystore_ttl_one_day">Bir Gün</string>
+    <string name="keystore_ttl_forever">Daima</string>
+    <string name="unlock_key_title">Anahtar Kilidini Kaldır \"%1$s\"</string>
+    <string name="progress_unlocking">Anahtar Kilidi Açılıyor</string>
+    <string name="please_wait_decrypting">Deşifre ediliyor</string>
+    <string name="error_password_wrong">Parola yanlış!</string>
+    <string name="action_unlock_key">Anahtar kilidini kaldır</string>
+    <string name="new_password_keystore_text">Güçlü bir parola belirleyin. Bu anahtarınızı çalınmalara ve kanunsuz el koymalara karşı korur.!</string>
+    <string name="new_password_pbkdf_text">Anahtar Oluşturmak için güçlü bir parola belirleyin! Bu parolayı Bilen Herkes Anahtarınızı Tekrar Oluşturabilir!</string>
+    <string name="new_password_share_text">Güçlü bir parola belirleyin. Bu anahtarınızı güvenilmeyen uygulamalara karşı korur!</string>
+    <string name="new_password_keystore_title">Anahtar Parolası</string>
+    <string name="new_password_pbkdf_title">Parola tabanlı anahtar</string>
+    <string name="new_password_share_title">Paylaşılan Parola</string>
+    <string name="action_save">Kaydet</string>
+    <string name="action_generate">Devam Et</string>
+    <string name="action_share">Paylaş</string>
+    <string name="error_passwords_dont_match">Parola eşleşmiyor!</string>
+    <string name="error_password_length">Seçtiğiniz parola güvensiz!</string>
+    <string name="action_show_all_content">%1$s fazla karakter.\nHepsini göster</string>
+    <string name="error_cannot_show_inner_data_of_type">Hata! İç veri tipini gösteremiyor %1$s</string>
+    <string name="error_cannot_show_inner_data">Hata! Şifreli veri gözterilemiyor.</string>
+    <string name="action_perform_passwordinput">Parola girin</string>
+    <string name="confirmation_share_decrypted__title">Şifresiz Metin Paylaşmayı Onayla</string>
+    <string name="confirmation_share_decrypted__content">ŞİFRESİZ metni bir başkasıyla paylaşmak istediğinize emin misiniz?, Güvensiz bir uygulama olabilir!</string>
+    <string name="action_cancel">İptal</string>
+    <string name="action_share_encrypted">ŞİFRELİ metni Paylaşt</string>
+    <string name="action_share_decrypted">ŞİFRESİZ metni Paylaş</string>
+    <string name="action_download_missing_public_key">[Hatalı Anahtar, Yine de indirilsin mi?]</string>
+    <string name="action_show_signature_key">Anahtar imzasını göster</string>
+    <string name="action_share_gpg_ascii">PGP Mesajını Paylaş (ascii-armored)</string>
+    <string name="action_share_sym_base64">Simetrik Mesajı Paylaş (json)</string>
+    <string name="label_key_unconfirmed">Doğrulanamadı</string>
+</resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_ok">OK</string>
+    <string name="common_error_title">Erreur</string>
+    <string name="common_error_body">Error Inattendue: %1$s</string>
+    <string name="keystore_ttl_lock_screen">jusqu\'à ce que l\'écran s\'éteigne</string>
+    <string name="keystore_ttl_five_minutes">5 minutes</string>
+    <string name="keystore_ttl_thirty_minutes">30 minutes</string>
+    <string name="keystore_ttl_one_hour">une heure</string>
+    <string name="keystore_ttl_six_hours">6 heures</string>
+    <string name="keystore_ttl_one_day">un jour</string>
+    <string name="keystore_ttl_forever">pour toujours</string>
+    <string name="unlock_key_title">"Déverouiller la clé \"%1$s\""</string>
+    <string name="progress_unlocking">Clé de déverrouillage</string>
+    <string name="please_wait_decrypting">décryptage</string>
+    <string name="error_password_wrong">Le mot de passe est faux!</string>
+    <string name="action_unlock_key">Débloquez la clé</string>
+    <string name="new_password_keystore_text">Choisissez un mot de passe fort. Il protège votre clé dans le cas où votre appareil est volé ou confisqué!</string>
+    <string name="new_password_pbkdf_text">Choisissez un mot de passe fort pour générer votre clé! Chacun qui connaît ce mot de passe peut créer votre clé!</string>
+    <string name="new_password_share_text">Choisissez un mot de passe fort. Il protège votre clé lors du partage avec une application tierce!</string>
+    <string name="new_password_keystore_title">Mot de passe de la clé</string>
+    <string name="new_password_pbkdf_title">Clé construite à base de mot de passe</string>
+    <string name="new_password_share_title">Partagee le mot de passe</string>
+    <string name="action_save">Sauvegarder</string>
+    <string name="action_generate">Continuer</string>
+    <string name="action_share">Partager</string>
+    <string name="error_passwords_dont_match">Non concordance des mots de passe</string>
+    <string name="error_password_length">Le mot de passe est trop faible!</string>
+    <string name="action_show_all_content">%1$s caractères en plus.\nTout afficher</string>
+    <string name="error_cannot_show_inner_data_of_type">Erreur! Pas possible d\'afficher les données de type %1$s</string>
+    <string name="error_cannot_show_inner_data">Erreur! Pas possible d\'afficher les données encryptées</string>
+    <string name="action_perform_passwordinput">Saisir le mot de passe</string>
+    <string name="confirmation_share_decrypted__title">Confirmez le partage de texte en clair</string>
+    <string name="confirmation_share_decrypted__content">Etes-vous sûr que de vouloir partager un texte en clair avec un autre application potentiellement non-sécurisée?</string>
+    <string name="action_cancel">Annuler</string>
+    <string name="action_share_encrypted">Partager le texte chiffré</string>
+    <string name="action_share_decrypted">Partager le texte déchiffré</string>
+    <string name="action_download_missing_public_key">"[Clé manquante</string>
+    <string name="action_show_signature_key">Afficher la signature de la clé</string>
+    <string name="action_share_gpg_ascii">Partager un message de PGP (ascii-blindé)</string>
+    <string name="action_share_sym_base64">Partager un message symétrique (JSON)</string>
+    <string name="label_key_unconfirmed">non-confirmée</string>
+</resources>

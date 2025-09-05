@@ -11,9 +11,8 @@ import io.oversec.one.crypto.symbase.KeyUtil
 import io.oversec.one.crypto.symbase.OversecChacha20Poly1305
 import io.oversec.one.crypto.symbase.OversecKeyCacheListener
 import net.rehacktive.waspdb.WaspFactory
-import org.spongycastle.util.encoders.Base64
-import org.spongycastle.util.encoders.DecoderException
-import roboguice.util.Ln
+import org.bouncycastle.util.encoders.Base64
+import org.bouncycastle.util.encoders.DecoderException
 
 import java.io.IOException
 import java.security.NoSuchAlgorithmException
@@ -50,12 +49,12 @@ class OversecKeystore2 private constructor(private val mCtx: Context) {
             var zombieFound = false;
             for (id in allIds) {
                 if (mSymmetricEncryptedKeys.get<SymmetricKeyEncrypted>(id)==null) {
-                    Ln.w("found a null key entry int the database id="+id)
+                    Log.w("OversecKeystore2", "found a null key entry int the database id="+id)
                    zombieFound = true;
                 }
             }
             if (zombieFound) {
-                Ln.w("rewriting database")
+                Log.w("OversecKeystore2", "rewriting database")
                 var allData = HashMap(mSymmetricEncryptedKeys.getAllData<Any, SymmetricKeyEncrypted>());
                 mSymmetricEncryptedKeys.flush();
                 for (id in allData.keys) {
@@ -250,11 +249,11 @@ fun encryptSymmetricKey(
     val ciphertext =
         OversecChacha20Poly1305.enChacha(plainKey.raw!!, bcryptedPassword, chachaIv)
 
-    Ln.w("XXX encryptSymmetricKey password="+String(password))
-    Ln.w("XXX encryptSymmetricKey bcryptedPassword="+bytesToHex(bcryptedPassword))
-    Ln.w("XXX encryptSymmetricKey ciphertext="+bytesToHex(ciphertext!!))
-    Ln.w("XXX encryptSymmetricKey iv="+bytesToHex(chachaIv))
-    Ln.w("XXX encryptSymmetricKey salt="+bytesToHex(bcrypt_salt))
+    Log.w("OversecKeystore2", "XXX encryptSymmetricKey password="+String(password))
+    Log.w("OversecKeystore2", "XXX encryptSymmetricKey bcryptedPassword="+bytesToHex(bcryptedPassword))
+    Log.w("OversecKeystore2", "XXX encryptSymmetricKey ciphertext="+bytesToHex(ciphertext!!))
+    Log.w("OversecKeystore2", "XXX encryptSymmetricKey iv="+bytesToHex(chachaIv))
+    Log.w("OversecKeystore2", "XXX encryptSymmetricKey salt="+bytesToHex(bcrypt_salt))
 
     KeyUtil.erase(bcryptedPassword)
 
@@ -293,15 +292,15 @@ fun encryptSymmetricKey(
 @Throws(IOException::class, OversecChacha20Poly1305.MacMismatchException::class)
 fun decryptSymmetricKey(k: SymmetricKeyEncrypted, password: CharArray): SymmetricKeyPlain {
 
-    Ln.w("XXX decryptSymmetricKey password="+String(password))
+    Log.w("OversecKeystore2", "XXX decryptSymmetricKey password="+String(password))
 
     val bcryptedPassword = KeyUtil.brcryptifyPassword(password, k.salt!!, k.cost, 32)
     KeyUtil.erase(password)
 
-    Ln.w("XXX decryptSymmetricKey bcryptedPassword="+bytesToHex(bcryptedPassword))
-    Ln.w("XXX decryptSymmetricKey ciphertext="+bytesToHex(k.ciphertext!!))
-    Ln.w("XXX decryptSymmetricKey iv="+bytesToHex(k.iv!!))
-    Ln.w("XXX decryptSymmetricKey salt="+bytesToHex(k.salt!!))
+    Log.w("OversecKeystore2", "XXX decryptSymmetricKey bcryptedPassword="+bytesToHex(bcryptedPassword))
+    Log.w("OversecKeystore2", "XXX decryptSymmetricKey ciphertext="+bytesToHex(k.ciphertext!!))
+    Log.w("OversecKeystore2", "XXX decryptSymmetricKey iv="+bytesToHex(k.iv!!))
+    Log.w("OversecKeystore2", "XXX decryptSymmetricKey salt="+bytesToHex(k.salt!!))
 
     val raw = OversecChacha20Poly1305.deChacha(k.ciphertext!!, bcryptedPassword, k.iv!!)
     KeyUtil.erase(bcryptedPassword)
@@ -352,7 +351,7 @@ companion object {
     private var INSTANCE: OversecKeystore2? = null
 
     init {
-        Security.insertProviderAt(org.spongycastle.jce.provider.BouncyCastleProvider(), 1)
+        Security.insertProviderAt(org.bouncycastle.jce.provider.BouncyCastleProvider(), 1)
     }
 
     fun noop() {
@@ -422,7 +421,7 @@ companion object {
                     ciphertext
                 )
             } else {
-                Ln.w("data array doesn't contain secret key")
+                Log.w("OversecKeystore2", "data array doesn't contain secret key")
                 return null
             }
 
@@ -454,7 +453,7 @@ companion object {
                 val keyBytes = plainKeyV0.keydata.toByteArray()
                 SymmetricKeyPlain(keyBytes)
             } else {
-                Ln.w("data array doesn't contain secret key")
+                Log.w("OversecKeystore2", "data array doesn't contain secret key")
                 null
             }
         } catch (e: InvalidProtocolBufferException) {

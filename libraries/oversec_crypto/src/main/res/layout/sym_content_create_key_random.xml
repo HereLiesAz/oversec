@@ -32,7 +32,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:singleLine="true"/>
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <TextView
@@ -102,4 +102,4 @@
                 android:src="@drawable/ic_save_black_24dp"/>
     </io.oversec.one.crypto.ui.util.SecureRelativeLayout>
 
-</android.support.v4.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>

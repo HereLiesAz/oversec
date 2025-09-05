@@ -12,7 +12,7 @@ import java.util.HashMap
  * @param expireTime the amount of time in milliseconds that any particular
  * cache entry is valid.
  */
-class ExpiringLruCache<K, V>
+class ExpiringLruCache<K: Any, V: Any>
     (maxSize: Int, private val mExpireTime: Long) {
     private val mCache: LruCache<K, V>
     private val mExpirationTimes: MutableMap<K, Long>

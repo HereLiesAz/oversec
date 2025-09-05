@@ -38,8 +38,10 @@ class TemporaryContentProvider : ContentProvider() {
                 val pfdRead = pipe[0]
                 val pfdWrite = pipe[1]
                 val `is` = ParcelFileDescriptor.AutoCloseInputStream(pfdRead)
-                @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-                TransferThreadIn(context, `is`, token).start()
+                context?.let {
+                    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+                    TransferThreadIn(it, `is`, token).start()
+                }
                 return pfdWrite
             } else if ("r" == mode) {
 
@@ -69,7 +71,7 @@ class TemporaryContentProvider : ContentProvider() {
         override fun onReceive(context: Context, intent: Intent) {
             if (ACTION_EXPIRE_BUFFER == intent.action) {
                 val token = intent.getStringExtra(EXTRA_TOKEN)
-                expire(token)
+                token?.let { expire(it) }
             }
         }
     }

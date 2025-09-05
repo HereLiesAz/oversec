@@ -73,7 +73,9 @@
 
     <View
         android:id="@+id/compose_sym_vg_padding_divider"
-        style="@style/Divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
         android:layout_above="@+id/compose_sym_vg_padding" />
 
 
@@ -105,7 +107,9 @@
 
     <View
         android:id="@+id/compose_sym_vg_fab_divider"
-        style="@style/Divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
         android:layout_above="@+id/fab_sym" />
 
     <LinearLayout

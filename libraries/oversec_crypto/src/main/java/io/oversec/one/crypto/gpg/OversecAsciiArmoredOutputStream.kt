@@ -1,9 +1,9 @@
 package io.oversec.one.crypto.gpg
 
-import org.spongycastle.bcpg.CRC24
-import org.spongycastle.bcpg.HashAlgorithmTags
-import org.spongycastle.bcpg.PacketTags
-import org.spongycastle.util.Strings
+import org.bouncycastle.bcpg.CRC24
+import org.bouncycastle.bcpg.HashAlgorithmTags
+import org.bouncycastle.bcpg.PacketTags
+import org.bouncycastle.util.Strings
 import java.io.IOException
 import java.io.OutputStream
 import java.util.Hashtable

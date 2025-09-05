@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_ok">好的</string>
+    <string name="common_error_title">错误</string>
+    <string name="common_error_body">意外错误：%1$s</string>
+    <string name="keystore_ttl_lock_screen">直到屏幕关闭</string>
+    <string name="keystore_ttl_five_minutes">5 分钟</string>
+    <string name="keystore_ttl_thirty_minutes">30 分钟</string>
+    <string name="keystore_ttl_one_hour">1 小时</string>
+    <string name="keystore_ttl_six_hours">6 小时</string>
+    <string name="keystore_ttl_one_day">一天</string>
+    <string name="keystore_ttl_forever">永远</string>
+    <string name="unlock_key_title">解锁密钥 \"%1$s\"</string>
+    <string name="progress_unlocking">解锁密钥</string>
+    <string name="please_wait_decrypting">解密</string>
+    <string name="error_password_wrong">密码错误！</string>
+    <string name="action_unlock_key">解锁密钥</string>
+    <string name="new_password_keystore_text">选择一个强密码。当你的设备被盗或被没收时它可以保护你的密钥!</string>
+    <string name="new_password_pbkdf_text">选择一个强密码生成你的密钥！任何知道此密码的人都能够重建你的密钥！</string>
+    <string name="new_password_share_text">选择一个强密码。当你通过不安全的应用分享密钥时它可以保护你的密钥。</string>
+    <string name="new_password_keystore_title">密钥密码</string>
+    <string name="new_password_pbkdf_title">基于密码短语的密钥</string>
+    <string name="new_password_share_title">分享密码</string>
+    <string name="action_save">保存</string>
+    <string name="action_generate">继续</string>
+    <string name="action_share">分享</string>
+    <string name="error_passwords_dont_match">密码不匹配</string>
+    <string name="error_password_length">密码太弱！</string>
+    <string name="action_show_all_content">还有 %1$s 个字符。\n显示全部</string>
+    <string name="error_cannot_show_inner_data_of_type">错误！无法显示 %1$s 类型的内部数据</string>
+    <string name="error_cannot_show_inner_data">错误！无法显示已加密数据</string>
+    <string name="action_perform_passwordinput">输入密码</string>
+    <string name="confirmation_share_decrypted__title">确认纯文本分享</string>
+    <string name="confirmation_share_decrypted__content">你确定要用另一个，可能不安全的应用分享已解密纯文本吗？</string>
+    <string name="action_cancel">取消</string>
+    <string name="action_share_encrypted">分享已加密文字</string>
+    <string name="action_share_decrypted">分享已解密文字</string>
+    <string name="action_download_missing_public_key">[缺少密钥，是否下载？]</string>
+    <string name="action_show_signature_key">显示签名密钥</string>
+    <string name="action_share_gpg_ascii">分享 PGP 消息 (ascii-armored)</string>
+    <string name="action_share_sym_base64">分享对称加密消息 (json)</string>
+    <string name="label_key_unconfirmed">未确认</string>
+</resources>

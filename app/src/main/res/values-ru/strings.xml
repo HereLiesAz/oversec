@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_ok">ОК</string>
+    <string name="common_error_title">Ошибка</string>
+    <string name="common_error_body">Непредвиденная ошибка: %1$s</string>
+    <string name="keystore_ttl_lock_screen">до отключения экрана</string>
+    <string name="keystore_ttl_five_minutes">5 минут</string>
+    <string name="keystore_ttl_thirty_minutes">30 минут</string>
+    <string name="keystore_ttl_one_hour">один час</string>
+    <string name="keystore_ttl_six_hours">6 часов</string>
+    <string name="keystore_ttl_one_day">один день</string>
+    <string name="keystore_ttl_forever">навсегда</string>
+    <string name="unlock_key_title">Разблокировать ключ «%1$s»</string>
+    <string name="progress_unlocking">Разблокировка ключа</string>
+    <string name="please_wait_decrypting">расшифровка</string>
+    <string name="error_password_wrong">Парольная фраза неверная!</string>
+    <string name="action_unlock_key">Разблокировать ключ</string>
+    <string name="new_password_keystore_text">Выберите надежный пароль. Он защищает ваш ключ в случае, если ваше устройство будет украдено или конфисковано!</string>
+    <string name="new_password_pbkdf_text">Выберите надежный пароль для генерирования вашего ключа! Каждый, кто знает этот пароль, может воссоздать ключ!</string>
+    <string name="new_password_share_text">Выберите надежный пароль. Он защищает ваш ключ при совместном его использовании с незащищенным приложением!</string>
+    <string name="new_password_keystore_title">Пароль ключа</string>
+    <string name="new_password_pbkdf_title">Ключ на основе парольной фразы</string>
+    <string name="new_password_share_title">Совместное использование пароля</string>
+    <string name="action_save">Сохранить</string>
+    <string name="action_generate">Продолжить</string>
+    <string name="action_share">Поделиться</string>
+    <string name="error_passwords_dont_match">Пароль не совпадает</string>
+    <string name="error_password_length">Пароль слишком ненадежный!</string>
+    <string name="action_show_all_content">%1$s больше символов.\nПоказать все</string>
+    <string name="error_cannot_show_inner_data_of_type">Ошибка! Невозможно отобразить внутренние данные типа %1$s</string>
+    <string name="error_cannot_show_inner_data">Ошибка! Невозможно отобразить зашифрованные данные</string>
+    <string name="action_perform_passwordinput">Ввести пароль</string>
+    <string name="confirmation_share_decrypted__title">Подтвердить совместное использование открытого текста</string>
+    <string name="confirmation_share_decrypted__content">Вы уверены, что хотите поделиться РАСШИФРОВАННЫМ открытым текстом с другим, возможно, небезопасным приложением?</string>
+    <string name="action_cancel">Отмена</string>
+    <string name="action_share_encrypted">Поделиться ЗАШИФРОВАННЫМ текстом</string>
+    <string name="action_share_decrypted">Поделиться РАСШИФРОВАННЫМ текстом</string>
+    <string name="action_download_missing_public_key">[Отсутствует ключ, скачать?]</string>
+    <string name="action_show_signature_key">Показать ключ подписи</string>
+    <string name="action_share_gpg_ascii">Поделиться сообщением PGP (усиленный код ASCII)</string>
+    <string name="action_share_sym_base64">Поделиться симметричным сообщением (JSON)</string>
+    <string name="label_key_unconfirmed">не подтвержден</string>
+</resources>

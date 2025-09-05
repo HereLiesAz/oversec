@@ -2,13 +2,10 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("com.google.protobuf")
-    id("ru.tinkoff.gradle.jarjar")
-    id("witness")
-    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
-    compileSdkVersion(36)
+    compileSdkVersion(34)
     namespace = "io.oversec.one.crypto"
 
     testOptions {
@@ -32,16 +29,15 @@ android {
         }
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "2.2.0"
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
     kotlinOptions {
         jvmTarget = "17"
     }
-}
-
-jarJar {
-    jarJarDependency = "com.googlecode.jarjar:jarjar:1.3"
-    rules = mapOf("commons-codec-1.10.jar" to "org.apache.commons.codec.** shadorg.apache.commons.codec.@1")
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 }
 
 protobuf {
@@ -59,22 +55,21 @@ protobuf {
 }
 
 dependencies {
-
-    add("jarJar", "commons-codec:commons-codec:1.10")
-    implementation(fileTree(mapOf("dir" to "./build/libs", "include" to listOf("*.jar")))) //to pick up the jarjared jar
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     api("com.google.protobuf:protobuf-java:3.6.1")
     api("org.sufficientlysecure:openpgp-api:11.0") //TODO update ?
-    api("com.afollestad.material-dialogs:core:3.3.0")
     api("com.github.rehacktive:waspdb:1.0")
     api("it.sephiroth.android.library.imagezoom:imagezoom:2.3.0")
     api("com.journeyapps:zxing-android-embedded:4.3.0")
 
     implementation("com.nulab-inc:zxcvbn:1.2.5")
     implementation("com.borjabravo:readmoretextview:2.1.0")
-    implementation("org.bouncycastle:bcprov-jdk15on:1.70")
-    implementation("org.bouncycastle:bcpkix-jdk15on:1.70")
+    implementation("com.madgag.spongycastle:core:1.58.0.0")
+    implementation("com.madgag.spongycastle:prov:1.58.0.0")
+    implementation("com.madgag.spongycastle:bcpkix-jdk15on:1.58.0.0")
+    implementation("com.madgag.spongycastle:bcpg-jdk15on:1.58.0.0")
+
 
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.legacy:legacy-support-v13:1.0.0")
@@ -102,5 +97,4 @@ dependencies {
     testImplementation("org.mockito:mockito-core:2.23.4")
     testImplementation("org.robolectric:robolectric:4.0.2")
     testImplementation("org.robolectric:shadows-supportv4:4.0.2")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.2.0")
 }

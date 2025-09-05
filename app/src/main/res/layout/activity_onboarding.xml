@@ -78,5 +78,5 @@ android:background="@drawable/tooltip_bg"
             </RelativeLayout>
 
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </FrameLayout>

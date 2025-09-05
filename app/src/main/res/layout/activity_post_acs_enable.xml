@@ -75,5 +75,5 @@
                     android:text="@string/settings_acs_post_enable_btn_configure"/>
 
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </FrameLayout>

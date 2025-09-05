@@ -2,8 +2,7 @@
 
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="io.oversec.one">
+          xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="com.android.vending.BILLING"/>
@@ -34,6 +33,7 @@
         <activity-alias
                 android:name=".MainActivityLauncher"
                 android:targetActivity=".ui.MainActivity"
+                android:exported="true"
         >
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN"/>
@@ -84,7 +84,8 @@
         <service
                 android:name=".acs.OversecAccessibilityService_1"
                 android:label="@string/acs_label"
-                android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+                android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+                android:exported="true">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService"/>
             </intent-filter>
@@ -139,6 +140,7 @@
                 android:label="@string/action_encrypt_image"
                 android:launchMode="singleInstance"
                 android:taskAffinity="io.oversec.one.ImageEncrypt"
+                android:exported="true"
                >
 
             <intent-filter tools:ignore="AppLinkUrlError,GoogleAppIndexingWarning">
@@ -162,6 +164,7 @@
                 android:name=".ui.ImageDecryptActivity"
                 android:excludeFromRecents="true"
                 android:label="@string/action_decrypt_image"
+                android:exported="true"
                >
             <intent-filter tools:ignore="AppLinkUrlError,GoogleAppIndexingWarning">
                 <action android:name="android.intent.action.VIEW"/>
