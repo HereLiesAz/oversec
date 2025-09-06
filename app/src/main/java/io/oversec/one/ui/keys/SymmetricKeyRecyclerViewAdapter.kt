@@ -1,4 +1,4 @@
-package io.oversec.one.crypto.sym.ui
+package io.oversec.one.ui.keys
 
 import android.app.Fragment
 import androidx.core.content.ContextCompat
@@ -10,9 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import io.oversec.one.crypto.R
+import io.oversec.one.R
 import io.oversec.one.crypto.sym.SymUtil
 import io.oversec.one.crypto.sym.SymmetricKeyEncrypted
+import io.oversec.one.view.KeyDetailsActivity
 import java.util.Date
 
 open class SymmetricKeyRecyclerViewAdapter(
