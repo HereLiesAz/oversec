@@ -18,9 +18,6 @@ abstract class BaseSymmetricCryptoHandler(ctx: Context) : AbstractCryptoHandler(
     protected val mKeyCache: KeyCache = KeyCache.getInstance(ctx)
     protected abstract val method: EncryptionMethod
 
-    override val displayEncryptionMethod: Int
-        get() = R.string.encryption_method_sym
-
     @Throws(KeyNotCachedException::class)
     protected abstract fun getKeyByHashedKeyId(
         keyhash: Long,

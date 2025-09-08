@@ -3,7 +3,6 @@ package io.oversec.one.crypto.encoding
 import android.content.Context
 import android.util.Base64
 import com.google.protobuf.InvalidProtocolBufferException
-import io.oversec.one.crypto.R
 import io.oversec.one.crypto.encoding.pad.AbstractPadder
 import io.oversec.one.crypto.proto.Outer
 import java.io.ByteArrayInputStream
@@ -61,7 +60,7 @@ class Base64XCoder(ctx: Context) : AbstractXCoder(ctx) {
     }
 
     override fun getLabel(padder: AbstractPadder?): String {
-        return mCtx.getString(R.string.encoder_base64)
+        return "Base64"
     }
 
     override fun getExample(padder: AbstractPadder?): String {

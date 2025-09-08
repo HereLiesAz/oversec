@@ -24,14 +24,14 @@ import io.oversec.one.crypto.gpg.OpenKeychainConnector
 import io.oversec.one.crypto.images.xcoder.ImageXCoder
 import io.oversec.one.crypto.images.xcoder.ImageXCoderFacade
 import io.oversec.one.crypto.proto.Outer
-import io.oversec.one.crypto.ui.AbstractBinaryEncryptionInfoFragment
-import io.oversec.one.crypto.ui.util.Util
+import io.oversec.one.view.AbstractBinaryEncryptionInfoFragment
+import io.oversec.one.view.util.Util
 import io.oversec.one.iab.FullVersionListener
 import io.oversec.one.iab.IabUtil
 import io.oversec.one.ui.encparams.ActivityResultWrapper
 import it.sephiroth.android.library.imagezoom.ImageViewTouch
 import it.sephiroth.android.library.imagezoom.ImageViewTouchBase
-import roboguice.util.Ln
+import android.util.Log
 import java.io.IOException
 import java.io.OutputStream
 
@@ -168,7 +168,7 @@ class ImageDecryptActivity : AppCompatActivity() {
                 try {
                     startIntentSenderForResult(ex.pendingIntent.intentSender, RQ_DECRYPT, null, 0, 0, 0)
                 } catch (e: IntentSender.SendIntentException) {
-                    Ln.e(e, "error sending pending intent")
+                    Log.e("ImageDecryptActivity", "error sending pending intent", e)
                 }
                 return
             }
@@ -274,7 +274,12 @@ class ImageDecryptActivity : AppCompatActivity() {
             var aFragment: AbstractBinaryEncryptionInfoFragment? = null
             val encryptionHandler = CryptoHandlerFacade.getInstance(this).getCryptoHandler(dec.encryptionMethod)
             if (encryptionHandler != null) {
-                aFragment = encryptionHandler.getBinaryEncryptionInfoFragment(null)
+                val encryptionInfo = encryptionHandler.getBinaryEncryptionInfo(null)
+                aFragment = when (encryptionInfo.type) {
+                    EncryptionInfoType.GPG -> GpgBinaryEncryptionInfoFragment.newInstance(encryptionInfo.packageName)
+                    EncryptionInfoType.SYMMETRIC -> SymmetricBinaryEncryptionInfoFragment.newInstance(encryptionInfo.packageName)
+                    EncryptionInfoType.SIMPLE_SYMMETRIC -> SimpleSymmetricBinaryEncryptionInfoFragment.newInstance(encryptionInfo.packageName)
+                }
             }
 
             if (aFragment == null) {
@@ -283,9 +288,9 @@ class ImageDecryptActivity : AppCompatActivity() {
 
                 aFragment.setArgs(null)
 
-                val manager = fragmentManager
+                val manager = supportFragmentManager
                 val transaction = manager.beginTransaction()
-                transaction.replace(io.oversec.one.crypto.R.id.encryptionInfoFragment_container, aFragment, "Foo")
+                transaction.replace(R.id.encryptionInfoFragment_container, aFragment, "Foo")
 
                 transaction.commit()
 
@@ -311,7 +316,7 @@ class ImageDecryptActivity : AppCompatActivity() {
         } catch (ex: Exception) {
             //TODO: implement better state synchronization,
             //weird stuff might happen if user rotates device while decrypting.
-            Ln.e(ex, "damnit,")
+            Log.e("ImageDecryptActivity", "damnit,", ex)
         }
     }
 

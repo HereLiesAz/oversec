@@ -8,12 +8,8 @@ import io.oversec.one.crypto.EncryptionMethod
 import io.oversec.one.crypto.UserInteractionRequiredException
 import io.oversec.one.crypto.encoding.Base64XCoder
 import io.oversec.one.crypto.proto.Outer
-import io.oversec.one.crypto.sym.ui.SymmetricBinaryEncryptionInfoFragment
-import io.oversec.one.crypto.sym.ui.SymmetricTextEncryptionInfoFragment
 import io.oversec.one.crypto.symbase.BaseSymmetricCryptoHandler
 import io.oversec.one.crypto.symbase.SymmetricDecryptResult
-import io.oversec.one.crypto.ui.AbstractBinaryEncryptionInfoFragment
-import io.oversec.one.crypto.ui.AbstractTextEncryptionInfoFragment
 
 class SymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ctx) {
 
@@ -41,16 +37,6 @@ class SymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ctx) {
     ): BaseDecryptResult {
         return tryDecrypt(msg.msgTextSymV0, encryptedText)
     }
-
-    override fun getTextEncryptionInfoFragment(packagename: String?): AbstractTextEncryptionInfoFragment {
-        return SymmetricTextEncryptionInfoFragment.newInstance(packagename)
-    }
-
-
-    override fun getBinaryEncryptionInfoFragment(packagename: String?): AbstractBinaryEncryptionInfoFragment {
-        return SymmetricBinaryEncryptionInfoFragment.newInstance(packagename)
-    }
-
 
     @Throws(KeyNotCachedException::class)
     override fun getKeyByHashedKeyId(

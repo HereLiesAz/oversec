@@ -10,7 +10,10 @@ class AppsReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         try {
             intent?.data?.encodedSchemeSpecificPart?.let {
-                packagename -> fire(context, intent.action, packagename )
+                packagename ->
+                intent.action?.let { action ->
+                    fire(context, action, packagename)
+                }
             }
         } catch (ex: Exception) {
             ex.printStackTrace()

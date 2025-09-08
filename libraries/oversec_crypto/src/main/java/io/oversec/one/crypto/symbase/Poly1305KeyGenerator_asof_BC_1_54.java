@@ -1,8 +1,8 @@
 package io.oversec.one.crypto.symbase;
 
-import org.spongycastle.crypto.CipherKeyGenerator;
-import org.spongycastle.crypto.KeyGenerationParameters;
-import org.spongycastle.crypto.macs.Poly1305;
+import org.bouncycastle.crypto.CipherKeyGenerator;
+import org.bouncycastle.crypto.KeyGenerationParameters;
+import org.bouncycastle.crypto.macs.Poly1305;
 
 /**
  * Generates keys for the Poly1305 MAC.

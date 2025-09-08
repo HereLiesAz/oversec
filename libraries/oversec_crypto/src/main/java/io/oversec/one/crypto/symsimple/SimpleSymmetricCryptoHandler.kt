@@ -13,11 +13,6 @@ import io.oversec.one.crypto.sym.SymUtil
 import io.oversec.one.crypto.sym.SymmetricKeyPlain
 import io.oversec.one.crypto.symbase.BaseSymmetricCryptoHandler
 import io.oversec.one.crypto.symbase.SymmetricDecryptResult
-import io.oversec.one.crypto.symsimple.ui.AddPasswordKeyActivity
-import io.oversec.one.crypto.symsimple.ui.SimpleSymmetricBinaryEncryptionInfoFragment
-import io.oversec.one.crypto.symsimple.ui.SimpleSymmetricTextEncryptionInfoFragment
-import io.oversec.one.crypto.ui.AbstractBinaryEncryptionInfoFragment
-import io.oversec.one.crypto.ui.AbstractTextEncryptionInfoFragment
 
 class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ctx) {
 
@@ -41,14 +36,6 @@ class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ct
         return tryDecrypt(msg.msgTextSymSimpleV0, encryptedText)
     }
 
-    override fun getTextEncryptionInfoFragment(packagename: String?): AbstractTextEncryptionInfoFragment {
-        return SimpleSymmetricTextEncryptionInfoFragment.newInstance(packagename)
-    }
-
-    override fun getBinaryEncryptionInfoFragment(packagename: String?): AbstractBinaryEncryptionInfoFragment {
-        return SimpleSymmetricBinaryEncryptionInfoFragment.newInstance(packagename)
-    }
-
     @Throws(KeyNotCachedException::class)
     override fun getKeyByHashedKeyId(
         keyhash: Long,
@@ -66,26 +53,10 @@ class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ct
         costKeyhash: Int,
         encryptedText: String?
     ) {
-        throw buildUserInteractionRequiredException(keyHashes, salts, costKeyhash, encryptedText)
+        // TODO: Re-implement this in the app module
+        // For now, just throw an exception to indicate that user interaction is required.
+        throw UserInteractionRequiredException(null, keyHashes.asList())
     }
-
-    private fun buildUserInteractionRequiredException(
-        keyHashes: LongArray,
-        salts: Array<ByteArray>,
-        sessionKeyCost: Int,
-        encryptedText: String?
-    ): UserInteractionRequiredException {
-        return KeyNotCachedException(
-            AddPasswordKeyActivity.buildPendingIntent(
-                mCtx,
-                keyHashes,
-                salts,
-                sessionKeyCost,
-                encryptedText
-            )
-        )
-    }
-
 
     override fun setMessage(
         builderMsg: Outer.Msg.Builder,
@@ -100,6 +71,4 @@ class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ct
         const val KEY_DERIVATION_COST = 8
         const val KEY_ID_COST = 6
     }
-
-
 }

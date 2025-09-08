@@ -1,8 +1,123 @@
-<resources>
+<!--suppress AndroidDomInspection -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="MyAppTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="alertDialogTheme">@style/Base.Theme.AppCompat.Light.Dialog.Alert</item>
+    </style>
+
+    <style name="AppTheme" parent="MyAppTheme.NoActionBar" />
+
+    <!-- Base application theme. -->
+    <style name="MyAppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
 
+    <style name="MyAppTheme.NoDisplay" parent="MyAppTheme">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!--
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowDisablePreview">true</item>
+          -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
 
 
+    </style>
+
+
+    <style name="Item" parent="Base.TextAppearance.AppCompat">
+
+    </style>
+
+    <style name="Item.Head">
+        <item name="android:textSize" tools:ignore="SpUsage">16dp</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+
+    <style name="Item.Sub">
+        <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+
+    <style name="Item.Head2">
+        <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+
+    <style name="Item.Sub2">
+        <item name="android:textSize" tools:ignore="SpUsage">12dp</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+
+
+    <style name="HintSmallest" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textSize" tools:ignore="SpUsage">12dp</item>
+        <item name="android:textColor">?android:attr/textColorTertiary</item>
+    </style>
+
+    <style name="MyMedium" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="MySubtitle" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize" tools:ignore="SpUsage">16dp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="MySubtitle.bold" parent="MySubtitle">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="HintSmallest.Tweaks">
+        <item name="android:paddingLeft">35dp</item>
+        <item name="android:paddingBottom">6dp</item>
+
+    </style>
+
+    <style name="gotit_msg" parent="TextAppearance.AppCompat.Subhead">
+
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/black</item>
+    </style>
+
+    <style name="ButtonStyleEvenSmaller" parent="Widget.AppCompat.Button.Small">
+        <!-- Customizations  -->
+        <item name="android:minHeight">20dp</item>
+    </style>
+
+    <style name="ButtonStyleSmallAccent" parent="Widget.AppCompat.Button.Small">
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:minHeight">30dp</item>
+        <item name="android:layout_margin">4dp</item>
+    </style>
 
     <style name="MyAppTheme.Translucent.NoActionBar" parent="MyAppTheme.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>

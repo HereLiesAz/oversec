@@ -1,7 +1,6 @@
 package io.oversec.one.crypto.encoding.pad
 
 import android.content.Context
-import io.oversec.one.crypto.R
 
 class ManualPadder internal constructor(ctx: Context) : AbstractPadder(ctx) {
 
@@ -19,12 +18,12 @@ class ManualPadder internal constructor(ctx: Context) : AbstractPadder(ctx) {
     }
 
     override val id
-        get() = mCtx.getString(R.string.padder_manual)
+        get() = "Manual"
 
     override val label
-        get() = mCtx.getString(R.string.padder_manual)
+        get() = "Manual"
 
     override val example
-        get() = mCtx.getString(R.string.manual_padder_hint)
+        get() = "(manually enter text to pad)"
 
 }

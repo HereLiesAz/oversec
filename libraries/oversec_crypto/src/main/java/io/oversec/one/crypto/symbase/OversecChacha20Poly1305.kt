@@ -1,15 +1,15 @@
 package io.oversec.one.crypto.symbase
 
-import org.spongycastle.crypto.Mac
-import org.spongycastle.crypto.StreamCipher
-import org.spongycastle.crypto.engines.ChaChaEngine
-import org.spongycastle.crypto.generators.Poly1305KeyGenerator
-import org.spongycastle.crypto.macs.Poly1305
-import org.spongycastle.crypto.params.KeyParameter
-import org.spongycastle.crypto.params.ParametersWithIV
-import org.spongycastle.util.Arrays
-import org.spongycastle.util.Pack
-import roboguice.util.Ln
+import org.bouncycastle.crypto.Mac
+import org.bouncycastle.crypto.StreamCipher
+import org.bouncycastle.crypto.engines.ChaChaEngine
+import org.bouncycastle.crypto.generators.Poly1305KeyGenerator
+import org.bouncycastle.crypto.macs.Poly1305
+import org.bouncycastle.crypto.params.KeyParameter
+import org.bouncycastle.crypto.params.ParametersWithIV
+import org.bouncycastle.util.Arrays
+import org.bouncycastle.util.Pack
+import android.util.Log
 
 
 /**
@@ -81,7 +81,7 @@ object OversecChacha20Poly1305 {
             if (!Arrays.constantTimeAreEqual(calculatedMAC1_54, receivedMAC)) {
                 throw MacMismatchException()
             }
-            Ln.w("DECHACHA succesfully workarounded an incorrect old Poly1305 MAC")
+            Log.w("OversecChacha20Poly1305", "DECHACHA succesfully workarounded an incorrect old Poly1305 MAC")
         }
 
         val output = ByteArray(plaintextLength)

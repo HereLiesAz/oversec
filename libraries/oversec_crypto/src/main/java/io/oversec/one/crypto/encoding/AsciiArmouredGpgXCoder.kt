@@ -1,7 +1,6 @@
 package io.oversec.one.crypto.encoding
 
 import android.content.Context
-import io.oversec.one.crypto.R
 import io.oversec.one.crypto.encoding.pad.AbstractPadder
 import io.oversec.one.crypto.gpg.GpgCryptoHandler
 import io.oversec.one.crypto.gpg.OversecAsciiArmoredOutputStream
@@ -44,7 +43,7 @@ class AsciiArmouredGpgXCoder(ctx: Context) : AbstractXCoder(ctx) {
     }
 
     override fun getLabel(padder: AbstractPadder?): String {
-        return mCtx.getString(R.string.encoder_gpg_ascii_armoured)
+        return "PGP ascii armored"
     }
 
     override fun getExample(padder: AbstractPadder?): String {

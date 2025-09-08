@@ -1,7 +1,6 @@
 package io.oversec.one.crypto.encoding.pad
 
 import android.content.Context
-import io.oversec.one.crypto.R
 
 class OversecPadder internal constructor(ctx: Context) : AbstractPadder(ctx) {
 
@@ -24,7 +23,7 @@ class OversecPadder internal constructor(ctx: Context) : AbstractPadder(ctx) {
         }
 
     override val label
-        get() = mCtx.getString(R.string.padder_oversec)
+        get() = "Oversec"
 
 
     override fun tail(): String {
@@ -32,6 +31,6 @@ class OversecPadder internal constructor(ctx: Context) : AbstractPadder(ctx) {
     }
 
     override val id
-        get() = mCtx.getString(R.string.padder_oversec)
+        get() = "Oversec"
 
 }

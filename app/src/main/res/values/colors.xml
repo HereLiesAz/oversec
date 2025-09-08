@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--
-    <color name="colorPrimary">#668F1C</color>
-    <color name="colorPrimaryDark">#667300</color>
-    <color name="colorAccent">#66B7E2</color>
--->
+    <color name="colorPrimary">#FF8F1C</color>
+    <color name="colorPrimaryDark">#E47300</color>
+    <color name="colorAccent">#20B7E2</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="transparent">#00000000</color>
-
     <color name="blur">#66000000</color>
-
+    <color name="colorTextLight">#FFFFFF</color>
+    <color name="colorWarning">#FF7043</color>
+    <color name="colorError">#E53935</color>
+    <color name="colorOk">#64DD17</color>
+    <color name="buttonDefaultBG">#D0FF8100</color>
+    <color name="textNodeDefaultBG">#D0FF8100</color>
+    <color name="textNodeDefaultFG">#FF000000</color>
+    <color name="password_strength_low">#f44336</color>
+    <color name="password_strength_medium">#ff9800</color>
+    <color name="password_strength_high">#7bad45</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="colorTooltipBG">#FFFFFFFF</color>
+    <color name="colorTooltipBorder">@color/colorPrimary</color>
     <color name="text_warning">@color/colorWarning</color>
     <color name="sample_background">#C7EDDF</color>
-
-
-
 </resources>

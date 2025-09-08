@@ -3,10 +3,8 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
-    id("org.jetbrains.kotlin.plugin.compose")
+    id("org.jetbrains.kotlin.android")
     id("com.gladed.androidgitversion") version "0.4.14"
-    id("witness")
 }
 
 data class AppTarget(
@@ -73,7 +71,7 @@ android {
     }
 
 
-    compileSdkVersion(36)
+    compileSdkVersion(34)
 
     defaultConfig {
         applicationId = "io.oversec.one"
@@ -211,7 +209,7 @@ android {
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
 }
 
@@ -241,7 +239,6 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.6.0")
     implementation("com.google.accompanist:accompanist-pager:0.34.0")
     implementation("com.google.accompanist:accompanist-pager-indicators:0.34.0")
-
 
     testImplementation("junit:junit:4.13.2")
     testImplementation(project(":libraries:oversec_crypto"))
@@ -305,11 +302,11 @@ tasks.register("preBuildMangleEntities") {
     }
 }
 
-tasks.whenTaskAdded {
-    if (name == "preBuild") {
-        dependsOn("preBuildMangleEntities")
-    }
-}
+// tasks.whenTaskAdded {
+//     if (name == "preBuild") {
+//         dependsOn("preBuildMangleEntities")
+//     }
+// }
 
 tasks.named("clean") {
     doFirst {

@@ -3,7 +3,7 @@ package io.oversec.one.crypto.symbase
 import io.oversec.one.crypto.sym.KeyNotCachedException
 import io.oversec.one.crypto.sym.SymUtil
 import io.oversec.one.crypto.sym.SymmetricKeyPlain
-import org.spongycastle.crypto.generators.BCrypt
+import org.bouncycastle.crypto.generators.BCrypt
 import java.io.IOException
 import java.nio.CharBuffer
 import java.nio.charset.Charset
