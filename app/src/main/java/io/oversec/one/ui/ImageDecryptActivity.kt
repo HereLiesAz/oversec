@@ -274,7 +274,12 @@ class ImageDecryptActivity : AppCompatActivity() {
             var aFragment: AbstractBinaryEncryptionInfoFragment? = null
             val encryptionHandler = CryptoHandlerFacade.getInstance(this).getCryptoHandler(dec.encryptionMethod)
             if (encryptionHandler != null) {
-                aFragment = encryptionHandler.getBinaryEncryptionInfoFragment(null)
+                val encryptionInfo = encryptionHandler.getBinaryEncryptionInfo(null)
+                aFragment = when (encryptionInfo.type) {
+                    EncryptionInfoType.GPG -> GpgBinaryEncryptionInfoFragment.newInstance(encryptionInfo.packageName)
+                    EncryptionInfoType.SYMMETRIC -> SymmetricBinaryEncryptionInfoFragment.newInstance(encryptionInfo.packageName)
+                    EncryptionInfoType.SIMPLE_SYMMETRIC -> SimpleSymmetricBinaryEncryptionInfoFragment.newInstance(encryptionInfo.packageName)
+                }
             }
 
             if (aFragment == null) {

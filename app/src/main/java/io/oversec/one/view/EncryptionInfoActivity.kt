@@ -48,8 +48,13 @@ class EncryptionInfoActivity : AppCompatActivity() {
         }
 
         aEncryptionHandler.let {
-            mEncryptionHandler = it;
-            mFragment = it.getTextEncryptionInfoFragment(mPackageName)
+            mEncryptionHandler = it
+            val encryptionInfo = it.getTextEncryptionInfo(mPackageName)
+            mFragment = when (encryptionInfo.type) {
+                EncryptionInfoType.GPG -> GpgTextEncryptionInfoFragment.newInstance(encryptionInfo.packageName)
+                EncryptionInfoType.SYMMETRIC -> SymmetricTextEncryptionInfoFragment.newInstance(encryptionInfo.packageName)
+                EncryptionInfoType.SIMPLE_SYMMETRIC -> SimpleSymmetricTextEncryptionInfoFragment.newInstance(encryptionInfo.packageName)
+            }
         }
         mFragment.setArgs(mPackageName)
 

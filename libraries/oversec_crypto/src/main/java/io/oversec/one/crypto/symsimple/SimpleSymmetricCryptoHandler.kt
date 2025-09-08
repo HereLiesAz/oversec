@@ -41,12 +41,12 @@ class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ct
         return tryDecrypt(msg.msgTextSymSimpleV0, encryptedText)
     }
 
-    override fun getTextEncryptionInfoFragment(packagename: String?): AbstractTextEncryptionInfoFragment {
-        return SimpleSymmetricTextEncryptionInfoFragment.newInstance(packagename)
+    override fun getTextEncryptionInfo(packagename: String?): EncryptionInfo {
+        return EncryptionInfo(EncryptionInfoType.SIMPLE_SYMMETRIC, packagename)
     }
 
-    override fun getBinaryEncryptionInfoFragment(packagename: String?): AbstractBinaryEncryptionInfoFragment {
-        return SimpleSymmetricBinaryEncryptionInfoFragment.newInstance(packagename)
+    override fun getBinaryEncryptionInfo(packagename: String?): EncryptionInfo {
+        return EncryptionInfo(EncryptionInfoType.SIMPLE_SYMMETRIC, packagename)
     }
 
     @Throws(KeyNotCachedException::class)
