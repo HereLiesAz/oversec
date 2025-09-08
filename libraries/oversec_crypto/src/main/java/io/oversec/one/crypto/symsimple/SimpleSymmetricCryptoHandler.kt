@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import io.oversec.one.crypto.AbstractEncryptionParams
 import io.oversec.one.crypto.BaseDecryptResult
+import io.oversec.one.crypto.EncryptionInfo
+import io.oversec.one.crypto.EncryptionInfoType
 import io.oversec.one.crypto.EncryptionMethod
 import io.oversec.one.crypto.UserInteractionRequiredException
 import io.oversec.one.crypto.encoding.Base64XCoder
@@ -13,11 +15,6 @@ import io.oversec.one.crypto.sym.SymUtil
 import io.oversec.one.crypto.sym.SymmetricKeyPlain
 import io.oversec.one.crypto.symbase.BaseSymmetricCryptoHandler
 import io.oversec.one.crypto.symbase.SymmetricDecryptResult
-import io.oversec.one.crypto.symsimple.ui.AddPasswordKeyActivity
-import io.oversec.one.crypto.symsimple.ui.SimpleSymmetricBinaryEncryptionInfoFragment
-import io.oversec.one.crypto.symsimple.ui.SimpleSymmetricTextEncryptionInfoFragment
-import io.oversec.one.crypto.ui.AbstractBinaryEncryptionInfoFragment
-import io.oversec.one.crypto.ui.AbstractTextEncryptionInfoFragment
 
 class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ctx) {
 
@@ -75,14 +72,11 @@ class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ct
         sessionKeyCost: Int,
         encryptedText: String?
     ): UserInteractionRequiredException {
-        return KeyNotCachedException(
-            AddPasswordKeyActivity.buildPendingIntent(
-                mCtx,
-                keyHashes,
-                salts,
-                sessionKeyCost,
-                encryptedText
-            )
+        return PasswordRequiredException(
+            keyHashes,
+            salts,
+            sessionKeyCost,
+            encryptedText
         )
     }
 

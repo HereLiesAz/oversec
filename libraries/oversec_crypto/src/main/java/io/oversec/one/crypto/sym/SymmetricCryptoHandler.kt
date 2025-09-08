@@ -4,16 +4,14 @@ import android.content.Context
 import android.content.Intent
 import io.oversec.one.crypto.AbstractEncryptionParams
 import io.oversec.one.crypto.BaseDecryptResult
+import io.oversec.one.crypto.EncryptionInfo
+import io.oversec.one.crypto.EncryptionInfoType
 import io.oversec.one.crypto.EncryptionMethod
 import io.oversec.one.crypto.UserInteractionRequiredException
 import io.oversec.one.crypto.encoding.Base64XCoder
 import io.oversec.one.crypto.proto.Outer
-import io.oversec.one.crypto.sym.ui.SymmetricBinaryEncryptionInfoFragment
-import io.oversec.one.crypto.sym.ui.SymmetricTextEncryptionInfoFragment
 import io.oversec.one.crypto.symbase.BaseSymmetricCryptoHandler
 import io.oversec.one.crypto.symbase.SymmetricDecryptResult
-import io.oversec.one.crypto.ui.AbstractBinaryEncryptionInfoFragment
-import io.oversec.one.crypto.ui.AbstractTextEncryptionInfoFragment
 
 class SymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ctx) {
 

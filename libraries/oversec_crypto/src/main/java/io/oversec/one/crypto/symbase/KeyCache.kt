@@ -2,16 +2,13 @@ package io.oversec.one.crypto.symbase
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import io.oversec.one.crypto.sym.KeyNotCachedException
-import io.oversec.one.crypto.sym.KeystoreIntentService
 import io.oversec.one.crypto.sym.SymmetricKeyPlain
-import io.oversec.one.crypto.sym.ui.UnlockKeyActivity
 import roboguice.util.Ln
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -19,8 +16,6 @@ import java.util.concurrent.ConcurrentHashMap
 class KeyCache private constructor(private val mCtx: Context) {
 
     private val mAlarmManager = mCtx.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    private val mNotificationManager =
-        mCtx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     private val mKeyCacheListeners = ArrayList<OversecKeyCacheListener>()
     private val mPendingAlarms = ConcurrentHashMap<Long, PendingIntent>()
     private val mKeyMap = ConcurrentHashMap<Long, SymmetricKeyPlain>()
@@ -35,7 +30,6 @@ class KeyCache private constructor(private val mCtx: Context) {
             }.values.filterNotNull().sortedBy {
                 it
             }
-
         }
 
 
@@ -85,11 +79,6 @@ class KeyCache private constructor(private val mCtx: Context) {
                 it.onStartedCachingKey(keyId)
             }
 
-            mNotificationManager.notify(
-                KeystoreIntentService.NOTIFICATION_ID__CACHED_KEYS,
-                KeystoreIntentService.buildCachedKeysNotification(mCtx, allCachedKeyAliases)
-            )
-
             if (ttl == 0L) {
                 mExpireOnScreenOff.add(keyId)
             } else if (ttl < Integer.MAX_VALUE) {
@@ -107,8 +96,6 @@ class KeyCache private constructor(private val mCtx: Context) {
                 mAlarmManager.set(AlarmManager.RTC_WAKEUP, triggerTime, alarmIntent)
             }
         }
-
-
     }
 
     @Synchronized
@@ -117,7 +104,6 @@ class KeyCache private constructor(private val mCtx: Context) {
             expire(it)
         }
         mKeyMap.clear()
-        mNotificationManager.cancel(KeystoreIntentService.NOTIFICATION_ID__CACHED_KEYS)
     }
 
     @Synchronized
@@ -136,15 +122,6 @@ class KeyCache private constructor(private val mCtx: Context) {
                 l.onFinishedCachingKey(keyId)
             }
         }
-
-        if (mKeyMap.size > 0) {
-            mNotificationManager.notify(
-                KeystoreIntentService.NOTIFICATION_ID__CACHED_KEYS,
-                KeystoreIntentService.buildCachedKeysNotification(mCtx, allCachedKeyAliases)
-            )
-        } else {
-            mNotificationManager.cancel(KeystoreIntentService.NOTIFICATION_ID__CACHED_KEYS)
-        }
     }
 
     @Synchronized
@@ -159,12 +136,7 @@ class KeyCache private constructor(private val mCtx: Context) {
     @Synchronized
     @Throws(KeyNotCachedException::class)
     operator fun get(keyId: Long?): SymmetricKeyPlain {
-        return mKeyMap[keyId] ?: throw KeyNotCachedException(
-            UnlockKeyActivity.buildPendingIntent(
-                mCtx,
-                keyId
-            )
-        )
+        return mKeyMap[keyId] ?: throw KeyNotCachedException(keyId)
     }
 
     fun hasKey(keyId: Long?): Boolean {

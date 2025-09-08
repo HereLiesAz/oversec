@@ -1,8 +1,6 @@
 package io.oversec.one.crypto.gpg
 
-import android.app.Activity
 import android.app.PendingIntent
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -10,15 +8,10 @@ import com.google.protobuf.ByteString
 import io.oversec.one.common.ExpiringLruCache
 import io.oversec.one.crypto.*
 import io.oversec.one.crypto.encoding.AsciiArmouredGpgXCoder
-import io.oversec.one.crypto.gpg.ui.GpgBinaryEncryptionInfoFragment
-import io.oversec.one.crypto.gpg.ui.GpgTextEncryptionInfoFragment
 import io.oversec.one.crypto.proto.Inner
 import io.oversec.one.crypto.proto.Outer
-import io.oversec.one.crypto.ui.AbstractBinaryEncryptionInfoFragment
-import io.oversec.one.crypto.ui.AbstractTextEncryptionInfoFragment
 import org.apache.commons.io.IOUtils
 import org.openintents.openpgp.OpenPgpError
-import org.openintents.openpgp.OpenPgpSignatureResult
 import org.openintents.openpgp.util.OpenPgpApi
 import org.bouncycastle.bcpg.ArmoredInputStream
 import org.bouncycastle.openpgp.*
@@ -131,7 +124,7 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
     @Throws(
         OpenPGPParamsException::class,
         OpenPGPErrorException::class,
-        UserInteractionRequiredException::class
+        GpgUserInteractionRequiredException::class
     )
     private fun encrypt(
         raw: ByteArray,
@@ -182,7 +175,7 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
             }
             OpenPgpApi.RESULT_CODE_USER_INTERACTION_REQUIRED -> {
                 val pi = result.getParcelableExtra<PendingIntent>(OpenPgpApi.RESULT_INTENT)
-                throw UserInteractionRequiredException(pi!!, pp.allPublicKeyIds)
+                throw GpgUserInteractionRequiredException(pi!!, pp.allPublicKeyIds.toList())
             }
             OpenPgpApi.RESULT_CODE_ERROR -> {
                 val error = result.getParcelableExtra<OpenPgpError>(OpenPgpApi.RESULT_ERROR)
@@ -202,15 +195,9 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
         return EncryptionInfo(EncryptionInfoType.GPG, packagename)
     }
 
-    //
-    //    @Override
-    //    public AbstractEncryptionParamsFragment getEncryptionParamsFragment(String packagename) {
-    //        return GpgEncryptionParamsFragment.newInstance(packagename);
-    //    }
-
     @Throws(
         OpenPGPErrorException::class,
-        UserInteractionRequiredException::class,
+        GpgUserInteractionRequiredException::class,
         UnsupportedEncodingException::class
     )
     fun decrypt(
@@ -234,7 +221,7 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
             OpenPgpApi.RESULT_CODE_SUCCESS -> {
 
 
-                var sigResult: OpenPgpSignatureResult? = null
+                var sigResult: org.openintents.openpgp.OpenPgpSignatureResult? = null
                 if (result.hasExtra(OpenPgpApi.RESULT_SIGNATURE)) {
                     sigResult = result.getParcelableExtra(OpenPgpApi.RESULT_SIGNATURE)
                 }
@@ -244,7 +231,7 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
                 if (sigResult != null) {
                     res.signatureResult = sigResult
                     val pi = result.getParcelableExtra<PendingIntent>(OpenPgpApi.RESULT_INTENT)
-                    if (sigResult.result == OpenPgpSignatureResult.RESULT_KEY_MISSING) {
+                    if (sigResult.result == org.openintents.openpgp.OpenPgpSignatureResult.RESULT_KEY_MISSING) {
                         res.downloadMissingSignatureKeyPendingIntent = pi!!
                     } else {
                         res.showSignatureKeyPendingIntent = pi!!
@@ -256,7 +243,7 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
             }
             OpenPgpApi.RESULT_CODE_USER_INTERACTION_REQUIRED -> {
                 val pi = result.getParcelableExtra<PendingIntent>(OpenPgpApi.RESULT_INTENT)
-                throw UserInteractionRequiredException(pi!!, pkids)
+                throw GpgUserInteractionRequiredException(pi!!, pkids)
             }
             OpenPgpApi.RESULT_CODE_ERROR -> {
                 val error = result.getParcelableExtra<OpenPgpError>(OpenPgpApi.RESULT_ERROR)
@@ -543,75 +530,6 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
 
         }
 
-
-        fun openOpenKeyChain(ctx: Context) {
-            try {
-                val i = Intent(Intent.ACTION_MAIN)
-                i.component = ComponentName(
-                    OpenKeychainConnector.PACKAGE_NAME,
-                    "org.sufficientlysecure.keychain.ui.MainActivity"
-                )
-                i.setPackage(OpenKeychainConnector.PACKAGE_NAME)
-                i.addCategory(Intent.CATEGORY_LAUNCHER)
-                if (ctx !is Activity) {
-                    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-                ctx.startActivity(i)
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
-
-        }
-
-        fun signatureResultToUiText(ctx: Context, sr: OpenPgpSignatureResult): String? {
-            return when (sr.result) {
-                OpenPgpSignatureResult.RESULT_INVALID_INSECURE -> ctx.getString(R.string.signature_result__invalid_insecure)
-                OpenPgpSignatureResult.RESULT_INVALID_KEY_EXPIRED -> ctx.getString(R.string.signature_result__invalid_key_expired)
-                OpenPgpSignatureResult.RESULT_INVALID_KEY_REVOKED -> ctx.getString(R.string.signature_result__invalid_key_revoked)
-                OpenPgpSignatureResult.RESULT_INVALID_SIGNATURE -> ctx.getString(R.string.signature_result__invalid)
-                OpenPgpSignatureResult.RESULT_KEY_MISSING -> ctx.getString(R.string.signature_result__key_missing)
-                OpenPgpSignatureResult.RESULT_NO_SIGNATURE -> ctx.getString(R.string.signature_result__no_signature)
-                OpenPgpSignatureResult.RESULT_VALID_CONFIRMED -> ctx.getString(R.string.signature_result__valid_confirmed)
-                OpenPgpSignatureResult.RESULT_VALID_UNCONFIRMED -> ctx.getString(R.string.signature_result__valid_unconfirmed)
-                else -> null
-            }
-        }
-
-        fun signatureResultToUiColorResId(sr: OpenPgpSignatureResult): Int {
-            return when (sr.result) {
-                OpenPgpSignatureResult.RESULT_INVALID_INSECURE, OpenPgpSignatureResult.RESULT_INVALID_KEY_EXPIRED, OpenPgpSignatureResult.RESULT_INVALID_KEY_REVOKED -> R.color.colorWarning
-                OpenPgpSignatureResult.RESULT_INVALID_SIGNATURE, OpenPgpSignatureResult.RESULT_KEY_MISSING, OpenPgpSignatureResult.RESULT_NO_SIGNATURE -> R.color.colorError
-                OpenPgpSignatureResult.RESULT_VALID_UNCONFIRMED, OpenPgpSignatureResult.RESULT_VALID_CONFIRMED -> R.color.colorOk
-                else -> 0
-            }
-        }
-
-        fun signatureResultToUiIconRes(sr: OpenPgpSignatureResult, small: Boolean): Int {
-            return when (sr.result) {
-                OpenPgpSignatureResult.RESULT_INVALID_INSECURE, OpenPgpSignatureResult.RESULT_INVALID_KEY_EXPIRED, OpenPgpSignatureResult.RESULT_INVALID_KEY_REVOKED, OpenPgpSignatureResult.RESULT_INVALID_SIGNATURE -> if (small) R.drawable.ic_error_red_18dp else R.drawable.ic_error_red_24dp
-                OpenPgpSignatureResult.RESULT_NO_SIGNATURE -> if (small) R.drawable.ic_warning_red_18dp else R.drawable.ic_warning_red_24dp
-                OpenPgpSignatureResult.RESULT_KEY_MISSING -> if (small) R.drawable.ic_warning_orange_18dp else R.drawable.ic_warning_orange_24dp
-                OpenPgpSignatureResult.RESULT_VALID_UNCONFIRMED -> if (small) R.drawable.ic_done_orange_18dp else R.drawable.ic_done_orange_24dp
-                OpenPgpSignatureResult.RESULT_VALID_CONFIRMED -> if (small) R.drawable.ic_done_all_green_a700_18dp else R.drawable.ic_done_all_green_a700_24dp
-                else -> 0
-            }
-        }
-
-        fun signatureResultToUiColorResId_KeyOnly(sr: OpenPgpSignatureResult): Int {
-            return when (sr.result) {
-                OpenPgpSignatureResult.RESULT_INVALID_INSECURE, OpenPgpSignatureResult.RESULT_INVALID_KEY_EXPIRED, OpenPgpSignatureResult.RESULT_INVALID_KEY_REVOKED, OpenPgpSignatureResult.RESULT_INVALID_SIGNATURE, OpenPgpSignatureResult.RESULT_KEY_MISSING, OpenPgpSignatureResult.RESULT_NO_SIGNATURE, OpenPgpSignatureResult.RESULT_VALID_UNCONFIRMED -> R.color.colorWarning
-                OpenPgpSignatureResult.RESULT_VALID_CONFIRMED -> R.color.colorOk
-                else -> 0
-            }
-        }
-
-        fun signatureResultToUiIconRes_KeyOnly(sr: OpenPgpSignatureResult, small: Boolean): Int {
-            return when (sr.result) {
-                OpenPgpSignatureResult.RESULT_INVALID_INSECURE, OpenPgpSignatureResult.RESULT_INVALID_KEY_EXPIRED, OpenPgpSignatureResult.RESULT_INVALID_KEY_REVOKED, OpenPgpSignatureResult.RESULT_INVALID_SIGNATURE, OpenPgpSignatureResult.RESULT_NO_SIGNATURE, OpenPgpSignatureResult.RESULT_KEY_MISSING, OpenPgpSignatureResult.RESULT_VALID_UNCONFIRMED -> if (small) R.drawable.ic_warning_red_18dp else R.drawable.ic_warning_red_24dp
-                OpenPgpSignatureResult.RESULT_VALID_CONFIRMED -> if (small) R.drawable.ic_done_green_a700_18dp else R.drawable.ic_done_green_a700_24dp
-                else -> 0
-            }
-        }
 
         fun getRawMessageAsciiArmoured(msg: Outer.Msg): String? {
             if (msg.hasMsgTextGpgV0()) {
