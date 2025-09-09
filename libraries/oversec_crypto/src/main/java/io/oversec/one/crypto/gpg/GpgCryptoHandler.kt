@@ -175,7 +175,11 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
             }
             OpenPgpApi.RESULT_CODE_USER_INTERACTION_REQUIRED -> {
                 val pi = result.getParcelableExtra<PendingIntent>(OpenPgpApi.RESULT_INTENT)
-                throw UserInteractionRequiredException(pi!!, pp.allPublicKeyIds)
+                val pi = result.getParcelableExtra<PendingIntent>(OpenPgpApi.RESULT_INTENT)
+                if (pi == null) {
+                    throw OpenPGPErrorException(OpenPgpError(OpenPgpError.ERROR_INTENT, "Missing PendingIntent for user interaction."))
+                }
+                throw UserInteractionRequiredException(pi, pp.allPublicKeyIds)
             }
             OpenPgpApi.RESULT_CODE_ERROR -> {
                 val error = result.getParcelableExtra<OpenPgpError>(OpenPgpApi.RESULT_ERROR)
