@@ -328,7 +328,7 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
             }
             OpenPgpApi.RESULT_CODE_ERROR -> {
                 val error = result.getParcelableExtra<OpenPgpError>(OpenPgpApi.RESULT_ERROR)
-                Log.e("TAG", "Error: " + error!!.message)
+                Log.e("TAG", "Error: " + error?.message)
 
                 return null
             }
