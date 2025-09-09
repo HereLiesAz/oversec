@@ -419,7 +419,7 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
 
             }
             OpenPgpApi.RESULT_CODE_USER_INTERACTION_REQUIRED -> {
-                return result.getParcelableExtra(OpenPgpApi.RESULT_INTENT)!!
+                return result.getParcelableExtra(OpenPgpApi.RESULT_INTENT)
             }
             OpenPgpApi.RESULT_CODE_ERROR -> {
 
