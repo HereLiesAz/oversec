@@ -218,11 +218,12 @@ class AddPasswordKeyActivity : FragmentActivity() {
 
 
             SymPreferences.getInstance(context!!).keystoreSimpleTTL = timeToLiveSeconds
-            val progressDialog = ProgressDialog.show(
-                activity,
-                getString(R.string.progress_generating_key),
-                getString(R.string.please_wait_keyderivation),
-                true)
+            val progressDialog = AlertDialog.Builder(activity!!)
+                .setTitle(getString(R.string.progress_generating_key))
+                .setMessage(getString(R.string.please_wait_keyderivation))
+                .setView(ProgressBar(activity).apply { isIndeterminate = true })
+                .setCancelable(false)
+                .show()
 
             Thread(Runnable {
                 try {
