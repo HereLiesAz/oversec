@@ -50,4 +50,12 @@
                 android:textAppearance="@style/Item.Sub"/>
 
     </RelativeLayout>
+<<<<<<< Updated upstream
 </androidx.cardview.widget.CardView>
+=======
+<<<<<<< HEAD:libraries/oversec_crypto/src/main/res/layout/listitem_title_and_body.xml
+</androidx.cardview.widget.CardView>
+=======
+</androidx.cardview.widget.CardView>
+>>>>>>> origin/modernization-refactor:app/src/main/res/layout/listitem_title_and_body.xml
+>>>>>>> Stashed changes

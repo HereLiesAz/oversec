@@ -212,6 +212,17 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
     //    }
 >>>>>>> origin/modernization-refactor
 
+<<<<<<< Updated upstream
+=======
+=======
+>>>>>>> origin/modernization-refactor
+    //
+    //    @Override
+    //    public AbstractEncryptionParamsFragment getEncryptionParamsFragment(String packagename) {
+    //        return GpgEncryptionParamsFragment.newInstance(packagename);
+    //    }
+
+>>>>>>> Stashed changes
     @Throws(
         OpenPGPErrorException::class,
         GpgUserInteractionRequiredException::class,
@@ -560,7 +571,11 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
         }
 
 
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 =======
         fun openOpenKeyChain(ctx: Context) {
             try {
@@ -582,7 +597,11 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
         }
 
 
+<<<<<<< Updated upstream
 >>>>>>> origin/modernization-refactor
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
         fun getRawMessageAsciiArmoured(msg: Outer.Msg): String? {
             if (msg.hasMsgTextGpgV0()) {
                 val data = msg.msgTextGpgV0

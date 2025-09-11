@@ -71,7 +71,11 @@ class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ct
         throw UserInteractionRequiredException(null, keyHashes.asList())
     }
 
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
     private fun buildUserInteractionRequiredException(
         keyHashes: LongArray,
         salts: Array<ByteArray>,
@@ -88,7 +92,11 @@ class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ct
 
 
 =======
+<<<<<<< Updated upstream
 >>>>>>> origin/modernization-refactor
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     override fun setMessage(
         builderMsg: Outer.Msg.Builder,
         symMsgBuilder: Outer.MsgTextSymV0.Builder

@@ -102,4 +102,12 @@
                 android:src="@drawable/ic_save_black_24dp"/>
     </io.oversec.one.ui.util.SecureRelativeLayout>
 
+<<<<<<< Updated upstream
 </androidx.core.widget.NestedScrollView>
+=======
+<<<<<<< HEAD:libraries/oversec_crypto/src/main/res/layout/sym_content_create_key_random.xml
+</androidx.core.widget.NestedScrollView>
+=======
+</androidx.core.widget.NestedScrollView>
+>>>>>>> origin/modernization-refactor:app/src/main/res/layout/sym_content_create_key_random.xml
+>>>>>>> Stashed changes
