@@ -1,5 +1,16 @@
 package io.oversec.one.crypto.sym
 
+<<<<<<< HEAD
+=======
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.widget.TextView
+import com.google.zxing.BarcodeFormat
+import com.jwetherell.quick_response_code.data.Contents
+import com.jwetherell.quick_response_code.qrcode.QRCodeEncoder
+import org.bouncycastle.util.encoders.Base64
+
+>>>>>>> origin/modernization-refactor
 import java.math.BigInteger
 import java.nio.ByteBuffer
 

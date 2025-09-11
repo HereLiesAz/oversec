@@ -17,7 +17,6 @@
 package uk.co.biddell.diceware.dictionaries;
 
 import android.content.Context;
-import io.oversec.one.crypto.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,7 +62,7 @@ public final class DiceWare {
     }
 
     public DiceWare(Context ctx) throws IOException {
-        InputStream is = ctx.getAssets().open(ctx.getString(R.string.diceware_dictionary));
+        InputStream is = ctx.getAssets().open("diceware.wordlist");
 
         this.dictionary = new Dictionary(is);
         is.close();

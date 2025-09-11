@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                    xmlns:tools="http://schemas.android.com/tools"
+                                    android:id="@+id/settings_imenotenabled"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="15dp"
+                                    card_view:cardCornerRadius="5dp"
+                                    card_view:contentPadding="5dp">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    >
+
+
+        <ImageView
+                android:id="@+id/icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_alignParentLeft="true"
+                android:padding="16dp"
+                android:scaleType="fitXY"
+                tools:background="#f5f5f5"
+                tools:ignore="ContentDescription"
+                android:src="@drawable/ic_vpn_key_black_24dp"/>
+
+
+        <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@id/icon"
+                android:text="TextView"
+                android:textAppearance="@style/Item.Head"/>
+
+        <TextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv1"
+                android:layout_toRightOf="@id/icon"
+                android:text="TextView"
+                android:textAppearance="@style/Item.Sub"/>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

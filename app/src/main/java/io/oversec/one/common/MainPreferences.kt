@@ -1,7 +1,6 @@
 package io.oversec.one.common
 
 import android.content.Context
-import io.oversec.one.crypto.R
 
 object MainPreferences {
 
@@ -9,45 +8,49 @@ object MainPreferences {
 
     fun isAllowScreenshots(ctx: Context): Boolean {
         return ctx.getSharedPreferences(FILENAME, 0)
-            .getBoolean(ctx.getString(R.string.mainprefs_allow_screenshot_key), false)
+            .getBoolean("allow_screenshot", false)
     }
 
     fun isRelaxEncryptionCache(ctx: Context): Boolean {
         return ctx.getSharedPreferences(FILENAME, 0)
-            .getBoolean(ctx.getString(R.string.mainprefs_relaxecache_key), false)
+            .getBoolean("relax_cache", false)
     }
 
     fun isPanicOnScreenOff(ctx: Context): Boolean {
         return ctx.getSharedPreferences(FILENAME, 0)
-            .getBoolean(ctx.getString(R.string.mainprefs_screenoffpanic_key), false)
+            .getBoolean("screenoffpanic", false)
     }
 
     fun isHideLauncherOnPanic(ctx: Context): Boolean {
         return ctx.getSharedPreferences(FILENAME, 0)
-            .getBoolean(ctx.getString(R.string.mainprefs_hidelauncheronpanic_key), false)
+            .getBoolean("hidelauncheronpanic", false)
     }
 
     fun getLauncherSecretDialerCode(ctx: Context): String {
         return ctx.getSharedPreferences(FILENAME, 0)
+<<<<<<< HEAD:app/src/main/java/io/oversec/one/common/MainPreferences.kt
             .getString(ctx.getString(R.string.mainprefs_launchersecretcode_key), "") ?: ""
+=======
+            .getString("launchersecretcode0", "") ?: ""
+>>>>>>> origin/modernization-refactor:libraries/oversec_crypto/src/main/java/io/oversec/one/common/MainPreferences.kt
     }
 
     fun setLauncherSecretDialerCode(ctx: Context, value: String) {
         ctx.getSharedPreferences(FILENAME, 0).edit()
-            .putString(ctx.getString(R.string.mainprefs_launchersecretcode_key), value).commit()
+            .putString("launchersecretcode0", value).apply()
     }
 
     fun isDialerSecretCodeBroadcastConfirmedWorking(ctx: Context): Boolean {
         return ctx.getSharedPreferences(FILENAME, 0).getBoolean(
-            ctx.getString(R.string.mainprefs_dialersecretcodebroadcastworking_key),
+            "dialersecretcodebroadcastworking5",
             false
         )
     }
 
     fun setDialerSecretCodeBroadcastConfirmedWorking(ctx: Context) {
         ctx.getSharedPreferences(FILENAME, 0).edit().putBoolean(
-            ctx.getString(R.string.mainprefs_dialersecretcodebroadcastworking_key),
+            "dialersecretcodebroadcastworking5",
             true
-        ).commit()
+        ).apply()
     }
 }

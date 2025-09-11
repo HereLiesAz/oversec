@@ -24,6 +24,9 @@ android {
             resValue("string", "prefill_password_fields", "")
         }
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.10"
+    }
     kotlinOptions {
         jvmTarget = "17"
     }
@@ -51,15 +54,22 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     api("com.google.protobuf:protobuf-java:3.6.1")
-    api("org.sufficientlysecure:openpgp-api:11.0") //TODO update ?
+    api("com.github.open-keychain.open-keychain:openpgp-api:v5.7.1")
     api("com.github.rehacktive:waspdb:1.0")
 
     implementation("com.nulab-inc:zxcvbn:1.2.5")
-
-    // Bouncy Castle instead of Spongy Castle
+    implementation("com.borjabravo:readmoretextview:2.1.0")
     implementation("org.bouncycastle:bcprov-jdk18on:1.78.1")
     implementation("org.bouncycastle:bcpkix-jdk18on:1.78.1")
     implementation("org.bouncycastle:bcpg-jdk18on:1.78.1")
+    implementation("org.bouncycastle:bcutil-jdk18on:1.78.1")
+
+
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.legacy:legacy-support-v13:1.0.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.cardview:cardview:1.0.0")
+    implementation("com.google.android.material:material:1.11.0")
 
     implementation("androidx.collection:collection-ktx:1.4.0")
 

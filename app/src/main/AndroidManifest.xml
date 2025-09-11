@@ -98,6 +98,10 @@
                 android:name=".OversecIntentService"
                 android:exported="false"/>
 
+        <service
+            android:name="io.oversec.one.crypto.sym.KeystoreIntentService"
+            android:exported="false" />
+
         <activity
                 android:name=".ui.EncryptionParamsActivity"
                 android:excludeFromRecents="true"
@@ -209,6 +213,12 @@
                 android:name=".ui.ImeMemoryLeakWorkaroundDummyActivity"
                 android:taskAffinity="io.oversec.one.ImeMemoryLeakWorkaroundDummyActivity"
                 android:theme="@style/TransparentTheme.NoTitle"/>
+
+        <provider
+                android:name="io.oversec.one.app.crypto.TemporaryContentProvider"
+                android:authorities="oversec_temporary_content"
+                android:grantUriPermissions="true"
+                tools:ignore="ExportedContentProvider"/>
     </application>
 
 </manifest>

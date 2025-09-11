@@ -87,11 +87,11 @@
                     android:paddingBottom="1dp"
                     android:textAppearance="@android:style/TextAppearance.Medium"/>
 
-            <io.oversec.one.crypto.ui.util.KeystoreTTLSpinner
+            <io.oversec.one.ui.util.KeystoreTTLSpinner
                     android:id="@+id/ttl_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-            </io.oversec.one.crypto.ui.util.KeystoreTTLSpinner>
+            </io.oversec.one.ui.util.KeystoreTTLSpinner>
 
         </LinearLayout>
 

@@ -1,12 +1,11 @@
 package io.oversec.one.crypto.encoding
 
 import android.content.Context
+import android.util.Log
 import android.util.SparseIntArray
 import io.oversec.one.common.CoreContract
-import io.oversec.one.crypto.R
 import io.oversec.one.crypto.encoding.pad.AbstractPadder
 import io.oversec.one.crypto.proto.Outer
-import roboguice.util.Ln
 import java.io.IOException
 import java.util.Arrays
 
@@ -21,7 +20,7 @@ class ZeroWidthXCoder(context: Context) : AbstractXCoder(context) {
         get() = false
 
     override fun getLabel(padder: AbstractPadder?): String {
-        return mCtx.getString(R.string.encoder_zerowidth) + (padder?.let { "("+it.label+")" } ?: "")
+        return "Invisible" + (padder?.let { "("+it.label+")" } ?: "")
     }
 
     override fun getExample(padder: AbstractPadder?): String {
@@ -120,7 +119,7 @@ class ZeroWidthXCoder(context: Context) : AbstractXCoder(context) {
                 }
                 s.substring(off)
             } catch (ex: IndexOutOfBoundsException) {
-                Ln.e(ex, "problem stripping [%s]", s)
+                Log.e("ZeroWidthXCoder", "problem stripping [$s]", ex)
                 ""
             }
         }

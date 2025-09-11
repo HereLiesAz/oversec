@@ -7,9 +7,13 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.util.Log
 import io.oversec.one.crypto.sym.KeyNotCachedException
 import io.oversec.one.crypto.sym.SymmetricKeyPlain
+<<<<<<< HEAD
 import roboguice.util.Ln
+=======
+>>>>>>> origin/modernization-refactor
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
@@ -31,7 +35,6 @@ class KeyCache private constructor(private val mCtx: Context) {
                 it
             }
         }
-
 
     val allSimpleKeys: List<SymmetricKeyPlain>
         get() {
@@ -69,7 +72,7 @@ class KeyCache private constructor(private val mCtx: Context) {
         val keyId = plainKey.id
 
         if (mKeyMap.containsKey(keyId)) {
-            Ln.d("already cached!")
+            Log.d("KeyCache", "already cached!")
             //ToDo: this should never happen, but if so, maybe we should update the TTL ?
 
         } else {
@@ -79,6 +82,11 @@ class KeyCache private constructor(private val mCtx: Context) {
                 it.onStartedCachingKey(keyId)
             }
 
+<<<<<<< HEAD
+=======
+            // TODO: Fire an event to notify the UI to show a notification
+
+>>>>>>> origin/modernization-refactor
             if (ttl == 0L) {
                 mExpireOnScreenOff.add(keyId)
             } else if (ttl < Integer.MAX_VALUE) {
@@ -88,7 +96,7 @@ class KeyCache private constructor(private val mCtx: Context) {
                 // request code should be unique for each PendingIntent, thus keyId is used
                 val alarmIntent = PendingIntent.getBroadcast(
                     mCtx, ++requestCount, intent,
-                    PendingIntent.FLAG_CANCEL_CURRENT
+                    PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
                 mPendingAlarms[keyId] = alarmIntent
 
@@ -104,6 +112,10 @@ class KeyCache private constructor(private val mCtx: Context) {
             expire(it)
         }
         mKeyMap.clear()
+<<<<<<< HEAD
+=======
+        // TODO: Fire an event to notify the UI to cancel notifications
+>>>>>>> origin/modernization-refactor
     }
 
     @Synchronized
@@ -122,13 +134,17 @@ class KeyCache private constructor(private val mCtx: Context) {
                 l.onFinishedCachingKey(keyId)
             }
         }
+<<<<<<< HEAD
+=======
+        // TODO: Fire an event to notify the UI to update/cancel notifications
+>>>>>>> origin/modernization-refactor
     }
 
     @Synchronized
     internal fun expireOnScreenOff() {
         val ids = HashSet(mExpireOnScreenOff)
         for (id in ids) {
-            expire(id!!)
+            expire(id)
         }
         mExpireOnScreenOff.clear()
     }
@@ -136,7 +152,11 @@ class KeyCache private constructor(private val mCtx: Context) {
     @Synchronized
     @Throws(KeyNotCachedException::class)
     operator fun get(keyId: Long?): SymmetricKeyPlain {
+<<<<<<< HEAD
         return mKeyMap[keyId] ?: throw KeyNotCachedException(keyId)
+=======
+        return mKeyMap[keyId] ?: throw KeyNotCachedException(null)
+>>>>>>> origin/modernization-refactor
     }
 
     fun hasKey(keyId: Long?): Boolean {

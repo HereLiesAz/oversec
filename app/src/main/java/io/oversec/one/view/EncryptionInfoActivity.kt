@@ -56,7 +56,6 @@ class EncryptionInfoActivity : AppCompatActivity() {
                 EncryptionInfoType.SIMPLE_SYMMETRIC -> SimpleSymmetricTextEncryptionInfoFragment.newInstance(encryptionInfo.packageName)
             }
         }
-        mFragment.setArgs(mPackageName)
 
         setContent {
             MaterialTheme {

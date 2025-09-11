@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools">
 
@@ -7,6 +8,14 @@
                 android:name="io.oversec.one.crypto.TemporaryContentProvider"
                 android:authorities="@string/tempcontent_authority"
                 android:grantUriPermissions="true" tools:ignore="ExportedContentProvider"/>
+=======
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <service
+            android:name="io.oversec.one.crypto.sym.KeystoreIntentService"
+            android:exported="false" />
+>>>>>>> origin/modernization-refactor
 
         <service
                 android:name=".ZxcvbnService"

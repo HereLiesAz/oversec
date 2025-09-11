@@ -38,6 +38,7 @@ class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ct
         return tryDecrypt(msg.msgTextSymSimpleV0, encryptedText)
     }
 
+<<<<<<< HEAD
     override fun getTextEncryptionInfo(packagename: String?): EncryptionInfo {
         return EncryptionInfo(EncryptionInfoType.SIMPLE_SYMMETRIC, packagename)
     }
@@ -46,6 +47,8 @@ class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ct
         return EncryptionInfo(EncryptionInfoType.SIMPLE_SYMMETRIC, packagename)
     }
 
+=======
+>>>>>>> origin/modernization-refactor
     @Throws(KeyNotCachedException::class)
     override fun getKeyByHashedKeyId(
         keyhash: Long,
@@ -63,9 +66,12 @@ class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ct
         costKeyhash: Int,
         encryptedText: String?
     ) {
-        throw buildUserInteractionRequiredException(keyHashes, salts, costKeyhash, encryptedText)
+        // TODO: Re-implement this in the app module
+        // For now, just throw an exception to indicate that user interaction is required.
+        throw UserInteractionRequiredException(null, keyHashes.asList())
     }
 
+<<<<<<< HEAD
     private fun buildUserInteractionRequiredException(
         keyHashes: LongArray,
         salts: Array<ByteArray>,
@@ -81,6 +87,8 @@ class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ct
     }
 
 
+=======
+>>>>>>> origin/modernization-refactor
     override fun setMessage(
         builderMsg: Outer.Msg.Builder,
         symMsgBuilder: Outer.MsgTextSymV0.Builder
@@ -94,6 +102,4 @@ class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ct
         const val KEY_DERIVATION_COST = 8
         const val KEY_ID_COST = 6
     }
-
-
 }
