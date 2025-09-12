@@ -54,55 +54,20 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     api("com.google.protobuf:protobuf-java:3.6.1")
-<<<<<<< Updated upstream
     api("com.github.open-keychain.open-keychain:openpgp-api:v5.7.1")
     api("com.github.rehacktive:waspdb:1.0")
 
     implementation("com.nulab-inc:zxcvbn:1.2.5")
-    implementation("com.borjabravo:readmoretextview:2.1.0")
-=======
-<<<<<<< HEAD
-    api("org.sufficientlysecure:openpgp-api:11.0") //TODO update ?
-=======
-    api("com.github.open-keychain.open-keychain:openpgp-api:v5.7.1")
->>>>>>> origin/modernization-refactor
-    api("com.github.rehacktive:waspdb:1.0")
-
-    implementation("com.nulab-inc:zxcvbn:1.2.5")
-<<<<<<< Updated upstream
-=======
-    implementation("com.borjabravo:readmoretextview:2.1.0")
-<<<<<<< HEAD
-    implementation("com.madgag.spongycastle:core:1.58.0.0")
-    implementation("com.madgag.spongycastle:prov:1.58.0.0")
-    implementation("com.madgag.spongycastle:bcpkix-jdk15on:1.58.0.0")
-    implementation("com.madgag.spongycastle:bcpg-jdk15on:1.58.0.0")
-=======
-    implementation("org.bouncycastle:bcprov-jdk18on:1.78.1")
-    implementation("org.bouncycastle:bcpkix-jdk18on:1.78.1")
-    implementation("org.bouncycastle:bcpg-jdk18on:1.78.1")
-    implementation("org.bouncycastle:bcutil-jdk18on:1.78.1")
->>>>>>> origin/modernization-refactor
->>>>>>> Stashed changes
 
     // Bouncy Castle instead of Spongy Castle
->>>>>>> Stashed changes
     implementation("org.bouncycastle:bcprov-jdk18on:1.78.1")
     implementation("org.bouncycastle:bcpkix-jdk18on:1.78.1")
     implementation("org.bouncycastle:bcpg-jdk18on:1.78.1")
     implementation("org.bouncycastle:bcutil-jdk18on:1.78.1")
-
-
-    implementation("androidx.recyclerview:recyclerview:1.3.2")
-    implementation("androidx.legacy:legacy-support-v13:1.0.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.cardview:cardview:1.0.0")
-    implementation("com.google.android.material:material:1.11.0")
 
     implementation("androidx.collection:collection-ktx:1.4.0")
 
     testImplementation("junit:junit:4.12")
     testImplementation("org.mockito:mockito-core:2.23.4")
-    testImplementation("org.robolectric:robolectric:4.0.2")
-    testImplementation("org.robolectric:shadows-supportv4:4.0.2")
+    testImplementation("org.robolectric:robolectric:4.10.3")
 }

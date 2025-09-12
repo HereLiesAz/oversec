@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import io.oversec.one.crypto.AbstractEncryptionParams
 import io.oversec.one.crypto.BaseDecryptResult
-import io.oversec.one.crypto.EncryptionInfo
-import io.oversec.one.crypto.EncryptionInfoType
 import io.oversec.one.crypto.EncryptionMethod
 import io.oversec.one.crypto.UserInteractionRequiredException
 import io.oversec.one.crypto.encoding.Base64XCoder
@@ -38,17 +36,6 @@ class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ct
         return tryDecrypt(msg.msgTextSymSimpleV0, encryptedText)
     }
 
-<<<<<<< HEAD
-    override fun getTextEncryptionInfo(packagename: String?): EncryptionInfo {
-        return EncryptionInfo(EncryptionInfoType.SIMPLE_SYMMETRIC, packagename)
-    }
-
-    override fun getBinaryEncryptionInfo(packagename: String?): EncryptionInfo {
-        return EncryptionInfo(EncryptionInfoType.SIMPLE_SYMMETRIC, packagename)
-    }
-
-=======
->>>>>>> origin/modernization-refactor
     @Throws(KeyNotCachedException::class)
     override fun getKeyByHashedKeyId(
         keyhash: Long,
@@ -68,35 +55,9 @@ class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ct
     ) {
         // TODO: Re-implement this in the app module
         // For now, just throw an exception to indicate that user interaction is required.
-        throw UserInteractionRequiredException(null, keyHashes.asList())
+        throw UserInteractionRequiredException()
     }
 
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-    private fun buildUserInteractionRequiredException(
-        keyHashes: LongArray,
-        salts: Array<ByteArray>,
-        sessionKeyCost: Int,
-        encryptedText: String?
-    ): UserInteractionRequiredException {
-        return PasswordRequiredException(
-            keyHashes,
-            salts,
-            sessionKeyCost,
-            encryptedText
-        )
-    }
-
-
-=======
-<<<<<<< Updated upstream
->>>>>>> origin/modernization-refactor
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
     override fun setMessage(
         builderMsg: Outer.Msg.Builder,
         symMsgBuilder: Outer.MsgTextSymV0.Builder
