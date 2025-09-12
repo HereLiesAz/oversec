@@ -10,17 +10,6 @@ import android.content.IntentFilter
 import android.util.Log
 import io.oversec.one.crypto.sym.KeyNotCachedException
 import io.oversec.one.crypto.sym.SymmetricKeyPlain
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-import roboguice.util.Ln
-=======
->>>>>>> origin/modernization-refactor
-=======
-<<<<<<< Updated upstream
-import roboguice.util.Ln
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
@@ -89,19 +78,6 @@ class KeyCache private constructor(private val mCtx: Context) {
                 it.onStartedCachingKey(keyId)
             }
 
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
-            // TODO: Fire an event to notify the UI to show a notification
-
->>>>>>> origin/modernization-refactor
-=======
-<<<<<<< Updated upstream
-=======
-            // TODO: Fire an event to notify the UI to show a notification
-
->>>>>>> Stashed changes
->>>>>>> Stashed changes
             if (ttl == 0L) {
                 mExpireOnScreenOff.add(keyId)
             } else if (ttl < Integer.MAX_VALUE) {
@@ -127,17 +103,6 @@ class KeyCache private constructor(private val mCtx: Context) {
             expire(it)
         }
         mKeyMap.clear()
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
-        // TODO: Fire an event to notify the UI to cancel notifications
->>>>>>> origin/modernization-refactor
-=======
-<<<<<<< Updated upstream
-=======
-        // TODO: Fire an event to notify the UI to cancel notifications
->>>>>>> Stashed changes
->>>>>>> Stashed changes
     }
 
     @Synchronized
@@ -156,17 +121,6 @@ class KeyCache private constructor(private val mCtx: Context) {
                 l.onFinishedCachingKey(keyId)
             }
         }
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
-        // TODO: Fire an event to notify the UI to update/cancel notifications
->>>>>>> origin/modernization-refactor
-=======
-<<<<<<< Updated upstream
-=======
-        // TODO: Fire an event to notify the UI to update/cancel notifications
->>>>>>> Stashed changes
->>>>>>> Stashed changes
     }
 
     @Synchronized
@@ -181,19 +135,7 @@ class KeyCache private constructor(private val mCtx: Context) {
     @Synchronized
     @Throws(KeyNotCachedException::class)
     operator fun get(keyId: Long?): SymmetricKeyPlain {
-<<<<<<< Updated upstream
-<<<<<<< HEAD
         return mKeyMap[keyId] ?: throw KeyNotCachedException(keyId)
-=======
-        return mKeyMap[keyId] ?: throw KeyNotCachedException(null)
->>>>>>> origin/modernization-refactor
-=======
-<<<<<<< Updated upstream
-        return mKeyMap[keyId] ?: throw KeyNotCachedException(keyId)
-=======
-        return mKeyMap[keyId] ?: throw KeyNotCachedException(null)
->>>>>>> Stashed changes
->>>>>>> Stashed changes
     }
 
     fun hasKey(keyId: Long?): Boolean {

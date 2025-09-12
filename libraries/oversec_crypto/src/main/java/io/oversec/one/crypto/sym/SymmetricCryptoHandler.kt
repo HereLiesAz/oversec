@@ -40,19 +40,6 @@ class SymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ctx) {
         return tryDecrypt(msg.msgTextSymV0, encryptedText)
     }
 
-<<<<<<< HEAD
-    override fun getTextEncryptionInfo(packagename: String?): EncryptionInfo {
-        return EncryptionInfo(EncryptionInfoType.SYMMETRIC, packagename)
-    }
-
-
-    override fun getBinaryEncryptionInfo(packagename: String?): EncryptionInfo {
-        return EncryptionInfo(EncryptionInfoType.SYMMETRIC, packagename)
-    }
-
-
-=======
->>>>>>> origin/modernization-refactor
     @Throws(KeyNotCachedException::class)
     override fun getKeyByHashedKeyId(
         keyhash: Long,

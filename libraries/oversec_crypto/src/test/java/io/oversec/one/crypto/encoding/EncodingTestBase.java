@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.google.protobuf.ByteString;
 
-import io.oversec.one.crypto.BuildConfig;
 import io.oversec.one.crypto.proto.Outer;
 import io.oversec.one.crypto.sym.SymmetricKeyPlain;
 import io.oversec.one.crypto.symbase.BaseSymmetricCryptoHandler;

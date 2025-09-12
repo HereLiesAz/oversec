@@ -3,7 +3,6 @@ package io.oversec.one.crypto.symsimple;
 import android.content.Context;
 import com.google.protobuf.ByteString;
 import io.oversec.one.crypto.AbstractCryptoHandler;
-import io.oversec.one.crypto.BuildConfig;
 import io.oversec.one.crypto.proto.Inner;
 import io.oversec.one.crypto.symbase.KeyCache;
 import io.oversec.one.crypto.symbase.KeyUtil;
