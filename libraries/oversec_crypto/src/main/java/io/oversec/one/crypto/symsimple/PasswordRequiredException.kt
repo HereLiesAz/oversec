@@ -7,4 +7,4 @@ class PasswordRequiredException(
     val salts: Array<ByteArray>,
     val sessionKeyCost: Int,
     val encryptedText: String?
-) : UserInteractionRequiredException("Password required to decrypt.")
+) : UserInteractionRequiredException(null)

@@ -1,6 +1,8 @@
 package io.oversec.one.crypto.gpg
 
+import android.app.Activity
 import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -16,6 +18,7 @@ import org.openintents.openpgp.util.OpenPgpApi
 import org.bouncycastle.bcpg.ArmoredInputStream
 import org.bouncycastle.openpgp.*
 import org.bouncycastle.openpgp.operator.bc.BcKeyFingerprintCalculator
+import org.openintents.openpgp.OpenPgpSignatureResult
 import java.io.*
 import java.nio.charset.Charset
 import java.security.GeneralSecurityException
@@ -172,31 +175,20 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
             }
             OpenPgpApi.RESULT_CODE_USER_INTERACTION_REQUIRED -> {
                 val pi = result.getParcelableExtra<PendingIntent>(OpenPgpApi.RESULT_INTENT)
-<<<<<<< HEAD
-                throw GpgUserInteractionRequiredException(pi!!, pp.allPublicKeyIds.toList())
-            }
-            OpenPgpApi.RESULT_CODE_ERROR -> {
-                val error = result.getParcelableExtra<OpenPgpError>(OpenPgpApi.RESULT_ERROR)
-                Log.e("GpgCryptoHandler", "encryption error: ${error!!.message}")
-=======
-                val pi = result.getParcelableExtra<PendingIntent>(OpenPgpApi.RESULT_INTENT)
                 if (pi == null) {
-                    throw OpenPGPErrorException(OpenPgpError(OpenPgpError.ERROR_INTENT, "Missing PendingIntent for user interaction."))
+                    throw OpenPGPErrorException(OpenPgpError(1, "Missing PendingIntent for user interaction."))
                 }
                 throw UserInteractionRequiredException(pi, pp.allPublicKeyIds)
             }
             OpenPgpApi.RESULT_CODE_ERROR -> {
                 val error = result.getParcelableExtra<OpenPgpError>(OpenPgpApi.RESULT_ERROR)
                 Log.e("GpgCryptoHandler", "encryption error: ${error?.message}")
->>>>>>> origin/modernization-refactor
-                throw OpenPGPErrorException(error)
+                throw OpenPGPErrorException(error ?: OpenPgpError(1, "Unknown OpenPGP error from API"))
             }
             else -> return null
         }
     }
 
-
-<<<<<<< HEAD
     override fun getTextEncryptionInfo(packagename: String?): EncryptionInfo {
         return EncryptionInfo(EncryptionInfoType.GPG, packagename)
     }
@@ -204,25 +196,7 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
     override fun getBinaryEncryptionInfo(packagename: String?): EncryptionInfo {
         return EncryptionInfo(EncryptionInfoType.GPG, packagename)
     }
-=======
-    //
-    //    @Override
-    //    public AbstractEncryptionParamsFragment getEncryptionParamsFragment(String packagename) {
-    //        return GpgEncryptionParamsFragment.newInstance(packagename);
-    //    }
->>>>>>> origin/modernization-refactor
 
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> origin/modernization-refactor
-    //
-    //    @Override
-    //    public AbstractEncryptionParamsFragment getEncryptionParamsFragment(String packagename) {
-    //        return GpgEncryptionParamsFragment.newInstance(packagename);
-    //    }
-
->>>>>>> Stashed changes
     @Throws(
         OpenPGPErrorException::class,
         GpgUserInteractionRequiredException::class,
@@ -259,11 +233,7 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
                 if (sigResult != null) {
                     res.signatureResult = sigResult
                     val pi = result.getParcelableExtra<PendingIntent>(OpenPgpApi.RESULT_INTENT)
-<<<<<<< HEAD
-                    if (sigResult.result == org.openintents.openpgp.OpenPgpSignatureResult.RESULT_KEY_MISSING) {
-=======
                     if (sigResult.result == OpenPgpSignatureResult.RESULT_KEY_MISSING) {
->>>>>>> origin/modernization-refactor
                         res.downloadMissingSignatureKeyPendingIntent = pi!!
                     } else {
                         res.showSignatureKeyPendingIntent = pi!!
@@ -275,16 +245,12 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
             }
             OpenPgpApi.RESULT_CODE_USER_INTERACTION_REQUIRED -> {
                 val pi = result.getParcelableExtra<PendingIntent>(OpenPgpApi.RESULT_INTENT)
-<<<<<<< HEAD
-                throw GpgUserInteractionRequiredException(pi!!, pkids)
-=======
                 throw UserInteractionRequiredException(pi!!, pkids)
->>>>>>> origin/modernization-refactor
             }
             OpenPgpApi.RESULT_CODE_ERROR -> {
                 val error = result.getParcelableExtra<OpenPgpError>(OpenPgpApi.RESULT_ERROR)
-                Log.e("GpgCryptoHandler", "encryption error: ${error!!.message}")
-                throw OpenPGPErrorException(error)
+                Log.e("GpgCryptoHandler", "encryption error: ${error?.message}")
+                throw OpenPGPErrorException(error ?: OpenPgpError(1, "Unknown OpenPGP error from API"))
             }
             else -> return null
         }
@@ -366,11 +332,7 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
             }
             OpenPgpApi.RESULT_CODE_ERROR -> {
                 val error = result.getParcelableExtra<OpenPgpError>(OpenPgpApi.RESULT_ERROR)
-<<<<<<< HEAD
-                Log.e("TAG", "Error: " + error!!.message)
-=======
                 Log.e("TAG", "Error: " + error?.message)
->>>>>>> origin/modernization-refactor
 
                 return null
             }
@@ -570,13 +532,6 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
 
         }
 
-
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
         fun openOpenKeyChain(ctx: Context) {
             try {
                 val i = Intent(Intent.ACTION_MAIN)
@@ -596,12 +551,6 @@ class GpgCryptoHandler(ctx: Context) : AbstractCryptoHandler(ctx) {
 
         }
 
-
-<<<<<<< Updated upstream
->>>>>>> origin/modernization-refactor
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
         fun getRawMessageAsciiArmoured(msg: Outer.Msg): String? {
             if (msg.hasMsgTextGpgV0()) {
                 val data = msg.msgTextGpgV0

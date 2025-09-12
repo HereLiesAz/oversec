@@ -6,9 +6,9 @@ import android.content.*
 import android.database.Cursor
 import android.net.Uri
 import android.os.ParcelFileDescriptor
+import android.util.Log
 import io.oversec.one.crypto.sym.SymUtil
 import io.oversec.one.crypto.symbase.KeyUtil
-import roboguice.util.Ln
 
 import java.io.*
 import java.lang.IllegalArgumentException
@@ -99,9 +99,9 @@ class TemporaryContentProvider : ContentProvider() {
 
                 val entry = mEntries[mToken]
                 if (entry == null) {
-                    Ln.d(
-                        "TCPR Entry for token %s not found, somebody has re-prepared another content with the same tag, ignoring content input stream",
-                        mToken
+                    Log.d(
+                        "TempContentProvider",
+                        "TCPR Entry for token %s not found, somebody has re-prepared another content with the same tag, ignoring content input stream".format(mToken)
                     )
                 } else {
                     entry.data = baos.toByteArray()
@@ -218,7 +218,7 @@ class TemporaryContentProvider : ContentProvider() {
 
         @Synchronized
         fun prepare(ctx: Context, mimetype: String, ttl_seconds: Int, tag: String?): Uri {
-            Ln.d("TCPR prepare tag=%s", tag)
+            Log.d("TempContentProvider", "TCPR prepare tag=%s".format(tag))
             //delete all existing entries with the same tag
 
             if (tag != null) {
@@ -236,7 +236,7 @@ class TemporaryContentProvider : ContentProvider() {
 
 
             val token = createRandomToken()
-            Ln.d("TCPR prepared tag=%s  token=%s", tag, token)
+            Log.d("TempContentProvider", "TCPR prepared tag=%s  token=%s".format(tag, token))
             mEntries[token] = Entry(mimetype, ttl_seconds, tag)
 
             val authority = "oversec_temporary_content"
@@ -271,7 +271,7 @@ class TemporaryContentProvider : ContentProvider() {
                     entry.data = null
                 }
             }
-            Ln.d("TCPR expired entry token=%s", token)
+            Log.d("TempContentProvider", "TCPR expired entry token=%s".format(token))
             mEntries.remove(token)
         }
 

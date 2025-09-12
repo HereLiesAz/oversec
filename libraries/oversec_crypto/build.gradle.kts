@@ -13,8 +13,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion(26)
-        targetSdkVersion(34)
+        minSdk = 26
     }
     buildTypes {
         getByName("debug") {
@@ -23,9 +22,6 @@ android {
         getByName("release") {
             resValue("string", "prefill_password_fields", "")
         }
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.10"
     }
     kotlinOptions {
         jvmTarget = "17"
@@ -54,39 +50,11 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     api("com.google.protobuf:protobuf-java:3.6.1")
-<<<<<<< Updated upstream
     api("com.github.open-keychain.open-keychain:openpgp-api:v5.7.1")
     api("com.github.rehacktive:waspdb:1.0")
 
     implementation("com.nulab-inc:zxcvbn:1.2.5")
     implementation("com.borjabravo:readmoretextview:2.1.0")
-=======
-<<<<<<< HEAD
-    api("org.sufficientlysecure:openpgp-api:11.0") //TODO update ?
-=======
-    api("com.github.open-keychain.open-keychain:openpgp-api:v5.7.1")
->>>>>>> origin/modernization-refactor
-    api("com.github.rehacktive:waspdb:1.0")
-
-    implementation("com.nulab-inc:zxcvbn:1.2.5")
-<<<<<<< Updated upstream
-=======
-    implementation("com.borjabravo:readmoretextview:2.1.0")
-<<<<<<< HEAD
-    implementation("com.madgag.spongycastle:core:1.58.0.0")
-    implementation("com.madgag.spongycastle:prov:1.58.0.0")
-    implementation("com.madgag.spongycastle:bcpkix-jdk15on:1.58.0.0")
-    implementation("com.madgag.spongycastle:bcpg-jdk15on:1.58.0.0")
-=======
-    implementation("org.bouncycastle:bcprov-jdk18on:1.78.1")
-    implementation("org.bouncycastle:bcpkix-jdk18on:1.78.1")
-    implementation("org.bouncycastle:bcpg-jdk18on:1.78.1")
-    implementation("org.bouncycastle:bcutil-jdk18on:1.78.1")
->>>>>>> origin/modernization-refactor
->>>>>>> Stashed changes
-
-    // Bouncy Castle instead of Spongy Castle
->>>>>>> Stashed changes
     implementation("org.bouncycastle:bcprov-jdk18on:1.78.1")
     implementation("org.bouncycastle:bcpkix-jdk18on:1.78.1")
     implementation("org.bouncycastle:bcpg-jdk18on:1.78.1")

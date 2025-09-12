@@ -70,15 +70,15 @@ fun OverlayPermissionWarningScreen(onGoClick: () -> Unit, onLaterClick: () -> Un
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = stringResource(id = R.string.overlay_permission_warning))
+        Text(text = stringResource(id = R.string.overlaypermissionswarning_text))
         Spacer(modifier = Modifier.height(16.dp))
         Row {
             Button(onClick = onGoClick) {
-                Text(text = stringResource(id = R.string.go_to_settings))
+                Text(text = stringResource(id = R.string.action_settings))
             }
             Spacer(modifier = Modifier.width(16.dp))
             Button(onClick = onLaterClick) {
-                Text(text = stringResource(id = R.string.later))
+                Text(text = stringResource(id = R.string.action_later))
             }
         }
     }

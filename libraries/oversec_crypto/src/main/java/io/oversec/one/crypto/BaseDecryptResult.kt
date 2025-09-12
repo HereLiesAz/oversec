@@ -15,12 +15,12 @@ open class BaseDecryptResult {
         SYM_UNSUPPORTED_CIPHER, SYM_NO_MATCHING_KEY, SYM_DECRYPT_FAILED, PGP_ERROR, PROTO_ERROR, NO_HANDLER
     }
 
-    open var encryptionMethod: EncryptionMethod?
+    open var encryptionMethod: EncryptionMethod? = null
         protected set
 
     protected var mDecryptedRawData: ByteArray? = null
 
-    var result: Result
+    lateinit var result: Result
         protected set
 
     var error: DecryptError? = null

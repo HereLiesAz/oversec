@@ -38,7 +38,6 @@ class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ct
         return tryDecrypt(msg.msgTextSymSimpleV0, encryptedText)
     }
 
-<<<<<<< HEAD
     override fun getTextEncryptionInfo(packagename: String?): EncryptionInfo {
         return EncryptionInfo(EncryptionInfoType.SIMPLE_SYMMETRIC, packagename)
     }
@@ -47,8 +46,6 @@ class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ct
         return EncryptionInfo(EncryptionInfoType.SIMPLE_SYMMETRIC, packagename)
     }
 
-=======
->>>>>>> origin/modernization-refactor
     @Throws(KeyNotCachedException::class)
     override fun getKeyByHashedKeyId(
         keyhash: Long,
@@ -71,32 +68,6 @@ class SimpleSymmetricCryptoHandler(ctx: Context) : BaseSymmetricCryptoHandler(ct
         throw UserInteractionRequiredException(null, keyHashes.asList())
     }
 
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-    private fun buildUserInteractionRequiredException(
-        keyHashes: LongArray,
-        salts: Array<ByteArray>,
-        sessionKeyCost: Int,
-        encryptedText: String?
-    ): UserInteractionRequiredException {
-        return PasswordRequiredException(
-            keyHashes,
-            salts,
-            sessionKeyCost,
-            encryptedText
-        )
-    }
-
-
-=======
-<<<<<<< Updated upstream
->>>>>>> origin/modernization-refactor
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
     override fun setMessage(
         builderMsg: Outer.Msg.Builder,
         symMsgBuilder: Outer.MsgTextSymV0.Builder

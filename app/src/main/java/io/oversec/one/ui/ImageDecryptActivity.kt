@@ -25,6 +25,9 @@ import io.oversec.one.crypto.images.xcoder.ImageXCoder
 import io.oversec.one.crypto.images.xcoder.ImageXCoderFacade
 import io.oversec.one.crypto.proto.Outer
 import io.oversec.one.view.AbstractBinaryEncryptionInfoFragment
+import io.oversec.one.view.GpgBinaryEncryptionInfoFragment
+import io.oversec.one.view.SimpleSymmetricBinaryEncryptionInfoFragment
+import io.oversec.one.view.SymmetricBinaryEncryptionInfoFragment
 import io.oversec.one.view.util.Util
 import io.oversec.one.iab.FullVersionListener
 import io.oversec.one.iab.IabUtil
@@ -177,7 +180,7 @@ class ImageDecryptActivity : AppCompatActivity() {
                 try {
                     val img = dr.decryptedDataAsInnerData.imageV0.image
                     val buf = img.toByteArray()
-                    decodedBitmap = BitmapFactory.decodeByteArray(buf, 0, buf.length)
+                    decodedBitmap = BitmapFactory.decodeByteArray(buf, 0, buf.size)
 
                 } catch (e: InvalidProtocolBufferException) {
                     e.printStackTrace()

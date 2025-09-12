@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="common_ok">OK</string>
-    <string name="common_error_title">Error</string>
-    <string name="common_error_body">Error inesperado: %1$s</string>
-=======
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE resources [
 <!ENTITY appname "Oversec">
@@ -85,7 +78,6 @@
     <string name="progress_saving">Guardando clave</string>
     <string name="label_keystore_passphrase">Contraseña de clave</string>
     <string name="remember">Recuerde</string>
->>>>>>> origin/modernization-refactor
     <string name="keystore_ttl_lock_screen">hasta que se desactive la pantalla</string>
     <string name="keystore_ttl_five_minutes">5 minutos</string>
     <string name="keystore_ttl_thirty_minutes">30 minutos</string>
@@ -93,38 +85,6 @@
     <string name="keystore_ttl_six_hours">6 horas</string>
     <string name="keystore_ttl_one_day">un día</string>
     <string name="keystore_ttl_forever">siempre</string>
-<<<<<<< HEAD
-    <string name="unlock_key_title">Desbloquear clave \"%1$s\"</string>
-    <string name="progress_unlocking">Clave para desbloquear</string>
-    <string name="please_wait_decrypting">descifrando</string>
-    <string name="error_password_wrong">¡Frase de contraseña incorrecta!</string>
-    <string name="action_unlock_key">Clave de desbloqueo</string>
-    <string name="new_password_keystore_text">Elija una contraseña segura, ya que protegerá su clave en caso de que su dispositivo sea robado o confiscado.</string>
-    <string name="new_password_pbkdf_text">¡Elija una contraseña segura a partir de la cual generar su clave! ¡Cualquiera que conozca esta contraseña podrá recrear su clave!</string>
-    <string name="new_password_share_text">Elija una contraseña segura, ya que protegerá su clave cuando la comparta con una aplicación insegura.</string>
-    <string name="new_password_keystore_title">Contraseña de clave</string>
-    <string name="new_password_pbkdf_title">Frase de contraseña basada en clave</string>
-    <string name="new_password_share_title">Compartiendo contraseña</string>
-    <string name="action_save">Guardar</string>
-    <string name="action_generate">Continuar</string>
-    <string name="action_share">Compartir</string>
-    <string name="error_passwords_dont_match">Las contraseñas no coinciden</string>
-    <string name="error_password_length">¡La contraseña es demasiado fácil!</string>
-    <string name="action_show_all_content">%1$s más caracteres.\nMostrar todos</string>
-    <string name="error_cannot_show_inner_data_of_type">¡Error! No\ se pueden mostrar los datos internos de tipo %1$s</string>
-    <string name="error_cannot_show_inner_data">¡Error! No\ se pueden mostrar los datos cifrados</string>
-    <string name="action_perform_passwordinput">Ingresar contraseña</string>
-    <string name="confirmation_share_decrypted__title">Confirmar el intercambio de texto plano</string>
-    <string name="confirmation_share_decrypted__content">¿Está seguro de que desea compartir el texto plano DESCIFRADO con otra aplicación, posiblemente insegura?</string>
-    <string name="action_cancel">Cancelar</string>
-    <string name="action_share_encrypted">Compartir texto ENCRIPTADO</string>
-    <string name="action_share_decrypted">Compartir texto DESCIFRADO</string>
-    <string name="action_download_missing_public_key">[Clave no encontrada, ¿descargar?]</string>
-    <string name="action_show_signature_key">Mostrar la clave de firma</string>
-    <string name="action_share_gpg_ascii">Compartir mensaje PGP (blindado ascii)</string>
-    <string name="action_share_sym_base64">Compartir mensaje simétrico (json)</string>
-    <string name="label_key_unconfirmed">sin confirmar</string>
-=======
     <string name="unlock_key_title">Desbloquear clave \&quot;%1$s\&quot;</string>
     <string name="progress_generating_key">generando...</string>
     <string name="manual_padder_hint">(introducir manualmente el texto al pad)</string>
@@ -472,5 +432,4 @@
     <string name="main_tab_apps__sort">Clasificación:</string>
     <string name="main_tab_apps__sortbyname">nombre</string>
     <string name="main_tab_apps__sortbychecked">activo</string>
->>>>>>> origin/modernization-refactor
 </resources>

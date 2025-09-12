@@ -163,7 +163,7 @@ fun PostAcsEnableScreen(
                 }
             }
             Button(onClick = onConfigureAppsClick) {
-                Text(text = stringResource(id = R.string.configure_apps))
+                Text(text = stringResource(id = R.string.settings_acs_post_enable_btn_configure))
             }
         } else {
             val text = if (targetAppNotInstalled) {

@@ -1,47 +1,3 @@
-<<<<<<< HEAD
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="common_ok">OK</string>
-    <string name="common_error_title">Fehler</string>
-    <string name="common_error_body">Unerwarteter Fehler: %1$s</string>
-    <string name="keystore_ttl_lock_screen">bis Bildschirm aus</string>
-    <string name="keystore_ttl_five_minutes">5 Minuten</string>
-    <string name="keystore_ttl_thirty_minutes">30 Minuten</string>
-    <string name="keystore_ttl_one_hour">eine Stunde</string>
-    <string name="keystore_ttl_six_hours">6 Stunden</string>
-    <string name="keystore_ttl_one_day">ein Tag</string>
-    <string name="keystore_ttl_forever">unendlich</string>
-    <string name="unlock_key_title">Schlüssel \"%1$s\" entsperren</string>
-    <string name="progress_unlocking">Schlüssel entsperren</string>
-    <string name="please_wait_decrypting">entschlüsseln</string>
-    <string name="error_password_wrong">Das Passwort ist falsch!</string>
-    <string name="action_unlock_key">Schlüssel entsperren</string>
-    <string name="new_password_keystore_text">Wähle ein starkes Passwort. Es sperrt den Schlüssel und schützt Ihn, wenn das Handy in falsche Hände gelangt!</string>
-    <string name="new_password_pbkdf_text">Wähle ein starkes Passwort um daraus einen Schlüssel zu generieren! Wenn jemand das Passwort kennt oder raten kann, kann er den gleichen Schlüssel erzeugen!</string>
-    <string name="new_password_share_text">Wähle ein starkes Passwort. Es schützt und sperrte den Schlüssel wenn er mit einer unsicheren App geteilt wird!</string>
-    <string name="new_password_keystore_title">Entsperr-Passwort</string>
-    <string name="new_password_pbkdf_title">Passwortbasierter Schlüssel</string>
-    <string name="new_password_share_title">Schlüssel-Password</string>
-    <string name="action_save">Speichern</string>
-    <string name="action_generate">Weiter</string>
-    <string name="action_share">Teilen</string>
-    <string name="error_passwords_dont_match">Passwörter stimmen nicht überein.</string>
-    <string name="error_password_length">Das Passwort ist zu einfach!</string>
-    <string name="action_show_all_content">%1$s weitere Zeichen.\nAlle anzeigen</string>
-    <string name="error_cannot_show_inner_data_of_type">Fehler! Innere Daten des Typs %1$s können nicht angezeigt werden.</string>
-    <string name="error_cannot_show_inner_data">Fehler! Verschlüsselte Daten können nicht angezeigt werden.</string>
-    <string name="action_perform_passwordinput">Passwort eingeben</string>
-    <string name="confirmation_share_decrypted__title">Teilen Bestätigen</string>
-    <string name="confirmation_share_decrypted__content">Sind sie sicher, dass sie den ENTSCHLÜSSELTEN Text mit einer anderen App teilen wollen?</string>
-    <string name="action_cancel">Abbruch</string>
-    <string name="action_share_encrypted">VERschlüsselten Text teilen</string>
-    <string name="action_share_decrypted">ENTschlüsselten Text teilen</string>
-    <string name="action_download_missing_public_key">[Fehlender Schlüssel, herunterladen?]</string>
-    <string name="action_show_signature_key">Sicgnatur-Schlüssel anzeigen</string>
-    <string name="action_share_gpg_ascii">PGP-Nachricht teilen (ascii-armored)</string>
-    <string name="action_share_sym_base64">PGP-Nachricht teilen (json)</string>
-    <string name="label_key_unconfirmed">unbestätigt</string>
-=======
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE resources [
 <!ENTITY appname "Oversec">
@@ -460,5 +416,4 @@
     <string name="main_tab_apps__sort">Sortierung:</string>
     <string name="main_tab_apps__sortbyname">Name</string>
     <string name="main_tab_apps__sortbychecked">Aktiv</string>
->>>>>>> origin/modernization-refactor
 </resources>

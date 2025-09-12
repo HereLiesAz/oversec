@@ -1,19 +1,18 @@
-package io.oversec.one.crypto.symsimple.ui
+package io.oversec.one.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import io.oversec.one.R
 import io.oversec.one.crypto.BaseDecryptResult
-import io.oversec.one.crypto.R
 import io.oversec.one.crypto.images.xcoder.ImageXCoder
 import io.oversec.one.crypto.proto.Outer
 import io.oversec.one.crypto.sym.KeyNotCachedException
 import io.oversec.one.crypto.sym.SymUtil
 import io.oversec.one.crypto.symbase.KeyCache
 import io.oversec.one.crypto.symbase.SymmetricDecryptResult
-import io.oversec.one.crypto.ui.AbstractBinaryEncryptionInfoFragment
 
 class SimpleSymmetricBinaryEncryptionInfoFragment : AbstractBinaryEncryptionInfoFragment() {
 

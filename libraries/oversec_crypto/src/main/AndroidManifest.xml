@@ -1,24 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools">
 
     <application>
-<<<<<<< Updated upstream
         <provider
                 android:name="io.oversec.one.crypto.TemporaryContentProvider"
                 android:authorities="@string/tempcontent_authority"
                 android:grantUriPermissions="true" tools:ignore="ExportedContentProvider"/>
-=======
-<<<<<<< Updated upstream
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <application>
-        <service
-            android:name="io.oversec.one.crypto.sym.KeystoreIntentService"
-            android:exported="false" />
->>>>>>> origin/modernization-refactor
-=======
         <meta-data
             android:name="android.nfc.disable_beam_default"
             android:value="true" />
@@ -67,17 +55,9 @@
             android:label="@string/title_activity_encryption_info"
             android:theme="@style/AppTheme" />
 
-=======
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <application>
->>>>>>> origin/modernization-refactor
         <service
             android:name="io.oversec.one.crypto.sym.KeystoreIntentService"
             android:exported="false" />
->>>>>>> Stashed changes
->>>>>>> Stashed changes
-
         <service
                 android:name=".ZxcvbnService"
                 android:exported="false"

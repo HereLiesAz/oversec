@@ -11,17 +11,7 @@ import androidx.core.content.ContextCompat
 import io.oversec.one.R
 import io.oversec.one.common.Consts
 import io.oversec.one.common.CoreContract
-<<<<<<< Updated upstream
-<<<<<<<< HEAD:app/src/main/java/io/oversec/one/KeystoreIntentService.kt
 import io.oversec.one.crypto.sym.OversecKeystore2
-========
->>>>>>>> origin/modernization-refactor:app/src/main/java/io/oversec/one/crypto/sym/KeystoreIntentService.kt
-=======
-<<<<<<<< Updated upstream:app/src/main/java/io/oversec/one/KeystoreIntentService.kt
-import io.oversec.one.crypto.sym.OversecKeystore2
-========
->>>>>>>> Stashed changes:app/src/main/java/io/oversec/one/crypto/sym/KeystoreIntentService.kt
->>>>>>> Stashed changes
 
 class KeystoreIntentService : IntentService("oversec_keystore_intent_service") {
 
@@ -49,31 +39,18 @@ class KeystoreIntentService : IntentService("oversec_keystore_intent_service") {
             mainIntent.action = ACTION_CLEAR_ALL_CACHED_KEYS
             val pendingMainIntent = PendingIntent.getService(
                 ctx, 0,
-                mainIntent, PendingIntent.FLAG_UPDATE_CURRENT
+                mainIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
 
             val clearKeycacheIntent = Intent(ctx, KeystoreIntentService::class.java)
             clearKeycacheIntent.action = ACTION_CLEAR_ALL_CACHED_KEYS
             val PendingClearKeycacheIntent = PendingIntent.getService(
                 ctx, 0,
-                clearKeycacheIntent, PendingIntent.FLAG_UPDATE_CURRENT
+                clearKeycacheIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
 
             val builder = NotificationCompat.Builder(
-<<<<<<< Updated upstream
-<<<<<<<< HEAD:app/src/main/java/io/oversec/one/KeystoreIntentService.kt
-=======
-<<<<<<<< Updated upstream:app/src/main/java/io/oversec/one/KeystoreIntentService.kt
->>>>>>> Stashed changes
-                ctx,
-                "oversec_channel_id" // TODO: Create a notification channel
-========
                 ctx, "oversec_channel_id" // TODO: Create a notification channel
-<<<<<<< Updated upstream
->>>>>>>> origin/modernization-refactor:app/src/main/java/io/oversec/one/crypto/sym/KeystoreIntentService.kt
-=======
->>>>>>>> Stashed changes:app/src/main/java/io/oversec/one/crypto/sym/KeystoreIntentService.kt
->>>>>>> Stashed changes
             )
                 .setSmallIcon(R.drawable.ic_cachedkey_24dp)
                 .setColor(ContextCompat.getColor(ctx, R.color.colorPrimary))

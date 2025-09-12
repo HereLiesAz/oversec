@@ -1,12 +1,5 @@
 package io.oversec.one.crypto
 
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-open class UserInteractionRequiredException(message: String? = null) : Exception(message)
-=======
 import android.app.PendingIntent
 
 open class UserInteractionRequiredException : Exception {
@@ -29,8 +22,3 @@ open class UserInteractionRequiredException : Exception {
         pendingIntent = pi
     }
 }
-<<<<<<< Updated upstream
->>>>>>> origin/modernization-refactor
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes

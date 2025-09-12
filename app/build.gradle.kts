@@ -4,6 +4,7 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
     id("com.gladed.androidgitversion") version "0.4.14"
 }
 
@@ -216,7 +217,7 @@ android {
 dependencies {
     implementation(fileTree(mapOf("include" to listOf("*.jar"), "dir" to "libs")))
 
-    implementation(project(":libraries:oversec_crypto"))
+    api(project(":libraries:oversec_crypto"))
 
     implementation("org.sufficientlysecure:html-textview:4.0")
     implementation("com.vladsch.flexmark:flexmark-all:0.64.8")

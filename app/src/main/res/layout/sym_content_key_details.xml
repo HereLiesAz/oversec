@@ -192,12 +192,4 @@
     </io.oversec.one.crypto.ui.util.SecureRelativeLayout>
 
 
-<<<<<<< Updated upstream
 </androidx.core.widget.NestedScrollView>
-=======
-<<<<<<< HEAD:libraries/oversec_crypto/src/main/res/layout/sym_content_key_details.xml
-</androidx.core.widget.NestedScrollView>
-=======
-</androidx.core.widget.NestedScrollView>
->>>>>>> origin/modernization-refactor:app/src/main/res/layout/sym_content_key_details.xml
->>>>>>> Stashed changes

@@ -4,6 +4,6 @@ import android.app.PendingIntent
 import io.oversec.one.crypto.UserInteractionRequiredException
 
 class GpgUserInteractionRequiredException(
-    val pendingIntent: PendingIntent,
+    pendingIntent: PendingIntent,
     val publicKeyIds: List<Long>? = null
-) : UserInteractionRequiredException("GPG user interaction required.")
+) : UserInteractionRequiredException(pendingIntent)

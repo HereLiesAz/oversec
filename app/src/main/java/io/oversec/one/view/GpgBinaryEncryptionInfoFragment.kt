@@ -1,4 +1,4 @@
-package io.oversec.one.crypto.gpg.ui
+package io.oversec.one.view
 
 import android.content.Intent
 import android.content.IntentSender
@@ -13,15 +13,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import io.oversec.one.crypto.*
+import io.oversec.one.R
+import io.oversec.one.crypto.AbstractCryptoHandler
+import io.oversec.one.crypto.BaseDecryptResult
+import io.oversec.one.crypto.CryptoHandlerFacade
+import io.oversec.one.crypto.EncryptionMethod
 import io.oversec.one.crypto.gpg.GpgCryptoHandler
 import io.oversec.one.crypto.gpg.GpgDecryptResult
 import io.oversec.one.crypto.gpg.OpenKeychainConnector
 import io.oversec.one.crypto.images.xcoder.ImageXCoder
 import io.oversec.one.crypto.proto.Outer
 import io.oversec.one.crypto.sym.SymUtil
-import io.oversec.one.crypto.ui.AbstractBinaryEncryptionInfoFragment
-import io.oversec.one.crypto.ui.EncryptionInfoActivity
 import org.openintents.openpgp.OpenPgpSignatureResult
 
 class GpgBinaryEncryptionInfoFragment : AbstractBinaryEncryptionInfoFragment() {

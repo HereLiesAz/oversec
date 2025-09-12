@@ -39,12 +39,9 @@ abstract class AbstractCryptoHandler(protected val mCtx: Context) {
         encryptedText: String?
     ): BaseDecryptResult?
 
-<<<<<<< HEAD
     abstract fun getTextEncryptionInfo(packagename: String?): EncryptionInfo
 
     abstract fun getBinaryEncryptionInfo(packagename: String?): EncryptionInfo
 
-=======
->>>>>>> origin/modernization-refactor
     abstract fun buildDefaultEncryptionParams(tdr: BaseDecryptResult): AbstractEncryptionParams
 }

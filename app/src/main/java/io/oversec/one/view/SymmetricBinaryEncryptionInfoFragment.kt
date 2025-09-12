@@ -1,4 +1,4 @@
-package io.oversec.one.crypto.sym.ui
+package io.oversec.one.view
 
 import android.os.Bundle
 import androidx.core.content.ContextCompat
@@ -8,14 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import io.oversec.one.R
 import io.oversec.one.crypto.BaseDecryptResult
-import io.oversec.one.crypto.R
 import io.oversec.one.crypto.images.xcoder.ImageXCoder
 import io.oversec.one.crypto.proto.Outer
 import io.oversec.one.crypto.sym.OversecKeystore2
 import io.oversec.one.crypto.sym.SymUtil
 import io.oversec.one.crypto.symbase.SymmetricDecryptResult
-import io.oversec.one.crypto.ui.AbstractBinaryEncryptionInfoFragment
 
 class SymmetricBinaryEncryptionInfoFragment : AbstractBinaryEncryptionInfoFragment() {
 

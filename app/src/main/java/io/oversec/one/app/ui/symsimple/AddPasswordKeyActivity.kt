@@ -5,7 +5,6 @@ import android.app.Activity
 import android.app.Dialog
 import android.app.Fragment
 import android.app.PendingIntent
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -21,6 +20,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import io.oversec.one.app.R
 import io.oversec.one.common.MainPreferences
@@ -218,20 +218,12 @@ class AddPasswordKeyActivity : FragmentActivity() {
 
 
             SymPreferences.getInstance(context!!).keystoreSimpleTTL = timeToLiveSeconds
-<<<<<<< Updated upstream
             val progressDialog = AlertDialog.Builder(activity!!)
                 .setTitle(getString(R.string.progress_generating_key))
                 .setMessage(getString(R.string.please_wait_keyderivation))
                 .setView(ProgressBar(activity).apply { isIndeterminate = true })
                 .setCancelable(false)
                 .show()
-=======
-            val progressDialog = ProgressDialog.show(
-                activity,
-                getString(R.string.progress_generating_key),
-                getString(R.string.please_wait_keyderivation),
-                true)
->>>>>>> Stashed changes
 
             Thread(Runnable {
                 try {
@@ -280,14 +272,14 @@ class AddPasswordKeyActivity : FragmentActivity() {
 
         }
 
-        override fun onCancel(dialog: DialogInterface?) {
+        override fun onCancel(dialog: DialogInterface) {
             super.onCancel(dialog)
             activity?.run { setResult(Activity.RESULT_CANCELED); finish() }
         }
 
 
 
-        override fun onDismiss(dialog: DialogInterface?) {
+        override fun onDismiss(dialog: DialogInterface) {
             super.onDismiss(dialog)
             hideKeyboard()
         }

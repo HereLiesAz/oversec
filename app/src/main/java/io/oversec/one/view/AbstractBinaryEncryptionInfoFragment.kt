@@ -71,11 +71,13 @@ abstract class AbstractBinaryEncryptionInfoFragment : Fragment() {
 
     protected open fun handleSetData(msg: Outer.Msg, tdr: BaseDecryptResult?, coder: ImageXCoder?) {
         //mTvCoder.setText(coder.getClass().getSimpleName());
-        val encH = CryptoHandlerFacade.getInstance(activity).getCryptoHandler(tdr!!)
-        if (encH != null) {
-            mTvMeth.setText(encH.displayEncryptionMethod)
-            mTvMeth.visibility = View.VISIBLE
-            mLblMeth.visibility = View.VISIBLE
+        if (tdr != null) {
+            val encH = CryptoHandlerFacade.getInstance(requireActivity()).getCryptoHandler(tdr)
+            if (encH != null) {
+                mTvMeth.text = encH.displayEncryptionMethod
+                mTvMeth.visibility = View.VISIBLE
+                mLblMeth.visibility = View.VISIBLE
+            }
         }
     }
 
