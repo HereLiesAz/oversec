@@ -1,4 +1,4 @@
-package io.oversec.one.ui.keys
+package io.oversec.one.view
 
 import android.app.Activity
 import android.app.Fragment
@@ -13,9 +13,8 @@ import android.view.ViewGroup
 import io.oversec.one.crypto.Help
 import io.oversec.one.crypto.R
 import io.oversec.one.crypto.sym.OversecKeystore2
-import io.oversec.one.crypto.ui.WithHelp
-import io.oversec.one.crypto.ui.util.SimpleDividerItemDecoration
-import io.oversec.one.view.KeyImportCreateActivity
+import io.oversec.one.view.WithHelp
+import io.oversec.one.view.util.SimpleDividerItemDecoration
 
 class KeysFragment : Fragment(), WithHelp, OversecKeystore2.KeyStoreListener {
     private lateinit var mRecyclerView: RecyclerView

@@ -220,6 +220,7 @@ dependencies {
 
     implementation("org.sufficientlysecure:html-textview:4.0")
     implementation("com.vladsch.flexmark:flexmark-all:0.64.8")
+    implementation("com.borjabravo:readmoretextview:2.1.0")
 
     implementation("androidx.multidex:multidex:2.0.1")
     implementation("androidx.legacy:legacy-support-v13:1.0.0")

@@ -1,4 +1,4 @@
-package io.oversec.one.crypto.sym.ui
+package io.oversec.one.view
 
 import android.os.Bundle
 import androidx.core.content.ContextCompat
@@ -15,7 +15,7 @@ import io.oversec.one.crypto.proto.Outer
 import io.oversec.one.crypto.sym.OversecKeystore2
 import io.oversec.one.crypto.sym.SymUtil
 import io.oversec.one.crypto.symbase.SymmetricDecryptResult
-import io.oversec.one.crypto.ui.AbstractBinaryEncryptionInfoFragment
+import io.oversec.one.view.AbstractBinaryEncryptionInfoFragment
 
 class SymmetricBinaryEncryptionInfoFragment : AbstractBinaryEncryptionInfoFragment() {
 
