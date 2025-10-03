@@ -34,9 +34,9 @@ import io.oversec.one.crypto.sym.SymUtil
 import io.oversec.one.crypto.sym.SymmetricKeyPlain
 import io.oversec.one.crypto.symbase.KeyUtil
 import io.oversec.one.crypto.symbase.OversecChacha20Poly1305
-import io.oversec.one.ui.NewPasswordInputDialog
-import io.oversec.one.ui.NewPasswordInputDialogCallback
-import io.oversec.one.ui.SecureBaseActivity
+import io.oversec.one.view.NewPasswordInputDialog
+import io.oversec.one.view.NewPasswordInputDialogCallback
+import io.oversec.one.view.SecureBaseActivity
 import java.io.IOException
 
 class KeyImportCreateActivity : SecureBaseActivity(),

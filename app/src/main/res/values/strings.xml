@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Oversec</string>
-    <string name="common_ok">OK</string>
-    <string name="common_error_title">Error</string>
-    <string name="common_error_body">Unexpected Error: %1$s</string>
-=======
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE resources [
 <!ENTITY appname "Oversec">
@@ -88,7 +80,6 @@
     <string name="progress_saving">Saving Key</string>
     <string name="label_keystore_passphrase">Key password</string>
     <string name="remember">Remember</string>
->>>>>>> origin/modernization-refactor
     <string name="keystore_ttl_lock_screen">until screen off</string>
     <string name="keystore_ttl_five_minutes">5 minutes</string>
     <string name="keystore_ttl_thirty_minutes">30 minutes</string>
@@ -97,42 +88,6 @@
     <string name="keystore_ttl_one_day">one day</string>
     <string name="keystore_ttl_forever">forever</string>
     <string name="unlock_key_title">Unlock Key \"%1$s\"</string>
-<<<<<<< HEAD
-    <string name="progress_unlocking">Unlocking Key</string>
-    <string name="please_wait_decrypting">decrypting</string>
-    <string name="error_password_wrong">The password is wrong!</string>
-    <string name="action_unlock_key">Unlock key</string>
-    <string name="new_password_keystore_text">Choose a strong password. It protects your key in case your device gets stolen or confiscated!</string>
-    <string name="new_password_pbkdf_text">Choose a strong password to generate your key from! Everybody who knows this password can recreate your key!</string>
-    <string name="new_password_share_text">Choose a strong password. It protects your key when sharing it with an insecure app!</string>
-    <string name="new_password_keystore_title">Key Password</string>
-    <string name="new_password_pbkdf_title">Passphrase Based Key</string>
-    <string name="new_password_share_title">Sharing Password</string>
-    <string name="action_save">Save</string>
-    <string name="action_generate">Continue</string>
-    <string name="action_share">Share</string>
-    <string name="error_passwords_dont_match">Password mismatch</string>
-    <string name="error_password_length">The password is too weak!</string>
-    <string name="action_show_all_content">%1$s more characters.\nShow all</string>
-    <string name="bytes_size" translatable="false">%1$s bytes</string>
-    <string name="error_cannot_show_inner_data_of_type">Error! Can\'t show inner data of type %1$s</string>
-    <string name="error_cannot_show_inner_data">Error! Can\'t show encrypted data</string>
-    <string name="action_perform_passwordinput">Input Password</string>
-    <string name="confirmation_share_decrypted__title">Confirm plaintext sharing</string>
-    <string name="confirmation_share_decrypted__content">Are you sure you want to share the DECRYPTED plaintext with another, possibly insecure app?</string>
-    <string name="action_cancel">Cancel</string>
-    <string name="action_share_encrypted">Share ENCRYPTED text</string>
-    <string name="action_share_decrypted">Share DECRYPTED text</string>
-    <string name="action_download_missing_public_key">[Missing Key, Download?]</string>
-    <string name="action_show_signature_key">Show signature key</string>
-    <string name="action_share_gpg_ascii">Share PGP message (ascii-armored)</string>
-    <string name="action_share_sym_base64">Share symmetric message (json)</string>
-    <string name="label_key_unconfirmed">unconfirmed</string>
-    <string name="error_image_decrypt_noencodeddata">No encrypted data found in the source image.</string>
-    <string name="error_image_decrypt_generic">Unexpected error when decrypting image.</string>
-    <string name="error_image_decrypt_nomatchingkey">No matching key found to decrypt this image.</string>
-    <string name="intent_chooser_share_unencrypted_image">Share _UN_encrypted image via…</string>
-=======
     <string name="progress_generating_key">generating…</string>
     <string name="manual_padder_hint">(manually enter text to pad)</string>
     <string name="dialog_save_key_title">Save Key</string>
@@ -488,5 +443,4 @@
     <string name="main_tab_apps__sort">Clasificación:</string>
     <string name="main_tab_apps__sortbyname">nombre</string>
     <string name="main_tab_apps__sortbychecked">activo</string>
->>>>>>> origin/modernization-refactor
 </resources>

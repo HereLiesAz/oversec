@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:app/src/main/java/io/oversec/one/ui/keys/SymmetricKeyRecyclerViewAdapter.kt
-package io.oversec.one.ui.keys
-========
 package io.oversec.one.view
->>>>>>>> origin/modernization-refactor:app/src/main/java/io/oversec/one/view/SymmetricKeyRecyclerViewAdapter.kt
 
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
@@ -17,7 +13,6 @@ import android.widget.TextView
 import io.oversec.one.R
 import io.oversec.one.crypto.sym.SymUtil
 import io.oversec.one.crypto.sym.SymmetricKeyEncrypted
-import io.oversec.one.view.KeyDetailsActivity
 import java.util.Date
 
 open class SymmetricKeyRecyclerViewAdapter(

@@ -43,7 +43,7 @@ import io.oversec.one.crypto.TemporaryContentProvider
 import io.oversec.one.crypto.sym.*
 import io.oversec.one.crypto.symbase.KeyUtil
 import io.oversec.one.crypto.symbase.OversecKeyCacheListener
-import io.oversec.one.ui.SecureBaseActivity
+import io.oversec.one.view.SecureBaseActivity
 import java.text.SimpleDateFormat
 import java.util.*
 

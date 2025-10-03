@@ -1,4 +1,4 @@
-package io.oversec.one.crypto.gpg.ui
+package io.oversec.one.view
 
 import android.content.Intent
 import android.content.IntentSender
@@ -20,8 +20,8 @@ import io.oversec.one.crypto.gpg.OpenKeychainConnector
 import io.oversec.one.crypto.images.xcoder.ImageXCoder
 import io.oversec.one.crypto.proto.Outer
 import io.oversec.one.crypto.sym.SymUtil
-import io.oversec.one.crypto.ui.AbstractBinaryEncryptionInfoFragment
-import io.oversec.one.crypto.ui.EncryptionInfoActivity
+import io.oversec.one.view.AbstractBinaryEncryptionInfoFragment
+import io.oversec.one.view.EncryptionInfoActivity
 import org.openintents.openpgp.OpenPgpSignatureResult
 
 class GpgBinaryEncryptionInfoFragment : AbstractBinaryEncryptionInfoFragment() {
