@@ -87,11 +87,10 @@
                     android:paddingBottom="1dp"
                     android:textAppearance="@android:style/TextAppearance.Medium"/>
 
-            <io.oversec.one.ui.util.KeystoreTTLSpinner
-                    android:id="@+id/ttl_spinner"
+            <androidx.compose.ui.platform.ComposeView
+                    android:id="@+id/ttl_compose_view"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-            </io.oversec.one.ui.util.KeystoreTTLSpinner>
+                    android:layout_height="wrap_content" />
 
         </LinearLayout>
 
