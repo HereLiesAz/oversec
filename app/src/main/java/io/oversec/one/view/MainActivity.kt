@@ -5,18 +5,25 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.pagerTabIndicatorOffset
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.google.accompanist.pager.*
 import io.oversec.one.Core
 import io.oversec.one.R
 import io.oversec.one.Share
 import io.oversec.one.Util
 import io.oversec.one.crypto.Help
-import io.oversec.one.view.WithHelp
+import io.oversec.one.view.compose.AppsScreen
+import io.oversec.one.view.compose.HelpScreen
+import io.oversec.one.view.compose.KeysScreen
+import io.oversec.one.view.compose.PadderScreen
+import io.oversec.one.view.compose.SettingsScreen
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -77,7 +84,7 @@ class MainActivity : AppCompatActivity() {
 
     private val tabs = mutableListOf<String>()
 
-    @OptIn(ExperimentalPagerApi::class)
+    @OptIn(ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mInstance = this
@@ -104,22 +111,9 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(tabs: List<String>, intent: Intent) {
-    val pagerState = rememberPagerState()
-    val coroutineScope = rememberCoroutineScope()
-
-    val initialTab = intent.getStringExtra(MainActivity.EXTRA_TAB)
-    if (initialTab != null) {
-        val index = tabs.indexOf(initialTab)
-        if (index != -1) {
-            LaunchedEffect(pagerState) {
-                pagerState.scrollToPage(index)
-            }
-        }
-    }
-
     Column {
         TopAppBar(
             title = { Text(text = stringResource(id = R.string.app_name)) },
@@ -127,36 +121,52 @@ fun MainScreen(tabs: List<String>, intent: Intent) {
                 // TODO: Add menu items here
             }
         )
-        TabRow(
-            selectedTabIndex = pagerState.currentPage,
-            indicator = { tabPositions ->
-                TabRowDefaults.Indicator(
-                    Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
-                )
-            }
-        ) {
-            tabs.forEachIndexed { index, title ->
-                Tab(
-                    text = { Text(text = getTabTitle(title)) },
-                    selected = pagerState.currentPage == index,
-                    onClick = {
-                        coroutineScope.launch {
-                            pagerState.animateScrollToPage(index)
-                        }
+        if (tabs.isNotEmpty()) {
+            val pagerState = rememberPagerState(pageCount = { tabs.size })
+            val coroutineScope = rememberCoroutineScope()
+
+            val initialTab = intent.getStringExtra(MainActivity.EXTRA_TAB)
+            if (initialTab != null) {
+                val index = tabs.indexOf(initialTab)
+                if (index != -1) {
+                    LaunchedEffect(pagerState) {
+                        pagerState.scrollToPage(index)
                     }
-                )
+                }
             }
-        }
-        HorizontalPager(
-            count = tabs.size,
-            state = pagerState,
-        ) { page ->
-            when (tabs[page]) {
-                MainActivity.TAB_HELP -> HelpScreen()
-                MainActivity.TAB_APPS -> AppsScreen()
-                MainActivity.TAB_KEYS -> KeysScreen()
-                MainActivity.TAB_SETTINGS -> SettingsScreen()
-                MainActivity.TAB_PADDER -> PadderScreen()
+
+            TabRow(
+                selectedTabIndex = pagerState.currentPage,
+                indicator = { tabPositions ->
+                    if (pagerState.currentPage < tabPositions.size) {
+                        TabRowDefaults.Indicator(
+                            Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
+                        )
+                    }
+                }
+            ) {
+                tabs.forEachIndexed { index, title ->
+                    Tab(
+                        text = { Text(text = getTabTitle(title)) },
+                        selected = pagerState.currentPage == index,
+                        onClick = {
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        }
+                    )
+                }
+            }
+            HorizontalPager(
+                state = pagerState,
+            ) { page ->
+                when (tabs[page]) {
+                    MainActivity.TAB_HELP -> HelpScreen()
+                    MainActivity.TAB_APPS -> AppsScreen()
+                    MainActivity.TAB_KEYS -> KeysScreen()
+                    MainActivity.TAB_SETTINGS -> SettingsScreen()
+                    MainActivity.TAB_PADDER -> PadderScreen()
+                }
             }
         }
     }
@@ -172,29 +182,4 @@ fun getTabTitle(tab: String): String {
         MainActivity.TAB_SETTINGS -> stringResource(R.string.main_tab_settings)
         else -> ""
     }
-}
-
-@Composable
-fun HelpScreen() {
-    Text(text = "Help Screen")
-}
-
-@Composable
-fun AppsScreen() {
-    Text(text = "Apps Screen")
-}
-
-@Composable
-fun KeysScreen() {
-    Text(text = "Keys Screen")
-}
-
-@Composable
-fun SettingsScreen() {
-    Text(text = "Settings Screen")
-}
-
-@Composable
-fun PadderScreen() {
-    Text(text = "Padder Screen")
 }

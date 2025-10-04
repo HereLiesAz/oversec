@@ -57,13 +57,13 @@ dependencies {
     api("com.github.open-keychain.open-keychain:openpgp-api:v5.7.1")
     api("com.github.rehacktive:waspdb:1.0")
 
-    implementation("com.nulab-inc:zxcvbn:1.2.5")
+    api("com.nulab-inc:zxcvbn:1.2.5")
 
     // Bouncy Castle instead of Spongy Castle
-    implementation("org.bouncycastle:bcprov-jdk18on:1.78.1")
-    implementation("org.bouncycastle:bcpkix-jdk18on:1.78.1")
-    implementation("org.bouncycastle:bcpg-jdk18on:1.78.1")
-    implementation("org.bouncycastle:bcutil-jdk18on:1.78.1")
+    api("org.bouncycastle:bcprov-jdk18on:1.78.1")
+    api("org.bouncycastle:bcpkix-jdk18on:1.78.1")
+    api("org.bouncycastle:bcpg-jdk18on:1.78.1")
+    api("org.bouncycastle:bcutil-jdk18on:1.78.1")
 
     implementation("androidx.collection:collection-ktx:1.4.0")
 
