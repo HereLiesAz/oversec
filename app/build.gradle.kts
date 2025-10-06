@@ -238,8 +238,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling:1.6.7")
     implementation("androidx.activity:activity-compose:1.9.0")
     implementation("io.coil-kt:coil-compose:2.6.0")
-    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
-
+    implementation("com.google.accompanist:accompanist-pager:0.34.0")
+    implementation("com.google.accompanist:accompanist-pager-indicators:0.34.0")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation(project(":libraries:oversec_crypto"))

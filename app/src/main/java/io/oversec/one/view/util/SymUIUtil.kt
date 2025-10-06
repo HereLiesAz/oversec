@@ -49,13 +49,4 @@ object SymUIUtil {
         textView.setBackgroundColor(color)
         textView.text = name[0].toString()
     }
-
-    fun colorFor(name: String?): Int {
-        val hash = name.hashCode()
-        val ba = SymUtil.long2bytearray(hash.toLong())
-        val red = ((ba[ba.size - 1].toInt() and 0xFF) * 0.8f).toInt()
-        val green = ((ba[ba.size - 2].toInt() and 0xFF) * 0.8f).toInt()
-        val blue = ((ba[ba.size - 3].toInt() and 0xFF) * 0.8f).toInt()
-        return Color.rgb(red, green, blue)
-    }
 }
