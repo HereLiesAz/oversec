@@ -443,4 +443,10 @@
     <string name="main_tab_apps__sort">Clasificación:</string>
     <string name="main_tab_apps__sortbyname">nombre</string>
     <string name="main_tab_apps__sortbychecked">activo</string>
+
+    <string name="mainprefs_allow_screenshot_key" translatable="false">allow_screenshot</string>
+    <string name="mainprefs_relax_cache_key" translatable="false">relax_cache</string>
+    <string name="mainprefs_screenoffpanic_key" translatable="false">screenoffpanic</string>
+    <string name="mainprefs_hidelauncheronpanic_key" translatable="false">hidelauncheronpanic</string>
+    <string name="mainprefs_dialersecretcodebroadcastworking_key" translatable="false">dialersecretcodebroadcastworking5</string>
 </resources>

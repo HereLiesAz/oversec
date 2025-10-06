@@ -5,6 +5,7 @@ import androidx.activity.compose.setContent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import io.oversec.one.iab.IabUtil;
 import io.oversec.one.ui.screen.AboutScreen;
 import io.oversec.one.ui.theme.OneTheme;
 
@@ -15,11 +16,12 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContent {
             OneTheme {
-                AboutScreen();
+                AboutScreen(
+                    onBackPressed = () -> finish(),
+                    isIabAvailable = IabUtil.getInstance(this).isIabAvailable()
+                );
             }
         };
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

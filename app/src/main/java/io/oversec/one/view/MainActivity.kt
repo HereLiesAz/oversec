@@ -11,12 +11,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.google.accompanist.pager.*
-import io.oversec.one.Core
 import io.oversec.one.R
-import io.oversec.one.Share
 import io.oversec.one.Util
-import io.oversec.one.crypto.Help
-import io.oversec.one.view.WithHelp
+import io.oversec.one.ui.screen.main.*
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -172,29 +169,4 @@ fun getTabTitle(tab: String): String {
         MainActivity.TAB_SETTINGS -> stringResource(R.string.main_tab_settings)
         else -> ""
     }
-}
-
-@Composable
-fun HelpScreen() {
-    Text(text = "Help Screen")
-}
-
-@Composable
-fun AppsScreen() {
-    Text(text = "Apps Screen")
-}
-
-@Composable
-fun KeysScreen() {
-    Text(text = "Keys Screen")
-}
-
-@Composable
-fun SettingsScreen() {
-    Text(text = "Settings Screen")
-}
-
-@Composable
-fun PadderScreen() {
-    Text(text = "Padder Screen")
 }

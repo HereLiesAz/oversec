@@ -9,22 +9,22 @@ object MainPreferences {
 
     fun isAllowScreenshots(ctx: Context): Boolean {
         return ctx.getSharedPreferences(FILENAME, 0)
-            .getBoolean("allow_screenshot", false)
+            .getBoolean(ctx.getString(R.string.mainprefs_allow_screenshot_key), false)
     }
 
     fun isRelaxEncryptionCache(ctx: Context): Boolean {
         return ctx.getSharedPreferences(FILENAME, 0)
-            .getBoolean("relax_cache", false)
+            .getBoolean(ctx.getString(R.string.mainprefs_relax_cache_key), false)
     }
 
     fun isPanicOnScreenOff(ctx: Context): Boolean {
         return ctx.getSharedPreferences(FILENAME, 0)
-            .getBoolean("screenoffpanic", false)
+            .getBoolean(ctx.getString(R.string.mainprefs_screenoffpanic_key), false)
     }
 
     fun isHideLauncherOnPanic(ctx: Context): Boolean {
         return ctx.getSharedPreferences(FILENAME, 0)
-            .getBoolean("hidelauncheronpanic", false)
+            .getBoolean(ctx.getString(R.string.mainprefs_hidelauncheronpanic_key), false)
     }
 
     fun getLauncherSecretDialerCode(ctx: Context): String {
@@ -39,14 +39,14 @@ object MainPreferences {
 
     fun isDialerSecretCodeBroadcastConfirmedWorking(ctx: Context): Boolean {
         return ctx.getSharedPreferences(FILENAME, 0).getBoolean(
-            "dialersecretcodebroadcastworking5",
+            ctx.getString(R.string.mainprefs_dialersecretcodebroadcastworking_key),
             false
         )
     }
 
     fun setDialerSecretCodeBroadcastConfirmedWorking(ctx: Context) {
         ctx.getSharedPreferences(FILENAME, 0).edit().putBoolean(
-            "dialersecretcodebroadcastworking5",
+            ctx.getString(R.string.mainprefs_dialersecretcodebroadcastworking_key),
             true
         ).apply()
     }

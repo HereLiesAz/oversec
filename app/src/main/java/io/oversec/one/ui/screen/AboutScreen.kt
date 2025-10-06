@@ -1,4 +1,4 @@
-package io.oversec.one.view.compose
+package io.oversec.one.ui.screen
 
 import android.content.ClipData
 import android.content.ClipboardManager
