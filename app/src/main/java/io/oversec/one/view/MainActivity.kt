@@ -9,8 +9,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.gestures.detectTransformGestures
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import com.google.accompanist.pager.*
+import io.oversec.one.Core
 import io.oversec.one.R
 import io.oversec.one.Util
 import io.oversec.one.ui.screen.main.*
@@ -106,6 +109,7 @@ class MainActivity : AppCompatActivity() {
 fun MainScreen(tabs: List<String>, intent: Intent) {
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     val initialTab = intent.getStringExtra(MainActivity.EXTRA_TAB)
     if (initialTab != null) {
@@ -117,7 +121,15 @@ fun MainScreen(tabs: List<String>, intent: Intent) {
         }
     }
 
-    Column {
+    Column(
+        modifier = Modifier.pointerInput(Unit) {
+            detectTransformGestures { _, pan, _, _ ->
+                if (pan.y > 20) { // Threshold for downward swipe
+                    Core.getInstance(context).panic()
+                }
+            }
+        }
+    ) {
         TopAppBar(
             title = { Text(text = stringResource(id = R.string.app_name)) },
             actions = {

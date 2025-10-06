@@ -14,7 +14,7 @@ object MainPreferences {
 
     fun isRelaxEncryptionCache(ctx: Context): Boolean {
         return ctx.getSharedPreferences(FILENAME, 0)
-            .getBoolean(ctx.getString(R.string.mainprefs_relax_cache_key), false)
+            .getBoolean(ctx.getString(R.string.mainprefs_relaxecache_key), false)
     }
 
     fun isPanicOnScreenOff(ctx: Context): Boolean {
