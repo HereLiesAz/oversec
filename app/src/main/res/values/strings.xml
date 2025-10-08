@@ -443,4 +443,8 @@
     <string name="main_tab_apps__sort">Clasificación:</string>
     <string name="main_tab_apps__sortbyname">nombre</string>
     <string name="main_tab_apps__sortbychecked">activo</string>
+    <string name="tab_stuff">Stuff</string>
+    <string name="tab_colors">Colors</string>
+    <string name="tab_expert">Expert</string>
+    <string name="tab_padders">Padders</string>
 </resources>
