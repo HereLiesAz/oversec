@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:gotit="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <io.oversec.one.crypto.ui.util.StandaloneTooltipView
+        android:id="@+id/gpgParamsGotIt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        gotit:arrowPos="50"
+        gotit:arrowSide="bottom"
+        gotit:gotit_id="@string/tooltipid_apps_fragment"
+        gotit:help_alias="main_apps"
+        gotit:msg="@string/tooltip_apps_fragment" />
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_tab_apps__sort"/>
+        <RadioGroup  android:id="@+id/rgSort"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <RadioButton
+                android:id="@+id/rbName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_tab_apps__sortbyname"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/rbChecked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_tab_apps__sortbychecked"
+                android:checked="false"/>
+        </RadioGroup>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/plist"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="vertical"
+
+        tools:listitem="@layout/listitem_app" />
+
+</LinearLayout>

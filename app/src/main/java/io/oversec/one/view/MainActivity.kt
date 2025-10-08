@@ -9,14 +9,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.foundation.gestures.detectTransformGestures
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import com.google.accompanist.pager.*
 import io.oversec.one.Core
 import io.oversec.one.R
+import io.oversec.one.Share
 import io.oversec.one.Util
-import io.oversec.one.ui.screen.main.*
+import io.oversec.one.crypto.Help
+import io.oversec.one.view.WithHelp
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -109,7 +109,6 @@ class MainActivity : AppCompatActivity() {
 fun MainScreen(tabs: List<String>, intent: Intent) {
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
-    val context = LocalContext.current
 
     val initialTab = intent.getStringExtra(MainActivity.EXTRA_TAB)
     if (initialTab != null) {
@@ -121,15 +120,7 @@ fun MainScreen(tabs: List<String>, intent: Intent) {
         }
     }
 
-    Column(
-        modifier = Modifier.pointerInput(Unit) {
-            detectTransformGestures { _, pan, _, _ ->
-                if (pan.y > 20) { // Threshold for downward swipe
-                    Core.getInstance(context).panic()
-                }
-            }
-        }
-    ) {
+    Column {
         TopAppBar(
             title = { Text(text = stringResource(id = R.string.app_name)) },
             actions = {
@@ -181,4 +172,29 @@ fun getTabTitle(tab: String): String {
         MainActivity.TAB_SETTINGS -> stringResource(R.string.main_tab_settings)
         else -> ""
     }
+}
+
+@Composable
+fun HelpScreen() {
+    Text(text = "Help Screen")
+}
+
+@Composable
+fun AppsScreen() {
+    Text(text = "Apps Screen")
+}
+
+@Composable
+fun KeysScreen() {
+    Text(text = "Keys Screen")
+}
+
+@Composable
+fun SettingsScreen() {
+    Text(text = "Settings Screen")
+}
+
+@Composable
+fun PadderScreen() {
+    Text(text = "Padder Screen")
 }
