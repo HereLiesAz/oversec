@@ -14,11 +14,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import io.oversec.one.Core
+import io.oversec.one.R
 import io.oversec.one.crypto.gpg.OpenKeychainConnector
 import io.oversec.one.db.Db
 import kotlinx.coroutines.Dispatchers
@@ -122,17 +124,17 @@ fun MainSettingsScreen(
             )
             Spacer(Modifier.height(16.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Sort by:")
+                Text(stringResource(R.string.main_tab_apps__sort))
                 RadioButton(
                     selected = sortOption == "Name",
                     onClick = { sortOption = "Name" }
                 )
-                Text("Name")
+                Text(stringResource(R.string.main_tab_apps__sortbyname))
                 RadioButton(
                     selected = sortOption == "Checked",
                     onClick = { sortOption = "Checked" }
                 )
-                Text("Checked")
+                Text(stringResource(R.string.main_tab_apps__sortbychecked))
             }
             Divider(modifier = Modifier.padding(vertical = 8.dp))
         }
@@ -168,7 +170,7 @@ fun AppListItem(
     ) {
         Image(
             painter = rememberDrawablePainter(drawable = appInfo.icon),
-            contentDescription = "App Icon",
+            contentDescription = stringResource(R.string.app_icon_description),
             modifier = Modifier.size(48.dp)
         )
         Spacer(Modifier.width(16.dp))
@@ -177,7 +179,7 @@ fun AppListItem(
             Text(text = appInfo.packageName, style = MaterialTheme.typography.bodySmall)
         }
         IconButton(onClick = onHelpClick) {
-            Icon(Icons.Filled.HelpOutline, contentDescription = "Help")
+            Icon(Icons.Filled.HelpOutline, contentDescription = stringResource(R.string.action_help))
         }
         Checkbox(
             checked = appInfo.isEnabled,
@@ -203,43 +205,43 @@ fun MainHelpSection(
     Column {
         if (!isAcsEnabled) {
             InfoCard(
-                title = "Accessibility Service",
-                status = "Service not enabled.",
-                button2Text = "Configure",
+                title = stringResource(R.string.accessibility_service),
+                status = stringResource(R.string.service_not_enabled),
+                button2Text = stringResource(R.string.action_configure),
                 onButton2Click = onAcsConfigureClick
             )
             Spacer(Modifier.height(8.dp))
         }
         if (isBossModeActive) {
             InfoCard(
-                title = "Boss Key",
-                status = "Boss/Panic mode is active.",
-                button2Text = "Re-enable",
+                title = stringResource(R.string.boss_key),
+                status = stringResource(R.string.boss_panic_mode_active),
+                button2Text = stringResource(R.string.action_reenable_boss),
                 onButton2Click = onBossKeyConfigureClick
             )
             Spacer(Modifier.height(8.dp))
         }
 
-        Button(onClick = onHelpClick, modifier = Modifier.fillMaxWidth()) { Text("Help") }
+        Button(onClick = onHelpClick, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.action_help)) }
         Spacer(Modifier.height(8.dp))
-        Button(onClick = onBugReportClick, modifier = Modifier.fillMaxWidth()) { Text("Send Bug Report") }
+        Button(onClick = onBugReportClick, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.action_send_bugreport)) }
         Spacer(Modifier.height(8.dp))
-        Button(onClick = onShareClick, modifier = Modifier.fillMaxWidth()) { Text("Share App") }
+        Button(onClick = onShareClick, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.action_share_app)) }
         Spacer(Modifier.height(16.dp))
 
         InfoCard(
-            title = "Upgrade to Full Version",
-            status = "Unlock all features",
-            button2Text = "Upgrade Now",
+            title = stringResource(R.string.upgrade_to_full_version),
+            status = stringResource(R.string.unlock_all_features),
+            button2Text = stringResource(R.string.action_upgrade),
             onButton2Click = onUpgradeClick
         )
         Spacer(Modifier.height(8.dp))
         if (!isOkcInstalled) {
             InfoCard(
-                title = "OpenKeychain",
-                status = "Not installed. Required for PGP.",
-                button2Text = "Play Store",
-                button3Text = "F-Droid",
+                title = stringResource(R.string.openkeychain),
+                status = stringResource(R.string.not_installed_pgp),
+                button2Text = stringResource(R.string.okc_install_googleplay),
+                button3Text = stringResource(R.string.okc_install_fdroid),
                 onButton2Click = onOkcPlayStoreClick,
                 onButton3Click = onOkcFdroidClick
             )

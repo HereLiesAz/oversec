@@ -17,7 +17,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import io.oversec.one.R
 import io.oversec.one.db.Db
 import io.oversec.one.db.Padder
 
@@ -39,7 +41,7 @@ fun PaddersScreen(db: Db) {
                 .align(Alignment.BottomEnd)
                 .padding(16.dp)
         ) {
-            Icon(Icons.Filled.Add, contentDescription = "Add Padder")
+            Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.add_padder))
         }
 
         if (showAddDialog) {
@@ -94,25 +96,25 @@ fun AddPadderDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Add Padder") },
+        title = { Text(stringResource(R.string.add_padder)) },
         text = {
             Column {
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it; showError = false },
-                    label = { Text("Title") },
+                    label = { Text(stringResource(R.string.title)) },
                     isError = showError && title.isBlank()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = example,
                     onValueChange = { example = it; showError = false },
-                    label = { Text("Example") },
+                    label = { Text(stringResource(R.string.example)) },
                     isError = showError && example.isBlank()
                 )
                 if (showError) {
                     Text(
-                        text = "Please fill in both fields.",
+                        text = stringResource(R.string.please_fill_both_fields),
                         color = MaterialTheme.colorScheme.error,
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.padding(top = 8.dp)
@@ -130,12 +132,12 @@ fun AddPadderDialog(
                     }
                 }
             ) {
-                Text("Add")
+                Text(stringResource(R.string.add))
             }
         },
         dismissButton = {
             Button(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(R.string.common_cancel))
             }
         }
     )

@@ -1,30 +1,10 @@
 package io.oversec.one.ui.screen
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Slider
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -61,28 +41,6 @@ fun ColorsTweakScreen(db: Db, packageName: String, onUpgrade: () -> Unit) {
 
     val scope = rememberCoroutineScope()
 
-    LaunchedEffect(fontSize) {
-        scope.launch(Dispatchers.IO) { db.setDecryptOverlayTextSize(packageName, fontSize.toInt()) }
-    }
-    LaunchedEffect(cornerRadius) {
-        scope.launch(Dispatchers.IO) { db.setDecryptOverlayCornerRadius(packageName, cornerRadius.toInt()) }
-    }
-    LaunchedEffect(paddingTop) {
-        scope.launch(Dispatchers.IO) { db.setDecryptOverlayPaddingTop(packageName, paddingTop.toInt()) }
-    }
-    LaunchedEffect(paddingLeft) {
-        scope.launch(Dispatchers.IO) { db.setDecryptOverlayPaddingLeft(packageName, paddingLeft.toInt()) }
-    }
-    LaunchedEffect(bgColor) {
-        scope.launch(Dispatchers.IO) { db.setDecryptOverlayBgColor(packageName, bgColor.toArgb()) }
-    }
-    LaunchedEffect(fgColor) {
-        scope.launch(Dispatchers.IO) { db.setDecryptOverlayTextColor(packageName, fgColor.toArgb()) }
-    }
-    LaunchedEffect(buttonColor) {
-        scope.launch(Dispatchers.IO) { db.setButtonOverlayBgColor(packageName, buttonColor.toArgb()) }
-    }
-
     var showDialogFor by remember { mutableStateOf<String?>(null) }
 
     val onColorClick: (String) -> Unit = { colorType ->
@@ -114,14 +72,14 @@ fun ColorsTweakScreen(db: Db, packageName: String, onUpgrade: () -> Unit) {
     }
 
     LazyColumn(modifier = Modifier.padding(16.dp)) {
-        item { SliderRow("Font Size", fontSize, { fontSize = it }, 10f..30f) }
-        item { SliderRow("Corner Radius", cornerRadius, { cornerRadius = it }, 0f..20f) }
-        item { SliderRow("Padding Top", paddingTop, { paddingTop = it }, 0f..30f) }
-        item { SliderRow("Padding Left", paddingLeft, { paddingLeft = it }, 0f..30f) }
+        item { SliderRow(stringResource(R.string.font_size), fontSize, { fontSize = it }, 10f..30f) }
+        item { SliderRow(stringResource(R.string.corner_radius), cornerRadius, { cornerRadius = it }, 0f..20f) }
+        item { SliderRow(stringResource(R.string.padding_top), paddingTop, { paddingTop = it }, 0f..30f) }
+        item { SliderRow(stringResource(R.string.padding_left), paddingLeft, { paddingLeft = it }, 0f..30f) }
         item { Spacer(modifier = Modifier.height(24.dp)) }
         item {
             Text(
-                text = "Lorem Ipsum",
+                text = stringResource(R.string.lorem),
                 fontSize = fontSize.sp,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -130,16 +88,32 @@ fun ColorsTweakScreen(db: Db, packageName: String, onUpgrade: () -> Unit) {
         }
         item { Spacer(modifier = Modifier.height(24.dp)) }
         if (!isFullVersion) {
-            item { Button(onClick = onUpgrade) { Text("Upgrade") } }
+            item { Button(onClick = onUpgrade) { Text(stringResource(R.string.action_upgrade)) } }
         }
         item { Spacer(modifier = Modifier.height(24.dp)) }
         item {
             Column(modifier = Modifier.alpha(if (isFullVersion) 1f else 0.5f)) {
-                Button(onClick = { onColorClick("bg") }) { Text("Background Color") }
+                Button(onClick = { onColorClick("bg") }) { Text(stringResource(R.string.background_color)) }
                 Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = { onColorClick("fg") }) { Text("Font Color") }
+                Button(onClick = { onColorClick("fg") }) { Text(stringResource(R.string.font_color)) }
                 Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = { onColorClick("button") }) { Text("Button Color") }
+                Button(onClick = { onColorClick("button") }) { Text(stringResource(R.string.button_color)) }
+            }
+        }
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(onClick = {
+                scope.launch(Dispatchers.IO) {
+                    db.setDecryptOverlayTextSize(packageName, fontSize.toInt())
+                    db.setDecryptOverlayCornerRadius(packageName, cornerRadius.toInt())
+                    db.setDecryptOverlayPaddingTop(packageName, paddingTop.toInt())
+                    db.setDecryptOverlayPaddingLeft(packageName, paddingLeft.toInt())
+                    db.setDecryptOverlayBgColor(packageName, bgColor.toArgb())
+                    db.setDecryptOverlayTextColor(packageName, fgColor.toArgb())
+                    db.setButtonOverlayBgColor(packageName, buttonColor.toArgb())
+                }
+            }) {
+                Text(stringResource(R.string.action_save))
             }
         }
     }
@@ -167,7 +141,7 @@ fun ColorPickerDialog(
     val controller = rememberColorPickerController()
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(text = "Select Color") },
+        title = { Text(text = stringResource(R.string.select_color)) },
         text = {
             Column {
                 HsvColorPicker(
@@ -182,9 +156,9 @@ fun ColorPickerDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = { onColorSelected(controller.selectedColor.value) }) { Text("OK") }
+            TextButton(onClick = { onColorSelected(controller.selectedColor.value) }) { Text(stringResource(R.string.common_ok)) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.common_cancel)) } }
     )
 }
 
@@ -221,10 +195,7 @@ fun ExpertTweaksScreen(db: Db, packageName: String) {
                 title = stringResource(R.string.controls_checkbox_infobutton),
                 summary = stringResource(R.string.controls_hint_showinfobutton),
                 checked = prefs.value["showInfoButton"] ?: false,
-                onCheckedChange = {
-                    prefs.value = prefs.value.toMutableMap().apply { put("showInfoButton", it) }
-                    scope.launch(Dispatchers.IO) { db.setShowInfoButton(packageName, it) }
-                }
+                onCheckedChange = { prefs.value = prefs.value.toMutableMap().apply { put("showInfoButton", it) } }
             )
         }
         item {
@@ -232,10 +203,7 @@ fun ExpertTweaksScreen(db: Db, packageName: String) {
                 title = stringResource(R.string.controls_checkbox_infoontap),
                 summary = stringResource(R.string.controls_hint_infoontap),
                 checked = prefs.value["showInfoOnTap"] ?: false,
-                onCheckedChange = {
-                    prefs.value = prefs.value.toMutableMap().apply { put("showInfoOnTap", it) }
-                    scope.launch(Dispatchers.IO) { db.setShowInfoOnTap(packageName, it) }
-                }
+                onCheckedChange = { prefs.value = prefs.value.toMutableMap().apply { put("showInfoOnTap", it) } }
             )
         }
         item {
@@ -243,10 +211,7 @@ fun ExpertTweaksScreen(db: Db, packageName: String) {
                 title = stringResource(R.string.controls_checkbox_infoonlongtap),
                 summary = stringResource(R.string.controls_hint_infoonlongtap),
                 checked = prefs.value["showInfoOnLongTap"] ?: false,
-                onCheckedChange = {
-                    prefs.value = prefs.value.toMutableMap().apply { put("showInfoOnLongTap", it) }
-                    scope.launch(Dispatchers.IO) { db.setShowInfoOnLongTap(packageName, it) }
-                }
+                onCheckedChange = { prefs.value = prefs.value.toMutableMap().apply { put("showInfoOnLongTap", it) } }
             )
         }
         item {
@@ -254,10 +219,7 @@ fun ExpertTweaksScreen(db: Db, packageName: String) {
                 title = stringResource(R.string.controls_checkbox_encryptbutton),
                 summary = stringResource(R.string.controls_hint_showencryptbutton),
                 checked = prefs.value["showEncryptButton"] ?: false,
-                onCheckedChange = {
-                    prefs.value = prefs.value.toMutableMap().apply { put("showEncryptButton", it) }
-                    scope.launch(Dispatchers.IO) { db.setShowEncryptButton(packageName, it) }
-                }
+                onCheckedChange = { prefs.value = prefs.value.toMutableMap().apply { put("showEncryptButton", it) } }
             )
         }
         item {
@@ -265,10 +227,7 @@ fun ExpertTweaksScreen(db: Db, packageName: String) {
                 title = stringResource(R.string.controls_checkbox_toggleencryptonlongtap),
                 summary = stringResource(R.string.controls_hint_toggleencryptonlongtap),
                 checked = prefs.value["toggleEncryptButtonOnLongTap"] ?: false,
-                onCheckedChange = {
-                    prefs.value = prefs.value.toMutableMap().apply { put("toggleEncryptButtonOnLongTap", it) }
-                    scope.launch(Dispatchers.IO) { db.setToggleEncryptButtonOnLongTap(packageName, it) }
-                }
+                onCheckedChange = { prefs.value = prefs.value.toMutableMap().apply { put("toggleEncryptButtonOnLongTap", it) } }
             )
         }
         item {
@@ -276,10 +235,7 @@ fun ExpertTweaksScreen(db: Db, packageName: String) {
                 title = stringResource(R.string.controls_checkbox_showuserinteractiondialogsimmediately),
                 summary = stringResource(R.string.controls_hint_showuserinteractiondialogsimmediately),
                 checked = prefs.value["showUserInteractionDialogsImmediately"] ?: false,
-                onCheckedChange = {
-                    prefs.value = prefs.value.toMutableMap().apply { put("showUserInteractionDialogsImmediately", it) }
-                    scope.launch(Dispatchers.IO) { db.setShowUserInteractionDialogsImmediately(packageName, it) }
-                }
+                onCheckedChange = { prefs.value = prefs.value.toMutableMap().apply { put("showUserInteractionDialogsImmediately", it) } }
             )
         }
         item {
@@ -287,10 +243,7 @@ fun ExpertTweaksScreen(db: Db, packageName: String) {
                 title = stringResource(R.string.controls_checkbox_notification),
                 summary = stringResource(R.string.controls_hint_shownotification),
                 checked = prefs.value["showNotification"] ?: false,
-                onCheckedChange = {
-                    prefs.value = prefs.value.toMutableMap().apply { put("showNotification", it) }
-                    scope.launch(Dispatchers.IO) { db.setShowNotification(packageName, it) }
-                }
+                onCheckedChange = { prefs.value = prefs.value.toMutableMap().apply { put("showNotification", it) } }
             )
         }
         item {
@@ -298,10 +251,7 @@ fun ExpertTweaksScreen(db: Db, packageName: String) {
                 title = stringResource(R.string.controls_checkbox_overlayaboveinput),
                 summary = stringResource(R.string.controls_hint_overlayaboveinput),
                 checked = prefs.value["overlayAboveInput"] ?: false,
-                onCheckedChange = {
-                    prefs.value = prefs.value.toMutableMap().apply { put("overlayAboveInput", it) }
-                    scope.launch(Dispatchers.IO) { db.setOverlayAboveInput(packageName, it) }
-                }
+                onCheckedChange = { prefs.value = prefs.value.toMutableMap().apply { put("overlayAboveInput", it) } }
             )
         }
         item {
@@ -309,10 +259,7 @@ fun ExpertTweaksScreen(db: Db, packageName: String) {
                 title = stringResource(R.string.controls_checkbox_voverflow),
                 summary = stringResource(R.string.controls_hint_voverflow),
                 checked = prefs.value["voverflow"] ?: false,
-                onCheckedChange = {
-                    prefs.value = prefs.value.toMutableMap().apply { put("voverflow", it) }
-                    scope.launch(Dispatchers.IO) { db.setVoverflow(packageName, it) }
-                }
+                onCheckedChange = { prefs.value = prefs.value.toMutableMap().apply { put("voverflow", it) } }
             )
         }
         item {
@@ -320,10 +267,7 @@ fun ExpertTweaksScreen(db: Db, packageName: String) {
                 title = stringResource(R.string.controls_checkbox_newlines),
                 summary = stringResource(R.string.controls_hint_newlines),
                 checked = prefs.value["appendNewLines"] ?: false,
-                onCheckedChange = {
-                    prefs.value = prefs.value.toMutableMap().apply { put("appendNewLines", it) }
-                    scope.launch(Dispatchers.IO) { db.setAppendNewLines(packageName, it) }
-                }
+                onCheckedChange = { prefs.value = prefs.value.toMutableMap().apply { put("appendNewLines", it) } }
             )
         }
         item {
@@ -331,10 +275,7 @@ fun ExpertTweaksScreen(db: Db, packageName: String) {
                 title = stringResource(R.string.controls_spinner_innerpadding),
                 summary = stringResource(R.string.controls_hint_innerpadding),
                 value = innerPadding,
-                onValueChange = {
-                    innerPadding = it
-                    scope.launch(Dispatchers.IO) { db.setMaxInnerPadding(packageName, it) }
-                },
+                onValueChange = { innerPadding = it },
                 values = listOf(0, 8, 32, 128, 512)
             )
         }
@@ -343,10 +284,7 @@ fun ExpertTweaksScreen(db: Db, packageName: String) {
                 title = stringResource(R.string.controls_checkbox_storeencryptionparamsperpackageonly),
                 summary = stringResource(R.string.controls_hint_storeencryptionparamsperpackageonly),
                 checked = prefs.value["storeEncryptionParamsPerPackageOnly"] ?: false,
-                onCheckedChange = {
-                    prefs.value = prefs.value.toMutableMap().apply { put("storeEncryptionParamsPerPackageOnly", it) }
-                    scope.launch(Dispatchers.IO) { db.setStoreEncryptionParamsPerPackageOnly(packageName, it) }
-                }
+                onCheckedChange = { prefs.value = prefs.value.toMutableMap().apply { put("storeEncryptionParamsPerPackageOnly", it) } }
             )
         }
         item {
@@ -354,10 +292,7 @@ fun ExpertTweaksScreen(db: Db, packageName: String) {
                 title = stringResource(R.string.controls_checkbox_forceencryptionparams),
                 summary = stringResource(R.string.controls_hint_forceencryptionparams),
                 checked = prefs.value["forceEncryptionParams"] ?: false,
-                onCheckedChange = {
-                    prefs.value = prefs.value.toMutableMap().apply { put("forceEncryptionParams", it) }
-                    scope.launch(Dispatchers.IO) { db.setForceEncryptionParams(packageName, it) }
-                }
+                onCheckedChange = { prefs.value = prefs.value.toMutableMap().apply { put("forceEncryptionParams", it) } }
             )
         }
         item {
@@ -365,10 +300,7 @@ fun ExpertTweaksScreen(db: Db, packageName: String) {
                 title = stringResource(R.string.controls_checkbox_hqscrape),
                 summary = stringResource(R.string.controls_hint_hqscrape),
                 checked = prefs.value["hqScrape"] ?: false,
-                onCheckedChange = {
-                    prefs.value = prefs.value.toMutableMap().apply { put("hqScrape", it) }
-                    scope.launch(Dispatchers.IO) { db.setHqScrape(packageName, it) }
-                }
+                onCheckedChange = { prefs.value = prefs.value.toMutableMap().apply { put("hqScrape", it) } }
             )
         }
         item {
@@ -376,10 +308,7 @@ fun ExpertTweaksScreen(db: Db, packageName: String) {
                 title = stringResource(R.string.controls_checkbox_includenotimporantviews),
                 summary = stringResource(R.string.controls_hint_includenotimporantviews),
                 checked = prefs.value["includeNonImportantViews"] ?: false,
-                onCheckedChange = {
-                    prefs.value = prefs.value.toMutableMap().apply { put("includeNonImportantViews", it) }
-                    scope.launch(Dispatchers.IO) { db.setIncludeNonImportantViews(packageName, it) }
-                }
+                onCheckedChange = { prefs.value = prefs.value.toMutableMap().apply { put("includeNonImportantViews", it) } }
             )
         }
         item {
@@ -387,10 +316,7 @@ fun ExpertTweaksScreen(db: Db, packageName: String) {
                 title = stringResource(R.string.controls_checkbox_spreadinvisibleencoding),
                 summary = stringResource(R.string.controls_hint_spreadinvisibleencoding),
                 checked = prefs.value["spreadInvisibleEncoding"] ?: false,
-                onCheckedChange = {
-                    prefs.value = prefs.value.toMutableMap().apply { put("spreadInvisibleEncoding", it) }
-                    scope.launch(Dispatchers.IO) { db.setSpreadInvisibleEncoding(packageName, it) }
-                }
+                onCheckedChange = { prefs.value = prefs.value.toMutableMap().apply { put("spreadInvisibleEncoding", it) } }
             )
         }
         item {
@@ -398,11 +324,38 @@ fun ExpertTweaksScreen(db: Db, packageName: String) {
                 title = stringResource(R.string.controls_checkbox_dontshowdecryptionfailed),
                 summary = stringResource(R.string.controls_hint_dontshowdecryptionfailed),
                 checked = prefs.value["dontShowDecryptionFailed"] ?: false,
-                onCheckedChange = {
-                    prefs.value = prefs.value.toMutableMap().apply { put("dontShowDecryptionFailed", it) }
-                    scope.launch(Dispatchers.IO) { db.setDontShowDecryptionFailed(packageName, it) }
-                }
+                onCheckedChange = { prefs.value = prefs.value.toMutableMap().apply { put("dontShowDecryptionFailed", it) } }
             )
+        }
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(onClick = {
+                scope.launch(Dispatchers.IO) {
+                    prefs.value.forEach { (key, value) ->
+                        when (key) {
+                            "showInfoButton" -> db.setShowInfoButton(packageName, value as Boolean)
+                            "showInfoOnTap" -> db.setShowInfoOnTap(packageName, value as Boolean)
+                            "showInfoOnLongTap" -> db.setShowInfoOnLongTap(packageName, value as Boolean)
+                            "showEncryptButton" -> db.setShowEncryptButton(packageName, value as Boolean)
+                            "toggleEncryptButtonOnLongTap" -> db.setToggleEncryptButtonOnLongTap(packageName, value as Boolean)
+                            "showUserInteractionDialogsImmediately" -> db.setShowUserInteractionDialogsImmediately(packageName, value as Boolean)
+                            "showNotification" -> db.setShowNotification(packageName, value as Boolean)
+                            "overlayAboveInput" -> db.setOverlayAboveInput(packageName, value as Boolean)
+                            "voverflow" -> db.setVoverflow(packageName, value as Boolean)
+                            "appendNewLines" -> db.setAppendNewLines(packageName, value as Boolean)
+                            "storeEncryptionParamsPerPackageOnly" -> db.setStoreEncryptionParamsPerPackageOnly(packageName, value as Boolean)
+                            "forceEncryptionParams" -> db.setForceEncryptionParams(packageName, value as Boolean)
+                            "hqScrape" -> db.setHqScrape(packageName, value as Boolean)
+                            "includeNonImportantViews" -> db.setIncludeNonImportantViews(packageName, value as Boolean)
+                            "spreadInvisibleEncoding" -> db.setSpreadInvisibleEncoding(packageName, value as Boolean)
+                            "dontShowDecryptionFailed" -> db.setDontShowDecryptionFailed(packageName, value as Boolean)
+                        }
+                    }
+                    db.setMaxInnerPadding(packageName, innerPadding)
+                }
+            }) {
+                Text(stringResource(R.string.action_save))
+            }
         }
     }
 }

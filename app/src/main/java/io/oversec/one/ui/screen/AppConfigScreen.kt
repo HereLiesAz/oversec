@@ -48,15 +48,15 @@ fun AppConfigScreen(
                 title = { Text(packageLabel) },
                 navigationIcon = {
                     IconButton(onClick = onBackPressed) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.Filled.ArrowBack, contentDescription = stringResource(R.string.back_content_description))
                     }
                 },
                 actions = {
                     IconButton(onClick = { onContextualHelp(tabIndex) }) {
-                        Icon(Icons.Default.HelpOutline, contentDescription = "Help")
+                        Icon(Icons.Default.HelpOutline, contentDescription = stringResource(R.string.action_help))
                     }
                     IconButton(onClick = { showMenu = !showMenu }) {
-                        Icon(Icons.Filled.MoreVert, contentDescription = "More")
+                        Icon(Icons.Filled.MoreVert, contentDescription = stringResource(R.string.more_options_content_description))
                     }
                     DropdownMenu(
                         expanded = showMenu,
