@@ -1,6 +1,7 @@
 package io.oversec.one.common
 
 import android.content.Context
+import io.oversec.one.R
 
 object MainPreferences {
 
@@ -28,24 +29,12 @@ object MainPreferences {
 
     fun getLauncherSecretDialerCode(ctx: Context): String {
         return ctx.getSharedPreferences(FILENAME, 0)
-<<<<<<< Updated upstream
-<<<<<<< HEAD:app/src/main/java/io/oversec/one/common/MainPreferences.kt
             .getString(ctx.getString(R.string.mainprefs_launchersecretcode_key), "") ?: ""
-=======
-            .getString("launchersecretcode0", "") ?: ""
->>>>>>> origin/modernization-refactor:libraries/oversec_crypto/src/main/java/io/oversec/one/common/MainPreferences.kt
-=======
-<<<<<<< HEAD
-            .getString(ctx.getString(R.string.mainprefs_launchersecretcode_key), "") ?: ""
-=======
-            .getString("launchersecretcode0", "") ?: ""
->>>>>>> origin/modernization-refactor
->>>>>>> Stashed changes
     }
 
     fun setLauncherSecretDialerCode(ctx: Context, value: String) {
         ctx.getSharedPreferences(FILENAME, 0).edit()
-            .putString("launchersecretcode0", value).apply()
+            .putString(ctx.getString(R.string.mainprefs_launchersecretcode_key), value).apply()
     }
 
     fun isDialerSecretCodeBroadcastConfirmedWorking(ctx: Context): Boolean {

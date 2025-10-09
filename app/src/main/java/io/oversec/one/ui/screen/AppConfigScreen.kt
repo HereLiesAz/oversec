@@ -55,7 +55,7 @@ fun AppConfigScreen(
                 },
                 actions = {
                     IconButton(onClick = { onContextualHelp(tabIndex) }) {
-                        Icon(Icons.Default.HelpOutline, contentDescription = stringResource(R.string.action_help))
+                        Icon(Icons.Filled.HelpOutline, contentDescription = stringResource(R.string.action_help))
                     }
                     IconButton(onClick = { showMenu = !showMenu }) {
                         Icon(Icons.Filled.MoreVert, contentDescription = stringResource(R.string.more_options_content_description))
