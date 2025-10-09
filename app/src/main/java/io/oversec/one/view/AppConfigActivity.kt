@@ -88,6 +88,11 @@ class AppConfigActivity : AppCompatActivity() {
                     },
                     onOkcFdroidClick = {
                         Util.openUrl(this, "https://f-droid.org/packages/org.sufficientlysecure.keychain/")
+                    },
+                    numIgnoredTexts = core.numIgnoredTexts,
+                    onClearIgnoredTexts = {
+                        core.clearIgnoredTexts()
+                        recreate()
                     }
                 )
             }

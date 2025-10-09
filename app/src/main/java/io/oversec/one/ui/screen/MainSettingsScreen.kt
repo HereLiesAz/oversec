@@ -18,29 +18,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
-import io.oversec.one.Core
 import io.oversec.one.R
-import io.oversec.one.crypto.gpg.OpenKeychainConnector
 import io.oversec.one.db.Db
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-
-data class AppInfo(
-    val appName: String,
-    val packageName: String,
-    val icon: android.graphics.drawable.Drawable,
-    var isEnabled: Boolean
-)
-
-private fun isPackageInstalled(pm: PackageManager, packageName: String): Boolean {
-    return try {
-        pm.getPackageInfo(packageName, 0)
-        true
-    } catch (e: PackageManager.NameNotFoundException) {
-        false
-    }
-}
+import io.oversec.one.ui.viewModel.MainSettingsViewModel
+import io.oversec.one.ui.viewModel.MainSettingsViewModelFactory
 
 @Composable
 fun MainSettingsScreen(
@@ -53,29 +36,27 @@ fun MainSettingsScreen(
     onAcsConfigureClick: () -> Unit,
     onBossKeyConfigureClick: () -> Unit,
     onOkcPlayStoreClick: () -> Unit,
-    onOkcFdroidClick: () -> Unit
+    onOkcFdroidClick: () -> Unit,
+    viewModel: MainSettingsViewModel = viewModel(factory = MainSettingsViewModelFactory(db, LocalContext.current))
 ) {
-    val context = LocalContext.current
-    val packageManager = context.packageManager
-    val core = Core.getInstance(context)
-    val scope = rememberCoroutineScope()
+    val apps by viewModel.apps.collectAsState()
+    val sortOption by viewModel.sortOption.collectAsState()
+    val isAcsEnabled by viewModel.isAcsEnabled.collectAsState()
+    val isBossModeActive by viewModel.isBossModeActive.collectAsState()
+    val isOkcInstalled by viewModel.isOkcInstalled.collectAsState()
 
-    var apps by remember {
-        mutableStateOf(
-            packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
-                .filter { packageManager.getLaunchIntentForPackage(it.packageName) != null }
-                .map {
-                    AppInfo(
-                        appName = it.loadLabel(packageManager).toString(),
-                        packageName = it.packageName,
-                        icon = it.loadIcon(packageManager),
-                        isEnabled = db.isPackageEnabled(it.packageName)
-                    )
-                }
-        )
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                viewModel.refreshStatus()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
     }
-
-    var sortOption by remember { mutableStateOf("Name") }
 
     val sortedApps = remember(apps, sortOption) {
         when (sortOption) {
@@ -85,25 +66,6 @@ fun MainSettingsScreen(
                     .thenBy { it.appName.lowercase() }
             )
             else -> apps
-        }
-    }
-
-    var isAcsEnabled by remember { mutableStateOf(core.isAccessibilityServiceRunning) }
-    var isBossModeActive by remember { mutableStateOf(db.isBossMode) }
-    var isOkcInstalled by remember { mutableStateOf(isPackageInstalled(packageManager, OpenKeychainConnector.PACKAGE_NAME)) }
-
-    val lifecycleOwner = LocalLifecycleOwner.current
-    DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) {
-                isAcsEnabled = core.isAccessibilityServiceRunning
-                isBossModeActive = db.isBossMode
-                isOkcInstalled = isPackageInstalled(packageManager, OpenKeychainConnector.PACKAGE_NAME)
-            }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
 
@@ -127,12 +89,12 @@ fun MainSettingsScreen(
                 Text(stringResource(R.string.main_tab_apps__sort))
                 RadioButton(
                     selected = sortOption == "Name",
-                    onClick = { sortOption = "Name" }
+                    onClick = { viewModel.onSortOptionChange("Name") }
                 )
                 Text(stringResource(R.string.main_tab_apps__sortbyname))
                 RadioButton(
                     selected = sortOption == "Checked",
-                    onClick = { sortOption = "Checked" }
+                    onClick = { viewModel.onSortOptionChange("Checked") }
                 )
                 Text(stringResource(R.string.main_tab_apps__sortbychecked))
             }
@@ -143,12 +105,7 @@ fun MainSettingsScreen(
             AppListItem(
                 appInfo = app,
                 onCheckedChange = { newCheckedState ->
-                    apps = apps.map {
-                        if (it.packageName == app.packageName) it.copy(isEnabled = newCheckedState) else it
-                    }
-                    scope.launch(Dispatchers.IO) {
-                        db.setPackageEnabled(app.packageName, newCheckedState)
-                    }
+                    viewModel.onAppCheckedChange(app.packageName, newCheckedState)
                 },
                 onHelpClick = { onAppHelpClick(app.packageName) }
             )

@@ -31,7 +31,9 @@ fun AppConfigScreen(
     onAcsConfigureClick: () -> Unit,
     onBossKeyConfigureClick: () -> Unit,
     onOkcPlayStoreClick: () -> Unit,
-    onOkcFdroidClick: () -> Unit
+    onOkcFdroidClick: () -> Unit,
+    numIgnoredTexts: Int,
+    onClearIgnoredTexts: () -> Unit
 ) {
     var tabIndex by remember { mutableStateOf(0) }
     val tabs = listOf(
@@ -76,6 +78,15 @@ fun AppConfigScreen(
                                 showMenu = false
                             }
                         )
+                        if (numIgnoredTexts > 0) {
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.action_clear_ignored_keys, numIgnoredTexts)) },
+                                onClick = {
+                                    onClearIgnoredTexts()
+                                    showMenu = false
+                                }
+                            )
+                        }
                     }
                 }
             )
@@ -84,7 +95,7 @@ fun AppConfigScreen(
         Column(modifier = Modifier.padding(paddingValues)) {
             if (isTempHidden) {
                 Button(onClick = onUnhide) {
-                    Text("Undo temporary hide")
+                    Text(stringResource(R.string.undo_temporary_hide))
                 }
             }
             TabRow(selectedTabIndex = tabIndex) {

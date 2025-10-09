@@ -1,14 +1,40 @@
 package io.oversec.one.ui.screen
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.text.format.DateFormat
+import android.widget.Toast
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import io.oversec.one.BuildConfig
 import io.oversec.one.R
+import io.oversec.one.iab.FullVersionListener
+import io.oversec.one.iab.IabUtil
+import io.oversec.one.iab.Purchase
+import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,7 +55,7 @@ fun AboutScreen(
                 title = { Text(stringResource(R.string.title_activity_about)) },
                 navigationIcon = {
                     IconButton(onClick = onBackPressed) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.Filled.ArrowBack, contentDescription = stringResource(R.string.back_content_description))
                     }
                 }
             )
@@ -54,34 +80,6 @@ fun AboutScreen(
     }
 }
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.text.format.DateFormat
-import android.widget.Toast
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import io.oversec.one.BuildConfig
-import io.oversec.one.iab.FullVersionListener
-import io.oversec.one.iab.IabUtil
-import io.oversec.one.iab.Purchase
-import java.util.Date
-
 @Composable
 fun AboutTab() {
     val context = LocalContext.current
@@ -94,7 +92,7 @@ fun AboutTab() {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
                 painter = painterResource(id = R.mipmap.ic_launcher),
-                contentDescription = "App Icon",
+                contentDescription = stringResource(R.string.app_icon_description),
                 modifier = Modifier.size(48.dp)
             )
             Spacer(modifier = Modifier.width(16.dp))
@@ -144,7 +142,7 @@ fun PurchasesTab() {
 
     if (purchases.isEmpty()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text("No purchases found.")
+            Text(stringResource(R.string.no_purchases_found))
         }
     } else {
         LazyColumn(modifier = Modifier.padding(16.dp)) {
@@ -182,25 +180,25 @@ fun DonationsTab() {
             modifier = Modifier.padding(bottom = 16.dp)
         )
         DonationButton(
-            coinName = "Bitcoin",
+            coinName = stringResource(R.string.donate_btn_btc),
             address = BuildConfig.DONATION_BTC,
             clipboardManager = clipboardManager,
             context = context
         )
         DonationButton(
-            coinName = "Ethereum",
+            coinName = stringResource(R.string.donate_btn_eth),
             address = BuildConfig.DONATION_ETH,
             clipboardManager = clipboardManager,
             context = context
         )
         DonationButton(
-            coinName = "IOTA",
+            coinName = stringResource(R.string.donate_btn_iota),
             address = BuildConfig.DONATION_IOTA,
             clipboardManager = clipboardManager,
             context = context
         )
         DonationButton(
-            coinName = "Dash",
+            coinName = stringResource(R.string.donate_btn_dash),
             address = BuildConfig.DONATION_DASH,
             clipboardManager = clipboardManager,
             context = context

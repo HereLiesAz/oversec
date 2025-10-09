@@ -1,5 +1,6 @@
 package io.oversec.one.ui.screen
 
+import android.app.Activity
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -10,20 +11,26 @@ import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import io.oversec.one.R
-import io.oversec.one.db.PadderContent
+import io.oversec.one.db.PadderDb
+import io.oversec.one.ui.viewModel.PadderDetailViewModel
+import io.oversec.one.ui.viewModel.PadderDetailViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PadderDetailScreen(
-    padder: PadderContent?,
-    onSave: (String, String) -> Unit,
-    onDelete: () -> Unit,
+    padderId: Long?,
+    db: PadderDb,
     onHelp: () -> Unit,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    onSaveFinished: () -> Unit,
+    viewModel: PadderDetailViewModel = viewModel(factory = PadderDetailViewModelFactory(db, padderId))
 ) {
+    val padder by viewModel.padder.collectAsState()
     var name by remember { mutableStateOf(padder?.name ?: "") }
     var content by remember { mutableStateOf(padder?.content ?: "") }
     var nameError by remember { mutableStateOf<String?>(null) }
@@ -31,6 +38,14 @@ fun PadderDetailScreen(
     var showMenu by remember { mutableStateOf(false) }
     val nameMinLengthError = stringResource(R.string.error_padder_name_too_short, 5)
     val contentMinLengthError = stringResource(R.string.error_padder_content_too_short, 5)
+    val context = LocalContext.current
+
+    LaunchedEffect(padder) {
+        padder?.let {
+            name = it.name
+            content = it.content
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -45,7 +60,7 @@ fun PadderDetailScreen(
                     IconButton(onClick = onHelp) {
                         Icon(Icons.Default.HelpOutline, contentDescription = stringResource(R.string.action_help))
                     }
-                    if (padder != null) {
+                    if (padderId != null) {
                         IconButton(onClick = { showMenu = !showMenu }) {
                             Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.more_options_content_description))
                         }
@@ -56,7 +71,7 @@ fun PadderDetailScreen(
                             DropdownMenuItem(
                                 text = { Text(stringResource(R.string.action_delete)) },
                                 onClick = {
-                                    onDelete()
+                                    viewModel.deletePadder(context as Activity, onSaveFinished)
                                     showMenu = false
                                 }
                             )
@@ -70,7 +85,7 @@ fun PadderDetailScreen(
                 nameError = if (name.length < 5) nameMinLengthError else null
                 contentError = if (content.length < 5) contentMinLengthError else null
                 if (nameError == null && contentError == null) {
-                    onSave(name, content)
+                    viewModel.savePadder(name, content, context as Activity, onSaveFinished)
                 }
             }) {
                 Icon(Icons.Default.Save, contentDescription = stringResource(R.string.action_save))
