@@ -440,7 +440,51 @@
     <string name="donate_body">Please consider making a donation to support further development of &appname;</string>
     <string name="donate_clip_label">Dirección de la donación</string>
     <string name="donate_toast_copied">Dirección copiada al portapapeles</string>
-    <string name="main_tab_apps__sort">Clasificación:</string>
-    <string name="main_tab_apps__sortbyname">nombre</string>
-    <string name="main_tab_apps__sortbychecked">activo</string>
+    <string name="main_tab_apps__sort">Sort:</string>
+    <string name="main_tab_apps__sortbyname">Name</string>
+    <string name="main_tab_apps__sortbychecked">Checked</string>
+    <string name="tab_stuff">Stuff</string>
+    <string name="tab_colors">Colors</string>
+    <string name="tab_expert">Expert</string>
+    <string name="tab_padders">Padders</string>
+
+    <!-- General UI -->
+    <string name="back_content_description">Back</string>
+    <string name="more_options_content_description">More options</string>
+    <string name="undo_temporary_hide">Undo temporary hide</string>
+    <string name="app_icon_description">App Icon</string>
+    <string name="title">Title</string>
+    <string name="example">Example</string>
+    <string name="add">Add</string>
+
+    <!-- MainSettingsScreen -->
+    <string name="accessibility_service">Accessibility Service</string>
+    <string name="service_not_enabled">Service not enabled.</string>
+    <string name="boss_key">Boss Key</string>
+    <string name="boss_panic_mode_active">Boss/Panic mode is active.</string>
+    <string name="upgrade_to_full_version">Upgrade to Full Version</string>
+    <string name="unlock_all_features">Unlock all features</string>
+    <string name="openkeychain">OpenKeychain</string>
+    <string name="not_installed_pgp">Not installed. Required for PGP.</string>
+
+    <!-- TweaksScreen -->
+    <string name="font_size">Font Size</string>
+    <string name="corner_radius">Corner Radius</string>
+    <string name="padding_top">Padding Top</string>
+    <string name="padding_left">Padding Left</string>
+    <string name="background_color">Background Color</string>
+    <string name="font_color">Font Color</string>
+    <string name="button_color">Button Color</string>
+    <string name="select_color">Select Color</string>
+
+    <!-- PaddersScreen -->
+    <string name="add_padder">Add Padder</string>
+    <string name="please_fill_both_fields">Please fill in both fields.</string>
+
+    <!-- AboutScreen -->
+    <string name="no_purchases_found">No purchases found.</string>
+    <string name="donate_btn_btc">Bitcoin</string>
+    <string name="donate_btn_eth">Ethereum</string>
+    <string name="donate_btn_iota">IOTA</string>
+    <string name="donate_btn_dash">Dash</string>
 </resources>

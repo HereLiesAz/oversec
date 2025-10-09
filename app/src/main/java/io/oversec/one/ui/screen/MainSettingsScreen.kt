@@ -14,29 +14,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
-import io.oversec.one.Core
-import io.oversec.one.crypto.gpg.OpenKeychainConnector
+import io.oversec.one.R
 import io.oversec.one.db.Db
-
-data class AppInfo(
-    val appName: String,
-    val packageName: String,
-    val icon: android.graphics.drawable.Drawable,
-    var isEnabled: Boolean
-)
-
-private fun isPackageInstalled(pm: PackageManager, packageName: String): Boolean {
-    return try {
-        pm.getPackageInfo(packageName, 0)
-        true
-    } catch (e: PackageManager.NameNotFoundException) {
-        false
-    }
-}
+import io.oversec.one.ui.viewModel.MainSettingsViewModel
+import io.oversec.one.ui.viewModel.MainSettingsViewModelFactory
 
 @Composable
 fun MainSettingsScreen(
@@ -49,53 +36,36 @@ fun MainSettingsScreen(
     onAcsConfigureClick: () -> Unit,
     onBossKeyConfigureClick: () -> Unit,
     onOkcPlayStoreClick: () -> Unit,
-    onOkcFdroidClick: () -> Unit
+    onOkcFdroidClick: () -> Unit,
+    viewModel: MainSettingsViewModel = viewModel(factory = MainSettingsViewModelFactory(db, LocalContext.current))
 ) {
-    val context = LocalContext.current
-    val packageManager = context.packageManager
-    val core = Core.getInstance(context)
-
-    var apps by remember {
-        mutableStateOf(
-            packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
-                .filter { it.flags and ApplicationInfo.FLAG_SYSTEM == 0 || it.packageName == "com.android.chrome" }
-                .map {
-                    AppInfo(
-                        appName = it.loadLabel(packageManager).toString(),
-                        packageName = it.packageName,
-                        icon = it.loadIcon(packageManager),
-                        isEnabled = db.isPackageEnabled(it.packageName)
-                    )
-                }
-        )
-    }
-
-    var sortOption by remember { mutableStateOf("Name") }
-
-    val sortedApps = remember(apps, sortOption) {
-        when (sortOption) {
-            "Name" -> apps.sortedBy { it.appName.lowercase() }
-            "Checked" -> apps.sortedByDescending { it.isEnabled }
-            else -> apps
-        }
-    }
-
-    var isAcsEnabled by remember { mutableStateOf(core.isAccessibilityServiceRunning) }
-    var isBossModeActive by remember { mutableStateOf(db.isBossMode) }
-    var isOkcInstalled by remember { mutableStateOf(isPackageInstalled(packageManager, OpenKeychainConnector.PACKAGE_NAME)) }
+    val apps by viewModel.apps.collectAsState()
+    val sortOption by viewModel.sortOption.collectAsState()
+    val isAcsEnabled by viewModel.isAcsEnabled.collectAsState()
+    val isBossModeActive by viewModel.isBossModeActive.collectAsState()
+    val isOkcInstalled by viewModel.isOkcInstalled.collectAsState()
 
     val lifecycleOwner = LocalLifecycleOwner.current
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_RESUME) {
-                isAcsEnabled = core.isAccessibilityServiceRunning
-                isBossModeActive = db.isBossMode
-                isOkcInstalled = isPackageInstalled(packageManager, OpenKeychainConnector.PACKAGE_NAME)
+                viewModel.refreshStatus()
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
+    val sortedApps = remember(apps, sortOption) {
+        when (sortOption) {
+            "Name" -> apps.sortedBy { it.appName.lowercase() }
+            "Checked" -> apps.sortedWith(
+                compareByDescending<AppInfo> { it.isEnabled }
+                    .thenBy { it.appName.lowercase() }
+            )
+            else -> apps
         }
     }
 
@@ -116,17 +86,17 @@ fun MainSettingsScreen(
             )
             Spacer(Modifier.height(16.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Sort by:")
+                Text(stringResource(R.string.main_tab_apps__sort))
                 RadioButton(
                     selected = sortOption == "Name",
-                    onClick = { sortOption = "Name" }
+                    onClick = { viewModel.onSortOptionChange("Name") }
                 )
-                Text("Name")
+                Text(stringResource(R.string.main_tab_apps__sortbyname))
                 RadioButton(
                     selected = sortOption == "Checked",
-                    onClick = { sortOption = "Checked" }
+                    onClick = { viewModel.onSortOptionChange("Checked") }
                 )
-                Text("Checked")
+                Text(stringResource(R.string.main_tab_apps__sortbychecked))
             }
             Divider(modifier = Modifier.padding(vertical = 8.dp))
         }
@@ -135,11 +105,7 @@ fun MainSettingsScreen(
             AppListItem(
                 appInfo = app,
                 onCheckedChange = { newCheckedState ->
-                    db.setPackageEnabled(app.packageName, newCheckedState)
-                    // Create a new list to trigger recomposition
-                    apps = apps.map {
-                        if (it.packageName == app.packageName) it.copy(isEnabled = newCheckedState) else it
-                    }
+                    viewModel.onAppCheckedChange(app.packageName, newCheckedState)
                 },
                 onHelpClick = { onAppHelpClick(app.packageName) }
             )
@@ -161,7 +127,7 @@ fun AppListItem(
     ) {
         Image(
             painter = rememberDrawablePainter(drawable = appInfo.icon),
-            contentDescription = "App Icon",
+            contentDescription = stringResource(R.string.app_icon_description),
             modifier = Modifier.size(48.dp)
         )
         Spacer(Modifier.width(16.dp))
@@ -170,7 +136,7 @@ fun AppListItem(
             Text(text = appInfo.packageName, style = MaterialTheme.typography.bodySmall)
         }
         IconButton(onClick = onHelpClick) {
-            Icon(Icons.Filled.HelpOutline, contentDescription = "Help")
+            Icon(Icons.Filled.HelpOutline, contentDescription = stringResource(R.string.action_help))
         }
         Checkbox(
             checked = appInfo.isEnabled,
@@ -196,43 +162,43 @@ fun MainHelpSection(
     Column {
         if (!isAcsEnabled) {
             InfoCard(
-                title = "Accessibility Service",
-                status = "Service not enabled.",
-                button2Text = "Configure",
+                title = stringResource(R.string.accessibility_service),
+                status = stringResource(R.string.service_not_enabled),
+                button2Text = stringResource(R.string.action_configure),
                 onButton2Click = onAcsConfigureClick
             )
             Spacer(Modifier.height(8.dp))
         }
         if (isBossModeActive) {
             InfoCard(
-                title = "Boss Key",
-                status = "Boss/Panic mode is active.",
-                button2Text = "Re-enable",
+                title = stringResource(R.string.boss_key),
+                status = stringResource(R.string.boss_panic_mode_active),
+                button2Text = stringResource(R.string.action_reenable_boss),
                 onButton2Click = onBossKeyConfigureClick
             )
             Spacer(Modifier.height(8.dp))
         }
 
-        Button(onClick = onHelpClick, modifier = Modifier.fillMaxWidth()) { Text("Help") }
+        Button(onClick = onHelpClick, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.action_help)) }
         Spacer(Modifier.height(8.dp))
-        Button(onClick = onBugReportClick, modifier = Modifier.fillMaxWidth()) { Text("Send Bug Report") }
+        Button(onClick = onBugReportClick, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.action_send_bugreport)) }
         Spacer(Modifier.height(8.dp))
-        Button(onClick = onShareClick, modifier = Modifier.fillMaxWidth()) { Text("Share App") }
+        Button(onClick = onShareClick, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.action_share_app)) }
         Spacer(Modifier.height(16.dp))
 
         InfoCard(
-            title = "Upgrade to Full Version",
-            status = "Unlock all features",
-            button2Text = "Upgrade Now",
+            title = stringResource(R.string.upgrade_to_full_version),
+            status = stringResource(R.string.unlock_all_features),
+            button2Text = stringResource(R.string.action_upgrade),
             onButton2Click = onUpgradeClick
         )
         Spacer(Modifier.height(8.dp))
         if (!isOkcInstalled) {
             InfoCard(
-                title = "OpenKeychain",
-                status = "Not installed. Required for PGP.",
-                button2Text = "Play Store",
-                button3Text = "F-Droid",
+                title = stringResource(R.string.openkeychain),
+                status = stringResource(R.string.not_installed_pgp),
+                button2Text = stringResource(R.string.okc_install_googleplay),
+                button3Text = stringResource(R.string.okc_install_fdroid),
                 onButton2Click = onOkcPlayStoreClick,
                 onButton3Click = onOkcFdroidClick
             )

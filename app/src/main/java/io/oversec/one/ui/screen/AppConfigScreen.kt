@@ -31,10 +31,17 @@ fun AppConfigScreen(
     onAcsConfigureClick: () -> Unit,
     onBossKeyConfigureClick: () -> Unit,
     onOkcPlayStoreClick: () -> Unit,
-    onOkcFdroidClick: () -> Unit
+    onOkcFdroidClick: () -> Unit,
+    numIgnoredTexts: Int,
+    onClearIgnoredTexts: () -> Unit
 ) {
     var tabIndex by remember { mutableStateOf(0) }
-    val tabs = listOf("Stuff", "Colors", "Expert", "Padders")
+    val tabs = listOf(
+        stringResource(R.string.tab_stuff),
+        stringResource(R.string.tab_colors),
+        stringResource(R.string.tab_expert),
+        stringResource(R.string.tab_padders)
+    )
     var showMenu by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -43,15 +50,15 @@ fun AppConfigScreen(
                 title = { Text(packageLabel) },
                 navigationIcon = {
                     IconButton(onClick = onBackPressed) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.Filled.ArrowBack, contentDescription = stringResource(R.string.back_content_description))
                     }
                 },
                 actions = {
                     IconButton(onClick = { onContextualHelp(tabIndex) }) {
-                        Icon(Icons.Default.HelpOutline, contentDescription = "Help")
+                        Icon(Icons.Default.HelpOutline, contentDescription = stringResource(R.string.action_help))
                     }
                     IconButton(onClick = { showMenu = !showMenu }) {
-                        Icon(Icons.Filled.MoreVert, contentDescription = "More")
+                        Icon(Icons.Filled.MoreVert, contentDescription = stringResource(R.string.more_options_content_description))
                     }
                     DropdownMenu(
                         expanded = showMenu,
@@ -71,6 +78,15 @@ fun AppConfigScreen(
                                 showMenu = false
                             }
                         )
+                        if (numIgnoredTexts > 0) {
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.action_clear_ignored_keys, numIgnoredTexts)) },
+                                onClick = {
+                                    onClearIgnoredTexts()
+                                    showMenu = false
+                                }
+                            )
+                        }
                     }
                 }
             )
@@ -79,7 +95,7 @@ fun AppConfigScreen(
         Column(modifier = Modifier.padding(paddingValues)) {
             if (isTempHidden) {
                 Button(onClick = onUnhide) {
-                    Text("Undo temporary hide")
+                    Text(stringResource(R.string.undo_temporary_hide))
                 }
             }
             TabRow(selectedTabIndex = tabIndex) {
