@@ -5,7 +5,7 @@ import android.graphics.Color
 import java.io.IOException
 import java.io.InputStream
 
-class BitmapInputStream internal constructor(
+class BitmapInputStream constructor(
     private val mBm: Bitmap,
     val pixels: Int
 ) : InputStream() {
