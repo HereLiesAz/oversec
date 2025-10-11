@@ -28,7 +28,7 @@ class PadderDetailViewModel(
     }
 
     fun savePadder(name: String, content: String, activity: Activity, afterSave: () -> Unit) {
-        CoreContract.getInstance().doIfFullVersionOrShowPurchaseDialog(activity, {
+        CoreContract.instance.doIfFullVersionOrShowPurchaseDialog(activity, {
             viewModelScope.launch {
                 val pc = _padder.value
                 if (pc == null) {
@@ -37,7 +37,7 @@ class PadderDetailViewModel(
                 } else {
                     pc.name = name
                     pc.content = content
-                    pc.sort = name
+                    pc.setSort(name)
                     db.update(pc)
                 }
                 afterSave()
@@ -46,7 +46,7 @@ class PadderDetailViewModel(
     }
 
     fun deletePadder(activity: Activity, afterDelete: () -> Unit) {
-        CoreContract.getInstance().doIfFullVersionOrShowPurchaseDialog(activity, {
+        CoreContract.instance.doIfFullVersionOrShowPurchaseDialog(activity, {
             viewModelScope.launch {
                 _padder.value?.let {
                     db.delete(it.key)

@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import io.oversec.one.R
+import io.oversec.one.crypto.encoding.pad.PadderContent
 import io.oversec.one.db.PadderDb
 import io.oversec.one.ui.viewModel.PadderDetailViewModel
 import io.oversec.one.ui.viewModel.PadderDetailViewModelFactory
@@ -53,23 +54,23 @@ fun PadderDetailScreen(
                 title = { Text(stringResource(R.string.title_activity_padder_detail)) },
                 navigationIcon = {
                     IconButton(onClick = onBackPressed) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.back_content_description))
+                        Icon(Icons.Filled.ArrowBack, contentDescription = stringResource(R.string.back_content_description))
                     }
                 },
                 actions = {
                     IconButton(onClick = onHelp) {
-                        Icon(Icons.Default.HelpOutline, contentDescription = stringResource(R.string.action_help))
+                        Icon(Icons.Filled.HelpOutline, contentDescription = stringResource(R.string.action_help))
                     }
                     if (padderId != null) {
                         IconButton(onClick = { showMenu = !showMenu }) {
-                            Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.more_options_content_description))
+                            Icon(Icons.Filled.MoreVert, contentDescription = stringResource(R.string.more_options_content_description))
                         }
                         DropdownMenu(
                             expanded = showMenu,
                             onDismissRequest = { showMenu = false }
                         ) {
                             DropdownMenuItem(
-                                text = { Text(stringResource(R.string.action_delete)) },
+                                text = { Text(stringResource(R.string.action_delete_key)) },
                                 onClick = {
                                     viewModel.deletePadder(context as Activity, onSaveFinished)
                                     showMenu = false
@@ -88,7 +89,7 @@ fun PadderDetailScreen(
                     viewModel.savePadder(name, content, context as Activity, onSaveFinished)
                 }
             }) {
-                Icon(Icons.Default.Save, contentDescription = stringResource(R.string.action_save))
+                Icon(Icons.Filled.Save, contentDescription = stringResource(R.string.action_save))
             }
         }
     ) { paddingValues ->

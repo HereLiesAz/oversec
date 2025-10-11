@@ -24,6 +24,7 @@ import io.oversec.one.R
 import io.oversec.one.db.Db
 import io.oversec.one.ui.viewModel.MainSettingsViewModel
 import io.oversec.one.ui.viewModel.MainSettingsViewModelFactory
+import io.oversec.one.ui.screen.AppInfo
 
 @Composable
 fun MainSettingsScreen(

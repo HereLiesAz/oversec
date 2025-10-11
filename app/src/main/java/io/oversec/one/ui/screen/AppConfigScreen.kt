@@ -55,7 +55,7 @@ fun AppConfigScreen(
                 },
                 actions = {
                     IconButton(onClick = { onContextualHelp(tabIndex) }) {
-                        Icon(Icons.Default.HelpOutline, contentDescription = stringResource(R.string.action_help))
+                        Icon(Icons.Filled.HelpOutline, contentDescription = stringResource(R.string.action_help))
                     }
                     IconButton(onClick = { showMenu = !showMenu }) {
                         Icon(Icons.Filled.MoreVert, contentDescription = stringResource(R.string.more_options_content_description))
@@ -72,7 +72,7 @@ fun AppConfigScreen(
                             }
                         )
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.about)) },
+                            text = { Text(stringResource(R.string.action_about)) },
                             onClick = {
                                 onAbout()
                                 showMenu = false
@@ -122,7 +122,7 @@ fun AppConfigScreen(
                 )
                 1 -> ColorsTweakScreen(db = db, packageName = packageName, onUpgrade = onUpgrade)
                 2 -> ExpertTweaksScreen(db = db, packageName = packageName)
-                3 -> PaddersScreen(db = db)
+                3 -> PaddersScreen()
             }
         }
     }
