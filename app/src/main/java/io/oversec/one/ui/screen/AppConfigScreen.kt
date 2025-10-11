@@ -72,7 +72,7 @@ fun AppConfigScreen(
                             }
                         )
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.about)) },
+                            text = { Text(stringResource(R.string.action_about)) },
                             onClick = {
                                 onAbout()
                                 showMenu = false
@@ -122,7 +122,7 @@ fun AppConfigScreen(
                 )
                 1 -> ColorsTweakScreen(db = db, packageName = packageName, onUpgrade = onUpgrade)
                 2 -> ExpertTweaksScreen(db = db, packageName = packageName)
-                3 -> PaddersScreen(db = db)
+                3 -> PaddersScreen()
             }
         }
     }

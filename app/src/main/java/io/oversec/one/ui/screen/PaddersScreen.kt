@@ -19,16 +19,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import io.oversec.one.R
-import io.oversec.one.db.Db
-import io.oversec.one.db.Padder
+import io.oversec.one.crypto.encoding.pad.PadderContent
+import io.oversec.one.db.PadderDb
 import io.oversec.one.ui.viewModel.PaddersViewModel
 import io.oversec.one.ui.viewModel.PaddersViewModelFactory
 import io.oversec.one.view.PadderDetailActivity
 
 @Composable
 fun PaddersScreen(
-    db: Db,
-    viewModel: PaddersViewModel = viewModel(factory = PaddersViewModelFactory(db))
+    viewModel: PaddersViewModel = viewModel(factory = PaddersViewModelFactory(PadderDb.getInstance(LocalContext.current)))
 ) {
     val context = LocalContext.current
     val padders by viewModel.padders.collectAsState()
@@ -49,7 +48,7 @@ fun PaddersScreen(
                     padder = padder,
                     onClick = {
                         val intent = Intent(context, PadderDetailActivity::class.java).apply {
-                            putExtra(PadderDetailActivity.EXTRA_ID, padder.id)
+                            putExtra(PadderDetailActivity.EXTRA_ID, padder.key)
                         }
                         launcher.launch(intent)
                     }
@@ -69,8 +68,8 @@ fun PaddersScreen(
         if (showAddDialog) {
             AddPadderDialog(
                 onDismiss = { showAddDialog = false },
-                onAdd = { title, example ->
-                    viewModel.addPadder(title, example)
+                onAdd = { name, content ->
+                    viewModel.addPadder(name, content)
                     showAddDialog = false
                 }
             )
@@ -79,7 +78,7 @@ fun PaddersScreen(
 }
 
 @Composable
-fun PadderListItem(padder: Padder, onClick: () -> Unit) {
+fun PadderListItem(padder: PadderContent, onClick: () -> Unit) {
     Column(
         modifier = Modifier
             .padding(vertical = 8.dp)
@@ -92,13 +91,13 @@ fun PadderListItem(padder: Padder, onClick: () -> Unit) {
                 .padding(vertical = 10.dp, horizontal = 10.dp)
         ) {
             Text(
-                text = padder.title,
+                text = padder.name,
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.weight(2f)
             )
             Spacer(modifier = Modifier.width(10.dp))
             Text(
-                text = padder.example,
+                text = padder.contentBegin,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.weight(3f)
             )
@@ -112,8 +111,8 @@ fun AddPadderDialog(
     onDismiss: () -> Unit,
     onAdd: (String, String) -> Unit
 ) {
-    var title by remember { mutableStateOf("") }
-    var example by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf("") }
+    var content by remember { mutableStateOf("") }
     var showError by remember { mutableStateOf(false) }
 
     AlertDialog(
@@ -122,17 +121,17 @@ fun AddPadderDialog(
         text = {
             Column {
                 OutlinedTextField(
-                    value = title,
-                    onValueChange = { title = it; showError = false },
-                    label = { Text(stringResource(R.string.title)) },
-                    isError = showError && title.isBlank()
+                    value = name,
+                    onValueChange = { name = it; showError = false },
+                    label = { Text(stringResource(R.string.label_padder_name)) },
+                    isError = showError && name.isBlank()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
-                    value = example,
-                    onValueChange = { example = it; showError = false },
-                    label = { Text(stringResource(R.string.example)) },
-                    isError = showError && example.isBlank()
+                    value = content,
+                    onValueChange = { content = it; showError = false },
+                    label = { Text(stringResource(R.string.label_padder_content)) },
+                    isError = showError && content.isBlank()
                 )
                 if (showError) {
                     Text(
@@ -147,8 +146,8 @@ fun AddPadderDialog(
         confirmButton = {
             Button(
                 onClick = {
-                    if (title.isNotBlank() && example.isNotBlank()) {
-                        onAdd(title, example)
+                    if (name.isNotBlank() && content.isNotBlank()) {
+                        onAdd(name, content)
                     } else {
                         showError = true
                     }

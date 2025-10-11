@@ -47,7 +47,7 @@ class MainSettingsViewModel(
 
     fun onAppCheckedChange(packageName: String, isEnabled: Boolean) {
         viewModelScope.launch {
-            db.setPackageEnabled(packageName, isEnabled)
+            db.setAppEnabled(packageName, isEnabled)
             val updatedApps = _apps.value.map {
                 if (it.packageName == packageName) it.copy(isEnabled = isEnabled) else it
             }
@@ -70,7 +70,7 @@ class MainSettingsViewModel(
                         appName = it.loadLabel(packageManager).toString(),
                         packageName = it.packageName,
                         icon = it.loadIcon(packageManager),
-                        isEnabled = db.isPackageEnabled(it.packageName)
+                        isEnabled = db.isAppEnabled(it.packageName)
                     )
                 }
         }
