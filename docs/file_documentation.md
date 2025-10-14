@@ -669,7 +669,7 @@ This service is used to estimate the strength of passwords. It uses the Zxcvbn l
 
 ## `app/src/main/res/anim/`
 
-This directory contains XML resource files for the application.
+This directory contains the animation resources for the application.
 
 ## `app/src/main/res/drawable/` and `app/src/main/res/drawable-*/`
 
