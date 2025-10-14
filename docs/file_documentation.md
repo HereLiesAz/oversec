@@ -64,6 +64,8 @@ This directory and its locale-specific subdirectories (e.g., `values-de`, `value
 This directory contains arbitrary XML files that can be read at runtime, such as the accessibility service configuration and the app's preferences.
 ## fastlane/
 This directory contains the Fastlane configuration for the app. Fastlane is a tool that automates the process of building, testing, and releasing mobile apps.
+### fastlane/metadata/android/
+This directory contains the metadata for the app's Google Play Store listing, such as the app's description, summary, and screenshots. The metadata is organized into subdirectories for each supported language.
 ## gradle/
 This directory contains the Gradle wrapper files, which allow the project to be built with a specific version of Gradle without requiring it to be installed on the system.
 ## libraries/
@@ -72,3 +74,17 @@ This directory contains reusable library modules that are used by the main appli
 This directory contains the `oversec_crypto` library, which provides the core cryptographic functionality for the Oversec app.
 #### libraries/oversec_crypto/build.gradle.kts
 This is the Gradle build file for the `oversec_crypto` library. It defines the library's dependencies and other build-related settings.
+#### libraries/oversec_crypto/src/
+This directory contains the source code for the `oversec_crypto` library, which is organized into three subdirectories: `main`, `test`, and `proto`.
+##### libraries/oversec_crypto/src/main/
+This directory contains the main source code and resources for the `oversec_crypto` library.
+###### libraries/oversec_crypto/src/main/AndroidManifest.xml
+This file is the Android manifest for the `oversec_crypto` library.
+###### libraries/oversec_crypto/src/main/assets/
+This directory contains asset files that are compiled into the library as-is, such as the Diceware wordlists.
+###### libraries/oversec_crypto/src/main/java/
+This directory contains the Java source code for the library.
+###### libraries/oversec_crypto/src/main/proto/
+This directory contains the Protocol Buffer (Protobuf) definition files for the library. Protobuf is a language-neutral, platform-neutral, extensible mechanism for serializing structured data.
+##### libraries/oversec_crypto/src/test/
+This directory contains the unit tests for the `oversec_crypto` library.
