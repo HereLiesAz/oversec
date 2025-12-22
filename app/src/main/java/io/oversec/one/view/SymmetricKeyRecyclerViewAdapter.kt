@@ -60,7 +60,7 @@ open class SymmetricKeyRecyclerViewAdapter(
         )
 
 
-        SymUtil.applyAvatar(holder.mTvAvatar, key.name)
+        io.oversec.one.view.util.SymUIUtil.applyAvatar(holder.mTvAvatar, key.name)
     }
 
     override fun getItemCount(): Int {

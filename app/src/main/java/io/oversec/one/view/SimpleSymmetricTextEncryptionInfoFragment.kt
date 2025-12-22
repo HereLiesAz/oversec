@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.*
 import android.widget.TextView
 import io.oversec.one.R
-import io.oversec.one.crypto.*
+import io.oversec.one.crypto.AbstractCryptoHandler
+import io.oversec.one.crypto.BaseDecryptResult
+import io.oversec.one.crypto.CryptoHandlerFacade
+import io.oversec.one.crypto.UserInteractionRequiredException
 import io.oversec.one.crypto.sym.KeyNotCachedException
 import io.oversec.one.crypto.sym.SymUtil
 import io.oversec.one.crypto.symbase.BaseSymmetricCryptoHandler
@@ -18,9 +21,9 @@ class SimpleSymmetricTextEncryptionInfoFragment : AbstractTextEncryptionInfoFrag
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mView = inflater.inflate(R.layout.encryption_info_text_simplesym, container, false)
-        super.onCreateView(inflater, container, savedInstanceState)
-        return mView
+        val view = inflater.inflate(R.layout.encryption_info_text_simplesym, container, false)
+        mView = view
+        return view
     }
 
 
@@ -33,10 +36,13 @@ class SimpleSymmetricTextEncryptionInfoFragment : AbstractTextEncryptionInfoFrag
     ) {
         super.setData(activity, encodedText, tdr, uix, encryptionHandler)
 
+        val view = mView ?: return
+        val context = context ?: return
+
         val r = tdr as SymmetricDecryptResult?
-        val lblSymKeyAlias = mView.findViewById<View>(R.id.lbl_sym_key_name) as TextView
-        val tvAvatar = mView.findViewById<View>(R.id.tvAvatar) as TextView
-        val tvSym = mView.findViewById<View>(R.id.tv_sym_key_name) as TextView
+        val lblSymKeyAlias = view.findViewById<View>(R.id.lbl_sym_key_name) as TextView
+        val tvAvatar = view.findViewById<View>(R.id.tvAvatar) as TextView
+        val tvSym = view.findViewById<View>(R.id.tv_sym_key_name) as TextView
 
         if (tdr == null) {
             lblSymKeyAlias.visibility = View.GONE
@@ -51,7 +57,7 @@ class SimpleSymmetricTextEncryptionInfoFragment : AbstractTextEncryptionInfoFrag
                 tvAvatar.visibility = View.GONE
 
             } else {
-                val kc = KeyCache.getInstance(getActivity())
+                val kc = KeyCache.getInstance(context)
                 var name = ""
                 try {
                     name = kc.get(r.symmetricKeyId).name!!
@@ -60,7 +66,7 @@ class SimpleSymmetricTextEncryptionInfoFragment : AbstractTextEncryptionInfoFrag
                 }
 
                 tvSym.text = name
-                SymUtil.applyAvatar(tvAvatar, r.symmetricKeyId!!, name)
+                io.oversec.one.view.util.SymUIUtil.applyAvatar(tvAvatar, r.symmetricKeyId!!, name)
             }
         }
     }

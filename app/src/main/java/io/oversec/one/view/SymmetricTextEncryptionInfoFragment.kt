@@ -20,9 +20,9 @@ class SymmetricTextEncryptionInfoFragment : AbstractTextEncryptionInfoFragment()
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mView = inflater.inflate(R.layout.encryption_info_text_sym, container, false)
-        super.onCreateView(inflater, container, savedInstanceState)
-        return mView
+        val view = inflater.inflate(R.layout.encryption_info_text_sym, container, false)
+        mView = view
+        return view
     }
 
 
@@ -56,7 +56,7 @@ class SymmetricTextEncryptionInfoFragment : AbstractTextEncryptionInfoFragment()
             if (keyId == null) {
                 btKeyDetails.visibility = View.GONE
             } else {
-                btKeyDetails.setOnClickListener { KeyDetailsActivity.show(getActivity(), keyId) }
+                btKeyDetails.setOnClickListener { KeyDetailsActivity.show(activity, keyId) }
             }
 
             if (keyId == null) {
@@ -66,16 +66,16 @@ class SymmetricTextEncryptionInfoFragment : AbstractTextEncryptionInfoFragment()
                 lblConfirm.visibility = View.GONE
                 tvConfirm.visibility = View.GONE
             } else {
-                val keystore = OversecKeystore2.getInstance(getActivity())
+                val keystore = OversecKeystore2.getInstance(activity)
                 val name = keystore.getSymmetricKeyEncrypted(keyId)?.name
                 tvSym.text = name
 
-                SymUtil.applyAvatar(tvAvatar, name!!)
+                io.oversec.one.view.util.SymUIUtil.applyAvatar(tvAvatar, name!!)
 
                 val confirmedDate = keystore.getConfirmDate(keyId)
                 tvConfirm.text =
-                        if (confirmedDate == null) getActivity().getString(R.string.label_key_unconfirmed) else DateUtils.formatDateTime(
-                            getActivity(),
+                        if (confirmedDate == null) activity.getString(R.string.label_key_unconfirmed) else DateUtils.formatDateTime(
+                            activity,
                             confirmedDate.time,
                             0
                         )
@@ -88,7 +88,7 @@ class SymmetricTextEncryptionInfoFragment : AbstractTextEncryptionInfoFragment()
                 if (confirmedDate == null) {
                     tvConfirm.setTextColor(
                         ContextCompat.getColor(
-                            getActivity(),
+                            activity,
                             R.color.colorWarning
                         )
                     )

@@ -43,6 +43,7 @@ import io.oversec.one.crypto.TemporaryContentProvider
 import io.oversec.one.crypto.sym.*
 import io.oversec.one.crypto.symbase.KeyUtil
 import io.oversec.one.crypto.symbase.OversecKeyCacheListener
+import io.oversec.one.view.util.SymUIUtil
 import io.oversec.one.view.SecureBaseActivity
 import java.text.SimpleDateFormat
 import java.util.*
@@ -133,11 +134,11 @@ class KeyDetailsActivity : SecureBaseActivity(), OversecKeyCacheListener {
                 .toInt()
         return try {
             if (blur) {
-                val bm = SymUtil.getQrCode(KeyUtil.getRandomBytes(32), dimension)
+                val bm = SymUIUtil.getQrCode(KeyUtil.getRandomBytes(32), dimension)
                 val bmSmallTmp = Bitmap.createScaledBitmap(bm!!, 25, 25, true)
                 Bitmap.createScaledBitmap(bmSmallTmp, dimension, dimension, true)
             } else {
-                SymUtil.getQrCode(mKeystore.getPlainKeyAsTransferBytes(mId), dimension)
+                SymUIUtil.getQrCode(mKeystore.getPlainKeyAsTransferBytes(mId), dimension)
             }
         } catch (ex: KeyNotCachedException) {
             null // Return null to indicate key needs unlocking

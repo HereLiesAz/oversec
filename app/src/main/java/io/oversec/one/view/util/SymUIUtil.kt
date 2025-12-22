@@ -4,8 +4,8 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.widget.TextView
 import com.google.zxing.BarcodeFormat
-import com.jwetherell.quick_response_code.data.Contents
-import com.jwetherell.quick_response_code.qrcode.QRCodeEncoder
+import com.google.zxing.MultiFormatWriter
+import com.google.zxing.common.BitMatrix
 import io.oversec.one.crypto.sym.SymUtil
 import org.bouncycastle.util.encoders.Base64
 
@@ -14,13 +14,28 @@ object SymUIUtil {
         try {
             val b64data = Base64.toBase64String(data)
 
-            val qrCodeEncoder = QRCodeEncoder(
-                b64data, null,
-                Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(),
-                dimension
+            val bitMatrix: BitMatrix = MultiFormatWriter().encode(
+                b64data,
+                BarcodeFormat.QR_CODE,
+                dimension,
+                dimension,
+                null
             )
 
-            return qrCodeEncoder.encodeAsBitmap()
+            val width = bitMatrix.width
+            val height = bitMatrix.height
+            val pixels = IntArray(width * height)
+
+            for (y in 0 until height) {
+                val offset = y * width
+                for (x in 0 until width) {
+                    pixels[offset + x] = if (bitMatrix[x, y]) Color.BLACK else Color.WHITE
+                }
+            }
+
+            val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
+            return bitmap
         } catch (e: Exception) {
             e.printStackTrace()
             return null

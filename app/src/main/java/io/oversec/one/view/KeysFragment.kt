@@ -1,7 +1,6 @@
 package io.oversec.one.view
 
 import android.app.Activity
-import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -10,10 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.oversec.one.crypto.Help
-import io.oversec.one.crypto.R
+import androidx.fragment.app.Fragment
+import io.oversec.one.R
 import io.oversec.one.crypto.sym.OversecKeystore2
-import io.oversec.one.view.WithHelp
 import io.oversec.one.view.util.SimpleDividerItemDecoration
 
 class KeysFragment : Fragment(), WithHelp, OversecKeystore2.KeyStoreListener {
