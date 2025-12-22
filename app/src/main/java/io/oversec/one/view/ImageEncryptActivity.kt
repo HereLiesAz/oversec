@@ -37,7 +37,6 @@ import io.oversec.one.crypto.images.xcoder.blackandwhite.BlackAndWhiteImageXCode
 import io.oversec.one.crypto.proto.Inner
 import io.oversec.one.crypto.proto.Outer
 import io.oversec.one.view.util.ImageInfo
-import io.oversec.one.view.util.ImgUtil
 import io.oversec.one.view.util.Util
 import roboguice.util.Ln
 import java.io.FileNotFoundException
@@ -176,7 +175,7 @@ class ImageEncryptActivity : AppCompatActivity() {
 
     private fun doEncode() {
         if (mImageUri != null) {
-            ImagePreferences.getPreferences(this).setXCoder(mCoder.javaClass.simpleName)
+            ImagePreferences.getPreferences(this).xCoder = mCoder.javaClass.simpleName
             //there is no real way to know which encryption params we should use, so ALWAYS let the user choose or confirm!
             EncryptionParamsActivity.showForResult_ImageEncrypt(this, mPackageName!!, RQ_ENCRYPTION_PARAMS)
         } else {
@@ -253,7 +252,7 @@ class ImageEncryptActivity : AppCompatActivity() {
                 }
             } catch (e: UserInteractionRequiredException) {
                 try {
-                    startIntentSenderForResult(e.pendingIntent.intentSender, RQ_PENDING_INTENT, null, 0, 0, 0)
+                    startIntentSenderForResult(e.pendingIntent!!.intentSender, RQ_PENDING_INTENT, null, 0, 0, 0)
                 } catch (e1: IntentSender.SendIntentException) {
                     e1.printStackTrace()
                 }
@@ -308,7 +307,7 @@ class ImageEncryptActivity : AppCompatActivity() {
     private fun transcode(input: Uri, coder: ImageXCoder, encryptionParams: AbstractEncryptionParams, encryptExtras: Intent?): Uri? {
 
         val `is` = contentResolver.openInputStream(input)
-        val origInfo = ImgUtil.parseImageInfo(`is`)
+        val origInfo = io.oversec.one.crypto.images.ImgUtil.parseImageInfo(`is`)
 
         val origMimeType = "image/" + origInfo.mimetype
         `is`?.close()
@@ -343,7 +342,7 @@ class ImageEncryptActivity : AppCompatActivity() {
         val outer = CryptoHandlerFacade.getInstance(this).encrypt(data, encryptionParams, encryptExtras)
 
 
-        val aUriResult = coder.encode(outer)
+        val aUriResult = coder.encode(outer!!)
         runOnUiThread {
             Util.showToast(this@ImageEncryptActivity, getString(R.string.warning_image_resized, 100 / mSampleSizeS))
         }

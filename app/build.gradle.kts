@@ -207,6 +207,7 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+        aidl = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.10"
@@ -228,6 +229,15 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("com.google.android.material:material:1.11.0")
+
+    // Missing dependencies
+    implementation("com.google.zxing:core:3.5.3")
+    implementation("com.nulab-inc:zxcvbn:1.2.5")
+    implementation("org.bouncycastle:bcprov-jdk18on:1.78.1")
+    implementation("org.bouncycastle:bcpkix-jdk18on:1.78.1")
+    implementation("org.bouncycastle:bcpg-jdk18on:1.78.1")
+    implementation("org.bouncycastle:bcutil-jdk18on:1.78.1")
+
 
     val composeBom = platform("androidx.compose:compose-bom:2024.04.01")
     implementation(composeBom)

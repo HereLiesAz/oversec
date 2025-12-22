@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import io.oversec.one.R
 import io.oversec.one.crypto.BaseDecryptResult
-import io.oversec.one.crypto.R
 import io.oversec.one.crypto.images.xcoder.ImageXCoder
 import io.oversec.one.crypto.proto.Outer
 import io.oversec.one.crypto.sym.OversecKeystore2
@@ -23,9 +23,9 @@ class SymmetricBinaryEncryptionInfoFragment : AbstractBinaryEncryptionInfoFragme
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mView = inflater.inflate(R.layout.encryption_info_binary_sym, container, false)
-        super.onCreateView(inflater, container, savedInstanceState)
-        return mView
+        val view = inflater.inflate(R.layout.encryption_info_binary_sym, container, false)
+        mView = view
+        return view
     }
 
 
@@ -65,7 +65,7 @@ class SymmetricBinaryEncryptionInfoFragment : AbstractBinaryEncryptionInfoFragme
                 val keystore = OversecKeystore2.getInstance(activity)
                 val name = keystore.getSymmetricKeyEncrypted(keyId)?.name
                 tvSym.text = name
-                SymUtil.applyAvatar(tvAvatar, name!!)
+                io.oversec.one.view.util.SymUIUtil.applyAvatar(tvAvatar, name!!)
 
 
                 val confirmedDate = keystore.getConfirmDate(keyId)

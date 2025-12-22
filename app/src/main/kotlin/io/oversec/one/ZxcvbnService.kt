@@ -6,6 +6,7 @@ import android.os.IBinder
 import android.os.RemoteException
 import android.util.Log
 import com.nulabinc.zxcvbn.Zxcvbn
+import io.oversec.one.crypto.ZxcvbnResult
 
 
 /**
